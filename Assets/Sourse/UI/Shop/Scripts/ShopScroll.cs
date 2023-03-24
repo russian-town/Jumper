@@ -17,7 +17,7 @@ public class ShopScroll : MonoBehaviour, IBeginDragHandler, IEndDragHandler
     private bool _isDragging;
     private float _correctivePositionX;
     private RectTransform _content;
-    private List<RectTransform> _items = new List<RectTransform>();
+    private List<RectTransform> _skins = new List<RectTransform>();
 
     private void Awake()
     {
@@ -39,18 +39,18 @@ public class ShopScroll : MonoBehaviour, IBeginDragHandler, IEndDragHandler
         float nearestDistance = float.MaxValue;
         float center = _scrollRect.transform.position.x;
 
-        for (int i = 0; i < _items.Count; i++)
+        for (int i = 0; i < _skins.Count; i++)
         {
-            float itemDistance = Mathf.Abs(center - _items[i].position.x);
+            float skinDistance = Mathf.Abs(center - _skins[i].position.x);
 
-            if (itemDistance < nearestDistance)
+            if (skinDistance < nearestDistance)
             {
-                nearestDistance = itemDistance;
+                nearestDistance = skinDistance;
                 nearestIndex = i;
             }
 
-            float size = Mathf.Lerp(_maxItemSize, _minItemSize, itemDistance / center);
-            _items[i].sizeDelta = CalculateSize(_items[i].sizeDelta, size);
+            float size = Mathf.Lerp(_maxItemSize, _minItemSize, skinDistance / center);
+            _skins[i].sizeDelta = CalculateSize(_skins[i].sizeDelta, size);
         }
 
         if (_isDragging == false)
@@ -62,12 +62,12 @@ public class ShopScroll : MonoBehaviour, IBeginDragHandler, IEndDragHandler
         }
     }
 
-    public void Initialize(List<ItemView> items)
+    public void Initialize(List<SkinView> skins)
     {
         if (_isInitialized)
             throw new InvalidOperationException("Already initialized");
 
-        items.ForEach(item => _items.Add((RectTransform)item.transform));
+        skins.ForEach(skin => _skins.Add((RectTransform)skin.transform));
         _isInitialized = true;
     }
 
@@ -86,8 +86,8 @@ public class ShopScroll : MonoBehaviour, IBeginDragHandler, IEndDragHandler
     {
         _scrollRect.inertia = false;
 
-        RectTransform item = _items[index];
-        float contentTargetPositionX = -1 * Mathf.Clamp(item.anchoredPosition.x - item.sizeDelta.x - _correctivePositionX, 0, _content.sizeDelta.x);
+        RectTransform skin = _skins[index];
+        float contentTargetPositionX = -1 * Mathf.Clamp(skin.anchoredPosition.x - skin.sizeDelta.x - _correctivePositionX, 0, _content.sizeDelta.x);
         Vector2 nextContentPosition = new Vector2(contentTargetPositionX, _content.anchoredPosition.y);
 
         _content.anchoredPosition = Vector2.Lerp(_content.anchoredPosition, nextContentPosition, _lerpSpeed * Time.deltaTime);
