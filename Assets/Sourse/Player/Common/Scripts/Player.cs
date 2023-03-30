@@ -16,8 +16,10 @@ public class Player : MonoBehaviour, IPauseHandler
     private Game _game;
     private bool _doubleJump;
     private bool _isPause;
+    private bool _isStart = false;
 
     public int ID => _id;
+    public bool IsStart => _isStart;
 
     private void Awake()
     {
@@ -64,16 +66,24 @@ public class Player : MonoBehaviour, IPauseHandler
         _isPause = isPause;
     }
 
+    public void SetStart(bool isStart)
+    {
+        _isStart = isStart;
+    }
+
     private void OnFell(Collision collision)
     {
-        if (_game.IsStart == false)
+        if (_isStart == false)
             return;
 
         _doubleJump = false;
         _animator.ResetJumpTrigger();
-        _fallParticle.Play();
 
-        if (collision.transform.TryGetComponent(out Ground ground))
+        if (collision.transform.TryGetComponent(out Props props))
+        {
+            _fallParticle.Play();
+        }
+        else if (collision.transform.TryGetComponent(out Ground ground))
         {
             _animator.HardFall();
             Die();

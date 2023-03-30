@@ -16,7 +16,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &3548185136957094532
 Transform:
@@ -46,8 +46,36 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _followCamera: {fileID: 0}
-  _playerTemplate: {fileID: 7837447733211374041, guid: 6f7cb2609416b6e4f9bcfc27e619135d, type: 3}
-  _playerPosition: {fileID: 0}
+  _audio: {fileID: 0}
+  _players:
+  - {fileID: 2061722627886511387, guid: 0ec1637b6bff7da42bde4651bd163df4, type: 3}
+  - {fileID: 5516721582368906776, guid: 202f5e3554c4f6746b4d3d5c528cc036, type: 3}
+  - {fileID: 884365066180790718, guid: d27a3436841a5f04899a3d94a8d78c56, type: 3}
+  - {fileID: 9163291394110237849, guid: f3f225da9ae27484aba7a21004bdd1f1, type: 3}
+  - {fileID: 243802417527646808, guid: 9a26663ecfe54cc41ace68974e2714ef, type: 3}
+  - {fileID: 122590282501092248, guid: 578a9e9d7ff4a164e82bab7dbcdaf174, type: 3}
+  - {fileID: 3154028464720261306, guid: 0b5bb1cc5d08c78429cf02b4b73699a2, type: 3}
+  _props:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  _defaultTemplate: {fileID: 3154028464720261306, guid: 0b5bb1cc5d08c78429cf02b4b73699a2, type: 3}
+  _defaultSkin: {fileID: 11400000, guid: aa7dad415a9470948b78a4ea36efa89f, type: 2}
+  _playerStartPosition: {fileID: 0}
+  _game: {fileID: 0}
+  _openableSkinHandler: {fileID: 0}
+  _levelProgress: {fileID: 0}
+  _shop: {fileID: 0}
+  _rewardedVideo: {fileID: 0}
 --- !u!114 &6421770793702540762
 MonoBehaviour:
   m_ObjectHideFlags: 0

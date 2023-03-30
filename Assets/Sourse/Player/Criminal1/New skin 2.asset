@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: New skin 2
   m_EditorClassIdentifier: 
   _type: 3
-  _icon: {fileID: 21300000, guid: 4b68c9c41750f2c48930c86395deec86, type: 3}
+  _icon: {fileID: 21300000, guid: 4a762e4dd2f7c644d8d647a4ec74757b, type: 3}
   _price: 0
   _id: 1
   _isSelect: 0

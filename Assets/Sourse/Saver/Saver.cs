@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public abstract class Saver : MonoBehaviour
+public class Saver : MonoBehaviour
 {
     public void Save(string key, float value)
     {

@@ -2,13 +2,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-[RequireComponent(typeof(SkinViewSpawner), typeof(Sorter), typeof(SelectedSkinIDSaver))]
-[RequireComponent(typeof(SkinStateSaver))]
+[RequireComponent(typeof(SkinViewSpawner), typeof(Sorter), typeof(Saver))]
 public class Shop : MonoBehaviour
 {
     public event UnityAction<int> Selected;
+    public event UnityAction<int> Initialized;
 
     private const string SelectedIDKey = "SelectedIDKey";
+    //Переделать чушь
 
     [SerializeField] private bool _isDelete;
     [SerializeField] private Transform _content;
@@ -16,12 +17,11 @@ public class Shop : MonoBehaviour
     [SerializeField] private List<Skin> _skins;
     [SerializeField] private Wallet _wallet;
 
-    private int _selectedID;
     private SkinViewSpawner _skinViewSpawner;
     private Sorter _sorter;
     private List<SkinView> _spawnedSkinsView = new List<SkinView>();
-    private SelectedSkinIDSaver _selectedSkinIDSaver;
-    private SkinStateSaver _skinStateSaver;
+    private Saver _saver;
+    private int _selectedID;
 
     public int SelectedID => _selectedID;
 
@@ -36,25 +36,29 @@ public class Shop : MonoBehaviour
 
     public void Initialize(OpenableSkinHandler openableSkinHandler, Skin defautSkin)
     {
-        _selectedSkinIDSaver = GetComponent<SelectedSkinIDSaver>();
-        _skinStateSaver = GetComponent<SkinStateSaver>();
         _skinViewSpawner = GetComponent<SkinViewSpawner>();
         _sorter = GetComponent<Sorter>();
+        _saver = GetComponent<Saver>();
 
-        if (_selectedSkinIDSaver.TryGetValue(SelectedIDKey, out int value))
+        if (_saver.TryGetValue(SelectedIDKey, out int value))
+        {
             _selectedID = value;
+
+            if (TrySearchByID(value, out Skin skin))
+                skin.Select();
+        }
         else
+        {
+            defautSkin.Select();
             _selectedID = defautSkin.ID;
+        }
 
         List<Skin> sortingSkins = _sorter.SortingSkins(_skins);
 
         for (int i = 0; i < sortingSkins.Count; i++)
         {
-            if (_skinStateSaver.TryGetValue(sortingSkins[i].ID) == true)
+            if (_saver.TryGetValue(sortingSkins[i].ID))
                 sortingSkins[i].By();
-
-            if (_selectedSkinIDSaver.TryGetValue(sortingSkins[i].ID) == true)
-                sortingSkins[i].Select();
 
             openableSkinHandler.AddOpenableSkin(sortingSkins[i]);
             var spawnedSkinView = _skinViewSpawner.GetSkinView(sortingSkins[i]);
@@ -63,6 +67,8 @@ public class Shop : MonoBehaviour
         }
 
         _shopScroll.Initialize(_spawnedSkinsView);
+
+        Initialized?.Invoke(_selectedID);
     }
 
     public void OpenSkin(int id)
@@ -78,7 +84,7 @@ public class Shop : MonoBehaviour
             {
                 _wallet.DicreaseMoney(skin.Price);
                 skin.By();
-                _skinStateSaver.Save(skin.ID.ToString(), 1);
+                _saver.Save(skin.ID.ToString(), 1);
                 return true;
             }
         }
@@ -86,7 +92,7 @@ public class Shop : MonoBehaviour
         return false;
     }
 
-    public void Select(int id)
+    public bool TrySelect(int id)
     {
         if (TrySearchByID(id, out Skin skin))
         {
@@ -95,10 +101,14 @@ public class Shop : MonoBehaviour
                 DeselectSkins();
                 skin.Select();
                 _selectedID = id;
-                _selectedSkinIDSaver.Save(SelectedIDKey, _selectedID);
-                Selected?.Invoke(_selectedID);
+                _saver.TryDeleteSaveData(SelectedIDKey);
+                _saver.Save(SelectedIDKey, id);
+                Selected?.Invoke(id);
+                return true;
             }
         }
+
+        return false;
     }
 
     private bool TrySearchByID(int id, out Skin skin)
@@ -108,7 +118,6 @@ public class Shop : MonoBehaviour
             if (_skins[i].ID == id)
             {
                 skin = _skins[i];
-                _skinStateSaver.Save(id.ToString(), 1);
                 return true;
             }
         }

@@ -1,12 +1,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(OpenableSkinIDSaver))]
+[RequireComponent(typeof(Saver))]
 public class OpenableSkinHandler : MonoBehaviour
 {
     private const string OpeningSkinIndexKey = "OpeningSkinIndex";
 
-    private OpenableSkinIDSaver _openableSkinIDSaver;
+    private Saver _saver;
     private List<Skin> _openableSkins = new List<Skin>();
     private Shop _shop;
     private LevelCompletePanel _levelCompletePanel;
@@ -18,7 +18,7 @@ public class OpenableSkinHandler : MonoBehaviour
 
     public void Initialize(Shop shop, LevelCompletePanel levelCompletePanel)
     {
-        _openableSkinIDSaver = GetComponent<OpenableSkinIDSaver>();
+        _saver = GetComponent<Saver>();
         _shop = shop;
         _levelCompletePanel = levelCompletePanel;
         _levelCompletePanel.SkinOpened += OnSkinOpened;
@@ -37,14 +37,14 @@ public class OpenableSkinHandler : MonoBehaviour
 
         int index;
 
-        if (_openableSkinIDSaver.TryGetValue(OpeningSkinIndexKey, out int value))
+        if (_saver.TryGetValue(OpeningSkinIndexKey, out int value))
         {
             index = value;
         }
         else
         {
             index = Random.Range(0, _openableSkins.Count);
-            _openableSkinIDSaver.Save(OpeningSkinIndexKey, index);
+            _saver.Save(OpeningSkinIndexKey, index);
         }
 
         return _openableSkins[index];
@@ -59,7 +59,7 @@ public class OpenableSkinHandler : MonoBehaviour
             if (_openableSkins[i].ID == id)
             {
                 _openableSkins.Remove(_openableSkins[i]);
-                _openableSkinIDSaver.TryDeleteSaveData(OpeningSkinIndexKey);
+                _saver.TryDeleteSaveData(OpeningSkinIndexKey);
                 i--;
             }
         }

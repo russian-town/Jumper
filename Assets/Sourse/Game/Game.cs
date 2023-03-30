@@ -22,7 +22,7 @@ public class Game : MonoBehaviour, IPauseHandler
     private PlayerPosition _playerStartPosition;
     private PlayerPosition _playerLastPosition;
 
-    public bool IsStart { get; private set; }
+    private bool _isStart;
 
     private void OnDisable()
     {
@@ -34,7 +34,7 @@ public class Game : MonoBehaviour, IPauseHandler
 
     private void Update()
     {
-        if (IsStart == true)
+        if (_isStart == true)
             return;
 
         if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
@@ -58,7 +58,8 @@ public class Game : MonoBehaviour, IPauseHandler
         if (_isPause)
             return;
 
-        IsStart = true;
+        _player.SetStart(true);
+        _isStart = true;
         _menu.Hide();
         _levelProgressView.Show();
         _gameOverView.Hide();
@@ -76,7 +77,7 @@ public class Game : MonoBehaviour, IPauseHandler
 
     private void OnPlayerDied()
     {
-        IsStart = false;
+        _isStart = false;
         float percent = Mathf.Ceil(_levelProgress.CurrentDistance * 100f);
         _gameOverView.Show();
 

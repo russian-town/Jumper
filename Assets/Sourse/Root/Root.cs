@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 [RequireComponent(typeof(PlayerSpawner))]
 public class Root : MonoBehaviour
@@ -25,7 +27,6 @@ public class Root : MonoBehaviour
     private void Awake()
     {
         _playerSpawner = GetComponent<PlayerSpawner>();
-        _shop.Initialize(_openableSkinHandler, _defaultSkin);
     }
 
     private void OnEnable()
@@ -33,6 +34,7 @@ public class Root : MonoBehaviour
         foreach (var props in _props)
             props.PlayerFell += OnPlayerFell;
 
+        _shop.Initialized += OnInitialized;
         _shop.Selected += OnSelected;
         _rewardedVideo.RewardedVideoEnded += RestartLevelOnLastPosition;
     }
@@ -42,13 +44,19 @@ public class Root : MonoBehaviour
         foreach (var props in _props)
             props.PlayerFell -= OnPlayerFell;
 
+        _shop.Initialized -= OnInitialized;
         _shop.Selected -= OnSelected;
         _rewardedVideo.RewardedVideoEnded -= RestartLevelOnLastPosition;
     }
 
     private void Start()
     {
-        StartGame(_shop.SelectedID, _playerStartPosition);
+        _shop.Initialize(_openableSkinHandler, _defaultSkin);
+    }
+
+    private void OnInitialized(int id)
+    {
+        StartGame(id, _playerStartPosition);
     }
 
     private void RestartLevelOnLastPosition()

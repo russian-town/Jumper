@@ -36,6 +36,5 @@ public class RewardedSkinView : SkinView
     private void OnRewardedCallback()
     {
         base.By();
-        Shop.TryBySkin(Skin.ID);
     }
 }

@@ -36,7 +36,6 @@ public class PaidSkinView : SkinView
 
     private void OnButtonClicked()
     {
-        if (Shop.TryBySkin(Skin.ID))
-            base.By();
+        base.By();
     }
 }

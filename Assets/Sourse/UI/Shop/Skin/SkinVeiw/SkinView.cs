@@ -12,11 +12,10 @@ public abstract class SkinView : MonoBehaviour
     [SerializeField] private Color _selectColor;
     [SerializeField] private Color _defaultColor;
 
-    private Skin _skin;
     private Shop _shop;
+    private Skin _skin;
 
     protected Skin Skin => _skin;
-    protected Shop Shop => _shop;
     protected SelectButton SelectButton => _selectButton;
     protected TMP_Text SelectText => _selectText;
 
@@ -32,23 +31,19 @@ public abstract class SkinView : MonoBehaviour
         _skin = skin;
         _shop = shop;
 
-        if (skin.IsSelect)
-            Select();
-
-        if (skin.IsBy)
-            By();
+        if (_skin.IsBy && _skin.IsSelect)
+            SwitchViewState(false, true, _selectColor);
+        else if (_skin.IsBy && !_skin.IsSelect)
+            SwitchViewState(true, false, _defaultColor);
     }
 
     public virtual void By()
     {
-        _selectButton.Show();
-        SwitchViewState(true, false, _defaultColor);
-    }
-
-    public void Select()
-    {
-        _shop.Select(_skin.ID);
-        SwitchViewState(false, true, _selectColor);
+        if (_shop.TryBySkin(_skin.ID))
+        {
+            _selectButton.Show();
+            SwitchViewState(true, false, _defaultColor);
+        }
     }
 
     public void Deselect()
@@ -63,6 +58,14 @@ public abstract class SkinView : MonoBehaviour
     protected void SetIconColor(Color color)
     {
         _icon.color = color;
+    }
+
+    private void Select()
+    {
+        if (_shop.TrySelect(_skin.ID))
+        {
+            SwitchViewState(false, true, _selectColor);
+        }
     }
 
     private void OnButtonClicked()

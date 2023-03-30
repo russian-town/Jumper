@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.UI;
 
-[RequireComponent(typeof(AudioView), typeof(VolumeSaver))]
+[RequireComponent(typeof(AudioView), typeof(Saver))]
 public class Audio : MonoBehaviour
 {
     private const string MasterVolume = "MasterVolume";
@@ -21,12 +21,12 @@ public class Audio : MonoBehaviour
     [SerializeField] private AudioMixerGroup _musicGroup;
 
     private AudioView _audioView;
-    private VolumeSaver _volumeSaver;
+    private Saver _saver;
 
     private void Awake()
     {
         _audioView = GetComponent<AudioView>();
-        _volumeSaver = GetComponent<VolumeSaver>();
+        _saver = GetComponent<Saver>();
     }
 
     private void OnEnable()
@@ -45,13 +45,13 @@ public class Audio : MonoBehaviour
 
     public void Initialize()
     {
-        if (_volumeSaver.TryGetValue(MusicVolumeKey, out float musicVolume))
+        if (_saver.TryGetValue(MusicVolumeKey, out float musicVolume))
         {
             ChangeMusicVolume(musicVolume);
             _musicSlider.value = musicVolume;
         }
 
-        if (_volumeSaver.TryGetValue(SoundVolumeKey, out float soundVolume))
+        if (_saver.TryGetValue(SoundVolumeKey, out float soundVolume))
         {
             ChangeSoundVolume(soundVolume);
             _soundSlider.value = soundVolume;
@@ -89,7 +89,7 @@ public class Audio : MonoBehaviour
     private void ChangeVolume(float value, AudioMixerGroup audioMixerGroup, string groupName, string key)
     {
         audioMixerGroup.audioMixer.SetFloat(groupName, value);
-        _volumeSaver.Save(key, value);
+        _saver.Save(key, value);
 
         if(value == MuteVolume)
         {

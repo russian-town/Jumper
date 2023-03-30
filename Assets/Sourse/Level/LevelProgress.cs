@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[RequireComponent(typeof(LevelProgressView), typeof(LevelProgressSaver))]
+[RequireComponent(typeof(LevelProgressView), typeof(Saver))]
 public class LevelProgress : MonoBehaviour
 {
     private const string LevelProgressKey = "LevelProgress";
@@ -12,24 +12,24 @@ public class LevelProgress : MonoBehaviour
     private float _distance;
     private float _maxDistance = 1f;
     private Player _player;
-    private LevelProgressSaver _levelProgressSaver;
+    private Saver _saver;
 
     public float CurrentDistance { get; private set; }
 
     public void Initialize(Player player)
     {
-        _levelProgressSaver = GetComponent<LevelProgressSaver>();
+        _saver = GetComponent<Saver>();
         _levelProgressView = GetComponent<LevelProgressView>();
         _player = player;
 
-        if(_levelProgressSaver.TryGetValue(LevelProgressKey, out float value))
+        if(_saver.TryGetValue(LevelProgressKey, out float value))
         {
             _distance = value;
         }
         else
         {
             _distance = Vector3.Distance(player.transform.position, _finishPosition.transform.position);
-            _levelProgressSaver.Save(LevelProgressKey, _distance);
+            _saver.Save(LevelProgressKey, _distance);
         }
     }
 

@@ -4,6 +4,7 @@ using UnityEngine.Events;
 public class Props : MonoBehaviour
 {
     public event UnityAction<PlayerPosition> PlayerFell;
+
     public CollisionEvent CollisionEnter;
     public CollisionEvent CollisionExit;
 
@@ -12,21 +13,22 @@ public class Props : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.transform.TryGetComponent(out Player player))
-        {
-            CollisionEnter.Invoke();
-        }
+            if (player.IsStart)
+                CollisionEnter.Invoke();
     }
 
     private void OnCollisionExit(Collision collision)
     {
         if (collision.transform.TryGetComponent(out Player player))
-            CollisionExit.Invoke();
+            if (player.IsStart)
+                CollisionExit.Invoke();
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.transform.TryGetComponent(out Player player))
-            PlayerFell?.Invoke(_playerPosition);
+            if (player.IsStart)
+                PlayerFell?.Invoke(_playerPosition);
     }
 }
 
