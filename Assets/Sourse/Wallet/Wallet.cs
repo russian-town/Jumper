@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[RequireComponent(typeof(WalletView), typeof(MoneySaver))]
+[RequireComponent(typeof(WalletView), typeof(Saver))]
 public class Wallet : MonoBehaviour
 {
     private const string MoneyKey = "Money";
@@ -8,19 +8,19 @@ public class Wallet : MonoBehaviour
     [SerializeField] private int _money;
 
     private WalletView _walletView;
-    private MoneySaver _moneySaver;
+    private Saver _saver;
 
     public int Money => _money;
 
     private void Awake()
     {
-        _moneySaver = GetComponent<MoneySaver>();
         _walletView = GetComponent<WalletView>();
+        _saver = GetComponent<Saver>();
 
-        if (_moneySaver.TryGetValue(MoneyKey, out int value))
-            _money = value;
+        if(_saver.TryGetValue(MoneyKey, out int money))
+            _money = money;
 
-        _walletView.UpdateMoneyText(Money);
+        _walletView.UpdateMoneyText(_money);
     }
 
     public void DicreaseMoney(int money)
@@ -29,8 +29,8 @@ public class Wallet : MonoBehaviour
             return;
 
         _money -= money;
-        _walletView.UpdateMoneyText(Money);
-        _moneySaver.Save(MoneyKey, _money);
+        _saver.Save(MoneyKey, _money);
+        _walletView.UpdateMoneyText(_money);
     }
 
     private void AddMoney(int money)
@@ -39,7 +39,7 @@ public class Wallet : MonoBehaviour
             return;
 
         _money += money;
-        _walletView.UpdateMoneyText(Money);
-        _moneySaver.Save(MoneyKey, _money);
+        _saver.Save(MoneyKey, _money);
+        _walletView.UpdateMoneyText(_money);
     }
 }

@@ -10,9 +10,16 @@ public class PlayerJumper : MonoBehaviour
 
     private Rigidbody _rigidbody;
 
+    public float VelocityY => _rigidbody.velocity.y;
+
     private void Awake()
     {
         _rigidbody = GetComponent<Rigidbody>();
+    }
+
+    public void ResetVelocity()
+    {
+        _rigidbody.velocity = Vector3.zero;
     }
 
     public void Jump()

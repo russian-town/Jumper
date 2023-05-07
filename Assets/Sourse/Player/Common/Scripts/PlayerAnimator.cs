@@ -10,8 +10,10 @@ public class PlayerAnimator : MonoBehaviour
     private const string DoubleJumpParametr = "DoubleJump";
     private const string IsGroundedParametr = "IsGrounded";
     private const string HardFallParametr = "HardFall";
+    private const string DefeatParametr = "Defeat";
 
     private Animator _animator;
+    private Coroutine StartResetTriggers;
 
     private void Awake()
     {
@@ -26,27 +28,32 @@ public class PlayerAnimator : MonoBehaviour
     public void Jump()
     {
         _animator.SetTrigger(JumpParametr);
+        StartResetTriggers = StartCoroutine(ResetTriggers());
+    }
+
+    public void Defeat()
+    {
+        _animator.SetBool(DefeatParametr, true);
     }
 
     public void DoubleJump()
     {
         _animator.SetTrigger(DoubleJumpParametr);
-        StartCoroutine(StartDoubleJump());
-    }
-
-    public void ResetJumpTrigger()
-    {
-        _animator.ResetTrigger(JumpParametr);
+        StartResetTriggers = StartCoroutine(ResetTriggers());
     }
 
     public void HardFall()
     {
-        _animator.SetBool(HardFallParametr, true);
+        _animator.SetTrigger(HardFallParametr);
     }
 
-    private IEnumerator StartDoubleJump()
+    private IEnumerator ResetTriggers()
     {
+        if (StartResetTriggers != null)
+            StopCoroutine(StartResetTriggers);
+
         yield return new WaitForSeconds(_animationDelay);
         _animator.ResetTrigger(DoubleJumpParametr);
+        _animator.ResetTrigger(JumpParametr);
     }
 }

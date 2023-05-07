@@ -1,14 +1,11 @@
 using UnityEngine;
-using UnityEngine.EventSystems;
-using Agava.YandexGames;
 
 [RequireComponent(typeof(OpenableSkinHandler))]
 public class Game : MonoBehaviour, IPauseHandler
 {
     [SerializeField] private GameOverView _gameOverView;
     [SerializeField] private LevelProgressView _levelProgressView;
-    [SerializeField] private Menu _menu;
-    [SerializeField] private Shop _shop;
+    [SerializeField] private Level _level;
     [SerializeField] private LevelCompletePanel _levelCompletePanel;
     [SerializeField] private float _percentOpeningSkin;
     [SerializeField] private Pause _pause;
@@ -18,9 +15,10 @@ public class Game : MonoBehaviour, IPauseHandler
     private OpenableSkinHandler _openableSkinHandler;
     private Player _player;
     private LevelProgress _levelProgress;
+    private PlayerInput _playerInput;
     private bool _isPause;
-    private PlayerPosition _playerStartPosition;
     private PlayerPosition _playerLastPosition;
+    private PlayerPosition _playerStartPosition;
 
     private bool _isStart;
 
@@ -29,38 +27,38 @@ public class Game : MonoBehaviour, IPauseHandler
         if (_player == null)
             return;
 
-        _player.Died -= OnPlayerDied;
+        Deinitialize();
     }
 
-    private void Update()
-    {
-        if (_isStart == true)
-            return;
-
-        if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
-            StartGame();
-    }
-
-    public void Initialaize(Player player, LevelProgress levelProgress, PlayerPosition playerStartPosition)
+    public void Initialaize(Player player, LevelProgress levelProgress, PlayerInput playerInput, PlayerPosition playerStartPosition)
     {
         _openableSkinHandler = GetComponent<OpenableSkinHandler>();
-        _openableSkinHandler.Initialize(_shop, _levelCompletePanel);
+        _openableSkinHandler.Initialize(_levelCompletePanel);
         _player = player;
+        _playerInput = playerInput;
+        _playerStartPosition = playerStartPosition;
         player.Died += OnPlayerDied;
         player.LevelCompleted += OnLevelCompleted;
-        _playerStartPosition = playerStartPosition;
+        _playerInput.Tap += StartGame;
         _levelProgress = levelProgress;
         _pause.Initialize(new IPauseHandler[] { player, this });
     }
 
+    public void Deinitialize()
+    {
+        _isStart = false;
+        _player.Died -= OnPlayerDied;
+        _playerInput.Tap -= StartGame;
+        _gameOverView.Hide();
+    }
+
     public void StartGame()
     {
-        if (_isPause)
+        if (_isStart == true || _isPause == true)
             return;
 
-        _player.SetStart(true);
         _isStart = true;
-        _menu.Hide();
+        _player.SetStart(_isStart);
         _levelProgressView.Show();
         _gameOverView.Hide();
     }
@@ -81,8 +79,7 @@ public class Game : MonoBehaviour, IPauseHandler
         float percent = Mathf.Ceil(_levelProgress.CurrentDistance * 100f);
         _gameOverView.Show();
 
-#if !UNITY_EDITOR
-        if (YandexGamesSdk.IsInitialized == false || _playerStartPosition == _playerLastPosition)
+        if (_playerLastPosition == null || _playerLastPosition == _playerStartPosition)
         {
             _rewardedPanel.Hide();
             _retryButton.Show();
@@ -92,16 +89,15 @@ public class Game : MonoBehaviour, IPauseHandler
             _rewardedPanel.Show();
             _retryButton.Hide();
         }
-#endif
 
-        _rewardedPanel.Show();
-        _retryButton.Hide();
         _gameOverView.ShowProgress(percent);
         _levelProgressView.Hide();
     }
 
     private void OnLevelCompleted()
     {
+        _isStart = false;
+        _pause.Enable();
         _levelProgressView.Hide();
         _levelCompletePanel.Show();
 
@@ -114,5 +110,7 @@ public class Game : MonoBehaviour, IPauseHandler
         {
             _levelCompletePanel.HideOpeningSkinBar();
         }
+
+        _levelCompletePanel.SetText(_level.CurrentLevelNumber);
     }
 }

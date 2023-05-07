@@ -26,16 +26,16 @@ public class Skin : ScriptableObject
         switch (_type)
         {
             case SkinType.Default:
-                SetData(0, 0, true);
+                SetStartParametr(0, 0, true);
                 break;
             case SkinType.Paid:
-                SetData(_price, 2, _isBy);
+                SetStartParametr(_price, 2, _isBy);
                 break;
             case SkinType.Rewarded:
-                SetData(0, 3, _isBy);
+                SetStartParametr(0, 3, _isBy);
                 break;
             case SkinType.Openable:
-                SetData(0, 1, _isBy);
+                SetStartParametr(0, 1, _isBy);
                 break;
         }
     }
@@ -55,7 +55,17 @@ public class Skin : ScriptableObject
         _isSelect = false;
     }
 
-    private void SetData(int price, int sortOrder, bool isBy)
+    public void SetSaveData(bool isBy, bool isSelect)
+    {
+        _isSelect = isSelect;
+
+        if (_type == SkinType.Default)
+            return;
+
+        _isBy = isBy;
+    }
+
+    private void SetStartParametr(int price, int sortOrder, bool isBy)
     {
         _price = price;
         _sortOrder = sortOrder;

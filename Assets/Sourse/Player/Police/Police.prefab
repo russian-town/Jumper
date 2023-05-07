@@ -1284,6 +1284,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!65 &2198880955266076008
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1354,7 +1355,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5dfa315af406a834980e312559f959dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _radius: 0.24
+  _distance: 0.39
   _layerMask:
     serializedVersion: 2
     m_Bits: 64

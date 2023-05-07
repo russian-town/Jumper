@@ -1,26 +1,33 @@
 using UnityEngine;
 using UnityEngine.Events;
 
+[RequireComponent(typeof(BoxCollider))]
 public class GroundDetector : MonoBehaviour
 {
     public event UnityAction<Collision> Fell;
 
-    [SerializeField] private float _radius;
+    [SerializeField] private float _distance;
     [SerializeField] private LayerMask _layerMask;
-    [SerializeField] private CheckGroundPosition _checkGroundPosition;
 
-    public bool IsGrounded { get; private set; }
+    private BoxCollider _boxCollider;
+
+    public void Initialize()
+    {
+        _boxCollider = GetComponent<BoxCollider>();
+    }
 
     private void FixedUpdate()
     {
-        if (Physics.OverlapSphere(_checkGroundPosition.transform.position, _radius, _layerMask).Length > 0)
-            IsGrounded = true;
-        else
-            IsGrounded = false;
+        IsGrounded();
     }
 
     private void OnCollisionEnter(Collision collision)
     {
         Fell?.Invoke(collision);
+    }
+
+    public bool IsGrounded()
+    {
+        return Physics.BoxCast(_boxCollider.bounds.center, transform.localScale / 2, -transform.up, transform.rotation, _distance, _layerMask);
     }
 }

@@ -197,6 +197,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6425182907865452318}
+  - component: {fileID: 6138058499875406427}
   m_Layer: 6
   m_Name: PlayerPosition
   m_TagString: Untagged
@@ -219,6 +220,18 @@ Transform:
   m_Father: {fileID: 7507804860756986201}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6138058499875406427
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 142971957549589610}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d0ef1568aa1172428fca51d0d87b0c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3239002292252745935
 GameObject:
   m_ObjectHideFlags: 0
@@ -692,6 +705,7 @@ GameObject:
   - component: {fileID: 7507804860756986203}
   - component: {fileID: 1842534877}
   - component: {fileID: 397196656377842231}
+  - component: {fileID: 1842534878}
   m_Layer: 6
   m_Name: Policecar
   m_TagString: Untagged
@@ -809,7 +823,7 @@ AudioSource:
   m_GameObject: {fileID: 7168257341504050147}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 8179410371896700620, guid: d8a608f9b1abbde4283823ca4d03a067, type: 2}
   m_audioClip: {fileID: 8300000, guid: 64bec4010e4d5f54aa9fbd7d794b597b, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 0.43
@@ -962,7 +976,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  _playerPosition: {fileID: 0}
+  _playerPosition: {fileID: 6138058499875406427}
 --- !u!114 &1842534877
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -993,3 +1007,16 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.1802416, y: 0.10560918, z: 1.2353971}
   m_Center: {x: 0, y: 1.4130892, z: 0}
+--- !u!65 &1842534878
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7168257341504050147}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.9027944, y: 0.16343951, z: 1.4300423}
+  m_Center: {x: 0.000000059604645, y: 1.4285864, z: -0.11140728}

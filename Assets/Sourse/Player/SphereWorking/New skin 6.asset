@@ -17,4 +17,4 @@ MonoBehaviour:
   _price: 100
   _id: 5
   _isSelect: 0
-  _isBy: 1
+  _isBy: 0

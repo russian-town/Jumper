@@ -2,79 +2,64 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-[RequireComponent(typeof(SkinViewSpawner), typeof(Sorter), typeof(Saver))]
-public class Shop : MonoBehaviour
+[RequireComponent(typeof(SkinViewSpawner))]
+public class Shop : SkinHandler
 {
     public event UnityAction<int> Selected;
     public event UnityAction<int> Initialized;
 
-    private const string SelectedIDKey = "SelectedIDKey";
-    //Переделать чушь
-
-    [SerializeField] private bool _isDelete;
     [SerializeField] private Transform _content;
     [SerializeField] private ShopScroll _shopScroll;
-    [SerializeField] private List<Skin> _skins;
     [SerializeField] private Wallet _wallet;
+    [SerializeField] private Skin _defaultSkin;
 
     private SkinViewSpawner _skinViewSpawner;
-    private Sorter _sorter;
     private List<SkinView> _spawnedSkinsView = new List<SkinView>();
-    private Saver _saver;
+    private SkinView _currentSkinView;
+    private Skin _currentSkin;
     private int _selectedID;
 
     public int SelectedID => _selectedID;
 
-    private void OnValidate()
-    {
-        if(_isDelete == true)
-        {
-            PlayerPrefs.DeleteAll();
-            _isDelete = false;
-        }
-    }
-
-    public void Initialize(OpenableSkinHandler openableSkinHandler, Skin defautSkin)
+    private void Awake()
     {
         _skinViewSpawner = GetComponent<SkinViewSpawner>();
-        _sorter = GetComponent<Sorter>();
-        _saver = GetComponent<Saver>();
+        Initialize();
 
-        if (_saver.TryGetValue(SelectedIDKey, out int value))
+        for (int i = 0; i < Skins.Count; i++)
         {
-            _selectedID = value;
-
-            if (TrySearchByID(value, out Skin skin))
-                skin.Select();
-        }
-        else
-        {
-            defautSkin.Select();
-            _selectedID = defautSkin.ID;
-        }
-
-        List<Skin> sortingSkins = _sorter.SortingSkins(_skins);
-
-        for (int i = 0; i < sortingSkins.Count; i++)
-        {
-            if (_saver.TryGetValue(sortingSkins[i].ID))
-                sortingSkins[i].By();
-
-            openableSkinHandler.AddOpenableSkin(sortingSkins[i]);
-            var spawnedSkinView = _skinViewSpawner.GetSkinView(sortingSkins[i]);
-            spawnedSkinView.Initialize(sortingSkins[i], this);
+            var spawnedSkinView = _skinViewSpawner.GetSkinView(Skins[i]);
+            spawnedSkinView.Selected += OnSkinViewSelected;
+            spawnedSkinView.ByButtonClicked += OnByButtonClicked;
+            spawnedSkinView.SelectButtonClicked += OnSelectButtonClicked;
+            spawnedSkinView.Initialize(Skins[i]);
             _spawnedSkinsView.Add(spawnedSkinView);
         }
 
-        _shopScroll.Initialize(_spawnedSkinsView);
+        if (_currentSkin == null)
+        {
+            _currentSkin = _defaultSkin;
+            _defaultSkin.Select();
+            _currentSkinView = _skinViewSpawner.DefaultSkin;
+            _currentSkinView.UpdateView();
+            _selectedID = _defaultSkin.ID;
+        }
 
+        _shopScroll.Initialize(_spawnedSkinsView);
         Initialized?.Invoke(_selectedID);
     }
 
-    public void OpenSkin(int id)
+    private void OnDisable()
     {
-        TryBySkin(id);
+        foreach (var skinView in _spawnedSkinsView)
+        {
+            skinView.Selected -= OnSkinViewSelected;
+            skinView.ByButtonClicked -= OnByButtonClicked;
+            skinView.SelectButtonClicked -= OnSelectButtonClicked;
+        }
     }
+
+    public void OpenSkin(int id) => TryBySkin(id);
 
     public bool TryBySkin(int id)
     {
@@ -84,7 +69,7 @@ public class Shop : MonoBehaviour
             {
                 _wallet.DicreaseMoney(skin.Price);
                 skin.By();
-                _saver.Save(skin.ID.ToString(), 1);
+                Saver.SaveState(IsByKey, skin.ID, skin.IsBy);
                 return true;
             }
         }
@@ -98,11 +83,11 @@ public class Shop : MonoBehaviour
         {
             if (skin.IsBy == true)
             {
-                DeselectSkins();
+                DeselectSkin(_selectedID);
                 skin.Select();
+                Saver.SaveState(IsSelectKey, skin.ID, skin.IsSelect);
                 _selectedID = id;
-                _saver.TryDeleteSaveData(SelectedIDKey);
-                _saver.Save(SelectedIDKey, id);
+                Saver.SaveSelectedID(_selectedID);
                 Selected?.Invoke(id);
                 return true;
             }
@@ -113,11 +98,11 @@ public class Shop : MonoBehaviour
 
     private bool TrySearchByID(int id, out Skin skin)
     {
-        for (int i = 0; i < _skins.Count; i++)
+        for (int i = 0; i < Skins.Count; i++)
         {
-            if (_skins[i].ID == id)
+            if (Skins[i].ID == id)
             {
-                skin = _skins[i];
+                skin = Skins[i];
                 return true;
             }
         }
@@ -126,11 +111,37 @@ public class Shop : MonoBehaviour
         return false;
     }
 
-    private void DeselectSkins()
+    private void OnSkinViewSelected(Skin skin, SkinView skinView)
     {
-        foreach (var spawnedSkinsView in _spawnedSkinsView)
+        _currentSkinView = skinView;
+        _currentSkin = skin;
+        _selectedID = skin.ID;
+    }
+
+    private void OnByButtonClicked(Skin skin, SkinView skinView)
+    {
+        if (TryBySkin(skin.ID))
+            skinView.UpdateView();
+    }
+
+    private void OnSelectButtonClicked(Skin skin, SkinView skinView)
+    {
+        if (TrySelect(skin.ID))
         {
-            spawnedSkinsView.Deselect();
+            if (_currentSkinView != null)
+                _currentSkinView.UpdateView();
+
+            skinView.UpdateView();
+            _currentSkinView = skinView;
+        }
+    }
+
+    private void DeselectSkin(int id)
+    {
+        if (TrySearchByID(id, out Skin skin))
+        {
+            skin.Deselect();
+            Saver.SaveState(IsSelectKey, skin.ID, skin.IsSelect);
         }
     }
 }

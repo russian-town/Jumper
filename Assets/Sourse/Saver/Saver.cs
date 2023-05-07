@@ -2,6 +2,23 @@ using UnityEngine;
 
 public class Saver : MonoBehaviour
 {
+    private const string SelectedIDKey = "SelectedID";
+    private const int DefaultPlayerID = 6;
+
+    public void SaveSelectedID(int id)
+    {
+        PlayerPrefs.SetInt(SelectedIDKey, id);
+        PlayerPrefs.Save();
+    }
+
+    public int GetSelectedID()
+    {
+        if (PlayerPrefs.HasKey(SelectedIDKey))
+            return PlayerPrefs.GetInt(SelectedIDKey);
+        else
+            return DefaultPlayerID;
+    }
+
     public void Save(string key, float value)
     {
         PlayerPrefs.SetFloat(key, value);
@@ -42,24 +59,20 @@ public class Saver : MonoBehaviour
         }
     }
 
-    public bool TryGetValue(string key)
+    public void SaveState(string key, int skinID, bool state)
     {
-        if (PlayerPrefs.HasKey(key))
-            if (PlayerPrefs.GetInt(key) == 1)
-                return true;
-            else
-                return false;
-
-        return false;
+        if (state == true)
+            PlayerPrefs.SetInt($"{key}{skinID}", 1);
+        else
+            PlayerPrefs.SetInt($"{key}{skinID}", 0);
     }
 
-    public bool TryGetValue(int key)
+    public bool GetState(string key, int skinID)
     {
-        if (PlayerPrefs.HasKey(key.ToString()))
-            if (PlayerPrefs.GetInt(key.ToString()) == 1)
-                return true;
-            else
-                return false;
+        if(PlayerPrefs.HasKey($"{key}{skinID}"))
+        {
+            return PlayerPrefs.GetInt($"{key}{skinID}") == 1;
+        }
 
         return false;
     }

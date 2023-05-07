@@ -6,7 +6,6 @@ public class LevelProgress : MonoBehaviour
     private const string LevelProgressKey = "LevelProgress";
 
     [SerializeField] private FinishPosition _finishPosition;
-    [SerializeField] private float _targetDistance;
 
     private LevelProgressView _levelProgressView;
     private float _distance;
@@ -37,13 +36,6 @@ public class LevelProgress : MonoBehaviour
     {
         if (_player == null)
             return;
-
-        if (CurrentDistance >= _targetDistance)
-        {
-            CurrentDistance = _maxDistance;
-            _levelProgressView.UpdateProgressBar(CurrentDistance);
-            return;
-        }
 
         CurrentDistance = _maxDistance - Vector3.Distance(_player.transform.position, _finishPosition.transform.position) / _distance;
         _levelProgressView.UpdateProgressBar(CurrentDistance);

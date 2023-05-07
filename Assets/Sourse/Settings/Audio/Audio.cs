@@ -1,4 +1,3 @@
-using Agava.WebUtility;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.UI;
@@ -6,17 +5,14 @@ using UnityEngine.UI;
 [RequireComponent(typeof(AudioView), typeof(Saver))]
 public class Audio : MonoBehaviour
 {
-    private const string MasterVolume = "MasterVolume";
     private const string SoundVolume = "SoundVolume";
     private const string MusicVolume = "MusicVolume";
     private const string SoundVolumeKey = "SoundVolumeKey";
     private const string MusicVolumeKey = "MusicVolumeKey";
     private const float MuteVolume = -80f;
-    private const float FullVolume = 0f;
 
     [SerializeField] private Slider _soundSlider;
     [SerializeField] private Slider _musicSlider;
-    [SerializeField] private AudioMixerGroup _masterGroup;
     [SerializeField] private AudioMixerGroup _soundGroup;
     [SerializeField] private AudioMixerGroup _musicGroup;
 
@@ -33,17 +29,20 @@ public class Audio : MonoBehaviour
     {
         _soundSlider.onValueChanged.AddListener(ChangeSoundVolume);
         _musicSlider.onValueChanged.AddListener(ChangeMusicVolume);
-        WebApplication.InBackgroundChangeEvent += OnInBackgroundChangeEvent;
     }
 
     private void OnDisable()
     {
         _soundSlider.onValueChanged.RemoveListener(ChangeSoundVolume);
         _musicSlider.onValueChanged.RemoveListener(ChangeMusicVolume);
-        WebApplication.InBackgroundChangeEvent -= OnInBackgroundChangeEvent;
     }
 
-    public void Initialize()
+    private void Start()
+    {
+        Initialize();
+    }
+
+    private void Initialize()
     {
         if (_saver.TryGetValue(MusicVolumeKey, out float musicVolume))
         {
@@ -66,24 +65,6 @@ public class Audio : MonoBehaviour
     public void ChangeMusicVolume(float value)
     {
         ChangeVolume(value, _musicGroup, MusicVolume, MusicVolumeKey);
-    }
-
-    private void Mute()
-    {
-        _masterGroup.audioMixer.SetFloat(MasterVolume, MuteVolume);
-    }
-
-    private void Unmute()
-    {
-        _masterGroup.audioMixer.SetFloat(MasterVolume, FullVolume);
-    }
-
-    private void OnInBackgroundChangeEvent(bool isChange)
-    {
-        if (isChange == true)
-            Mute();
-        else
-            Unmute();
     }
 
     private void ChangeVolume(float value, AudioMixerGroup audioMixerGroup, string groupName, string key)

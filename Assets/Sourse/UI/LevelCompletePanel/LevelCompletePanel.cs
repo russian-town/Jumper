@@ -1,4 +1,5 @@
 using System.Collections;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -14,6 +15,7 @@ public class LevelCompletePanel : UIElement
     [SerializeField] private float _speed;
     [SerializeField] private Image _openingSkinBar;
     [SerializeField] private Image _openingSkinBarBackground;
+    [SerializeField] private TMP_Text _completeLevelText;
 
     private int _id;
 
@@ -23,6 +25,11 @@ public class LevelCompletePanel : UIElement
         _openingSkinBarBackground.color = Color.black;
         _openingSkinBarBackground.sprite = skin.Icon;
         _id = skin.ID;
+    }
+
+    public void SetText(int levelNumber)
+    {
+        _completeLevelText.text = $"LEVEL {levelNumber} COMPLETED";
     }
 
     public void HideOpeningSkinBar()

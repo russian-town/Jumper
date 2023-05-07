@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.EventSystems;
 
 [RequireComponent(typeof(PlayerAnimator), typeof(PlayerJumper), typeof(GroundDetector))]
 public class Player : MonoBehaviour, IPauseHandler
@@ -8,15 +7,20 @@ public class Player : MonoBehaviour, IPauseHandler
     public event UnityAction Died;
     public event UnityAction LevelCompleted;
 
+    private const float MaxRelativeVelocityY = 5f;
+
     [SerializeField] private ParticleSystem _fallParticle;
     [SerializeField] private int _id;
 
     private PlayerAnimator _animator;
+    private PlayerJumper _jumper;
     private GroundDetector _groundDetector;
-    private Game _game;
     private bool _doubleJump;
+    private bool _jump;
     private bool _isPause;
     private bool _isStart = false;
+    private bool _isGameOver = false;
+    private bool _isLevelComleted = false;
 
     public int ID => _id;
     public bool IsStart => _isStart;
@@ -25,6 +29,8 @@ public class Player : MonoBehaviour, IPauseHandler
     {
         _animator = GetComponent<PlayerAnimator>();
         _groundDetector = GetComponent<GroundDetector>();
+        _jumper = GetComponent<PlayerJumper>();
+        _groundDetector.Initialize();
     }
 
     private void OnEnable()
@@ -39,26 +45,7 @@ public class Player : MonoBehaviour, IPauseHandler
 
     private void Update()
     {
-        _animator.SetGrounded(_groundDetector.IsGrounded);
-
-        if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject() && !_isPause)
-        {
-            if (_groundDetector.IsGrounded == true || _groundDetector.IsGrounded == false && _doubleJump == false)
-            {
-                _animator.Jump();
-            }
-
-            if (_groundDetector.IsGrounded == false && _doubleJump == false)
-            {
-                _animator.DoubleJump();
-                _doubleJump = true;
-            }
-        }
-    }
-
-    public void Initialize(Game game)
-    {
-        _game = game;
+        _animator.SetGrounded(_groundDetector.IsGrounded());
     }
 
     public void SetPause(bool isPause)
@@ -71,31 +58,54 @@ public class Player : MonoBehaviour, IPauseHandler
         _isStart = isStart;
     }
 
+    public void Jump()
+    {
+        if (_isPause == true || _isGameOver == true || _isLevelComleted == true)
+            return;
+
+        if (_groundDetector.IsGrounded() == true && _jump == false)
+        {
+            _animator.Jump();
+            _jump = true;
+        }
+        else if (_groundDetector.IsGrounded() == false && _doubleJump == false)
+        {
+            _animator.DoubleJump();
+            _doubleJump = true;
+        }
+    }
+
     private void OnFell(Collision collision)
     {
         if (_isStart == false)
             return;
 
+        _jump = false;
         _doubleJump = false;
-        _animator.ResetJumpTrigger();
+        _jumper.ResetVelocity();
+        _fallParticle.Play();
 
-        if (collision.transform.TryGetComponent(out Props props))
+        if (collision.transform.TryGetComponent(out Ground ground))
         {
-            _fallParticle.Play();
-        }
-        else if (collision.transform.TryGetComponent(out Ground ground))
-        {
-            _animator.HardFall();
-            Die();
+            _isGameOver = true;
+
+            if (collision.relativeVelocity.y >= MaxRelativeVelocityY)
+                _animator.HardFall();
+            else
+                _animator.Defeat();
+
+            Died?.Invoke();
         }
         else if (collision.transform.TryGetComponent(out Finish finish))
         {
-            LevelCompleted?.Invoke();
-        }
-    }
+            if (_isGameOver == true)
+                return;
 
-    private void Die()
-    {
-        Died?.Invoke();
+            if (_jumper.VelocityY == 0)
+            {
+                _isLevelComleted = true;
+                LevelCompleted?.Invoke();
+            }
+        }
     }
 }

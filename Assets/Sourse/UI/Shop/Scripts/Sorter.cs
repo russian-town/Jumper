@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class Sorter : MonoBehaviour
 {
-    public List<Skin> SortingSkins(List<Skin> skins)
+    public void SortingSkins(ref List<Skin> skins)
     {
         for (int i = 0; i < skins.Count; i++)
         {
@@ -17,7 +17,5 @@ public class Sorter : MonoBehaviour
                 }
             }
         }
-
-        return skins;
     }
 }

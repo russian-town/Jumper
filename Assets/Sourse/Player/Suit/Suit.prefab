@@ -25,7 +25,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1210210012534539072}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.122, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -358,6 +358,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!65 &3539028285357616277
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -428,11 +429,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5dfa315af406a834980e312559f959dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _radius: 0.24
+  _distance: 0.39
   _layerMask:
     serializedVersion: 2
     m_Bits: 64
-  _checkGroundPosition: {fileID: 9028463151821288789}
 --- !u!114 &3154028464720261306
 MonoBehaviour:
   m_ObjectHideFlags: 0
