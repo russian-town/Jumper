@@ -6,9 +6,9 @@ public class Level : MonoBehaviour
     public const string FirstLevelNumber = "1";
     public const string SavedIndexKey = "SavedIndex";
 
-    [SerializeField] private int _currentLevelNumber;
     [SerializeField] private LevelNumberText _levelNumberText;
 
+    private int _currentLevelNumber;
     private Saver _saver;
     private PlayerSceneLoader _sceneLoader;
 
@@ -18,6 +18,10 @@ public class Level : MonoBehaviour
     {
         _saver = GetComponent<Saver>();
         _sceneLoader = GetComponent<PlayerSceneLoader>();
+
+        if (int.TryParse(_sceneLoader.CurrentSceneName, out int level))
+            _currentLevelNumber = level;
+
         _saver.Save(SavedIndexKey, _currentLevelNumber);
         _levelNumberText.Initialize(_currentLevelNumber);
     }

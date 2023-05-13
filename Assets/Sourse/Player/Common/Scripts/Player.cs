@@ -87,6 +87,9 @@ public class Player : MonoBehaviour, IPauseHandler
 
         if (collision.transform.TryGetComponent(out Ground ground))
         {
+            if (_isLevelComleted == true)
+                return;
+
             _isGameOver = true;
 
             if (collision.relativeVelocity.y >= MaxRelativeVelocityY)

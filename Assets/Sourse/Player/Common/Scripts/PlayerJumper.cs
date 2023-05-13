@@ -22,12 +22,12 @@ public class PlayerJumper : MonoBehaviour
         _rigidbody.velocity = Vector3.zero;
     }
 
-    public void Jump()
+    public void JumpUp()
     {
         _rigidbody.velocity = new Vector3(_jumpLength, _jumpForce, 0f);
     }
 
-    public void DoubleJump()
+    public void DoubleJumpUp()
     {
         _rigidbody.velocity += new Vector3(_doubleJumpLength, _doubleJumpForce, 0f);
     }

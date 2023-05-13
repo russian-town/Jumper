@@ -27,9 +27,18 @@ public class LevelProgress : MonoBehaviour
         }
         else
         {
-            _distance = Vector3.Distance(player.transform.position, _finishPosition.transform.position);
-            _saver.Save(LevelProgressKey, _distance);
+            _distance = Vector3.Distance(player.transform.position, _finishPosition.transform.position);     
         }
+    }
+
+    public void SaveDistance()
+    {
+        _saver.Save(LevelProgressKey, _distance);
+    }
+
+    public void DeleteSavedDistance()
+    {
+        _saver.TryDeleteSaveData(LevelProgressKey);
     }
 
     private void Update()

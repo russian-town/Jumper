@@ -1,7 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using Lean.Localization;
 
 public class LevelNumberText : MonoBehaviour
 {
@@ -10,6 +9,6 @@ public class LevelNumberText : MonoBehaviour
     public void Initialize(int levelNumber)
     {
         _text = GetComponent<TMP_Text>();
-        _text.text = $"LEVEL {levelNumber}";
+        _text.text = LeanLocalization.GetTranslationText("Level") + " " + levelNumber.ToString();
     }
 }

@@ -53,7 +53,7 @@ public class PlayerAnimator : MonoBehaviour
             StopCoroutine(StartResetTriggers);
 
         yield return new WaitForSeconds(_animationDelay);
-        _animator.ResetTrigger(DoubleJumpParametr);
         _animator.ResetTrigger(JumpParametr);
+        _animator.ResetTrigger(DoubleJumpParametr);
     }
 }

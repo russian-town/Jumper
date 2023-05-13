@@ -22,7 +22,6 @@ public class Root : MonoBehaviour
 
     private void Awake()
     {
-        _level.Initialize();
         _playerSpawner = GetComponent<PlayerSpawner>();
         _saver = GetComponent<Saver>();
     }
@@ -45,11 +44,13 @@ public class Root : MonoBehaviour
 
     private void Start()
     {
+        _level.Initialize();
         Initialize(_saver.GetSelectedID(), _playerStartPosition);
     }
 
     private void RestartLevelOnLastPosition()
     {
+        _levelProgress.SaveDistance();
         _game.Deinitialize();
         RemovePlayer();
         Initialize(_saver.GetSelectedID(), _lastPlayerPosition);
@@ -74,5 +75,8 @@ public class Root : MonoBehaviour
     {
         _game.SetLastPosition(playerPosition);
         _lastPlayerPosition = playerPosition;
+
+        if (playerPosition == null)
+            Debug.LogError("Null. Player position not found!");
     }
 }

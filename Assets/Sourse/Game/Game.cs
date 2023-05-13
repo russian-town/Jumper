@@ -76,6 +76,7 @@ public class Game : MonoBehaviour, IPauseHandler
     private void OnPlayerDied()
     {
         _isStart = false;
+        _levelProgress.DeleteSavedDistance();
         float percent = Mathf.Ceil(_levelProgress.CurrentDistance * 100f);
         _gameOverView.Show();
 
@@ -97,6 +98,7 @@ public class Game : MonoBehaviour, IPauseHandler
     private void OnLevelCompleted()
     {
         _isStart = false;
+        _levelProgress.DeleteSavedDistance();
         _pause.Enable();
         _levelProgressView.Hide();
         _levelCompletePanel.Show();

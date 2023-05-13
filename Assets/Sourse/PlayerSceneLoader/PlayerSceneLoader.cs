@@ -11,6 +11,8 @@ public class PlayerSceneLoader : MonoBehaviour
 
     private Saver _saver;
 
+    public string CurrentSceneName => SceneManager.GetActiveScene().name;
+
     private void Awake()
     {
         _saver = GetComponent<Saver>();

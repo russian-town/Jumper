@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using Lean.Localization;
 
 public class GameOverView : UIElement
 {
@@ -7,6 +8,6 @@ public class GameOverView : UIElement
 
     public void ShowProgress(float progress)
     {
-        _progressText.text = $"{progress}% completed";
+        _progressText.text = $"{progress} % {LeanLocalization.GetTranslationText("COMPLETED")}";
     }
 }

@@ -4,6 +4,8 @@ public class Saver : MonoBehaviour
 {
     private const string SelectedIDKey = "SelectedID";
     private const int DefaultPlayerID = 6;
+    private const string LanguageKey = "LanguageKey";
+    private const string RusLanguage = "Rus";
 
     public void SaveSelectedID(int id)
     {
@@ -29,6 +31,20 @@ public class Saver : MonoBehaviour
     {
         PlayerPrefs.SetInt(key, value);
         PlayerPrefs.Save();
+    }
+
+    public void SaveLanguage(Language language)
+    {
+        PlayerPrefs.SetString(LanguageKey, language.ToString());
+        PlayerPrefs.Save();
+    }
+
+    public string GetLanguage()
+    {
+        if (PlayerPrefs.HasKey(LanguageKey))
+            return PlayerPrefs.GetString(LanguageKey);
+        else
+            return RusLanguage;
     }
 
     public bool TryGetValue(string key, out float value)

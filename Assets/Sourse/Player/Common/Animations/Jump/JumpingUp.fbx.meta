@@ -60,8 +60,8 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0.6204819
-        functionName: Jump
+      - time: 0.49626866
+        functionName: JumpUp
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0

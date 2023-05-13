@@ -1,11 +1,17 @@
 using UnityEngine;
 using TMPro;
+using Lean.Localization;
+
 [RequireComponent(typeof(LanguageSettingsView), typeof(Saver))]
 public class LanguageSettings : MonoBehaviour
 {
     private const string LanguageKey = "LanguageKey";
+    private const string RussianLanguage = "Russian";
+    private const string EnglishLanguage = "English";
+    private const string TurkishLanguage = "Turkish";
 
     [SerializeField] private TMP_Dropdown _languageDropdown;
+    [SerializeField] private LeanLocalization _leanLocalization;
 
     private LanguageSettingsView _languageSettingsView;
     private Saver _saver;
@@ -32,22 +38,24 @@ public class LanguageSettings : MonoBehaviour
         switch (value)
         {
             case 0:
-                LanguageChanged(Language.Rus);
+                SwitchLanguage(Language.Rus, RussianLanguage);
                 break;
             case 1:
-                LanguageChanged(Language.Eng);
+                SwitchLanguage(Language.Eng, EnglishLanguage);
                 break;
             case 2:
-                LanguageChanged(Language.Tur);
+                SwitchLanguage(Language.Tur, TurkishLanguage);
                 break;
         }
 
         _saver.Save(LanguageKey, value);
     }
 
-    private void LanguageChanged(Language language)
+    private void SwitchLanguage(Language language, string languageName)
     {
         _languageSettingsView.SwitchLanguage(language);
+        _leanLocalization.SetCurrentLanguage(languageName);
+        _saver.SaveLanguage(language);
     }
 }
 

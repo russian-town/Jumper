@@ -3,6 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
+using Lean.Localization;
 
 public class LevelCompletePanel : UIElement
 {
@@ -29,7 +30,7 @@ public class LevelCompletePanel : UIElement
 
     public void SetText(int levelNumber)
     {
-        _completeLevelText.text = $"LEVEL {levelNumber} COMPLETED";
+        _completeLevelText.text = LeanLocalization.GetTranslationText("LEVEL") + " " + levelNumber.ToString() + " " + LeanLocalization.GetTranslationText("COMPLETE");
     }
 
     public void HideOpeningSkinBar()
