@@ -8,9 +8,12 @@ public class Game : MonoBehaviour, IPauseHandler
     [SerializeField] private Level _level;
     [SerializeField] private LevelCompletePanel _levelCompletePanel;
     [SerializeField] private float _percentOpeningSkin;
+    [SerializeField] private int _moneyOfLevel;
     [SerializeField] private Pause _pause;
     [SerializeField] private RetryButton _retryButton;
     [SerializeField] private RewardedPanel _rewardedPanel;
+    [SerializeField] private PauseButton _pauseButton;
+    [SerializeField] private Wallet _wallet;
 
     private OpenableSkinHandler _openableSkinHandler;
     private Player _player;
@@ -19,6 +22,7 @@ public class Game : MonoBehaviour, IPauseHandler
     private bool _isPause;
     private PlayerPosition _playerLastPosition;
     private PlayerPosition _playerStartPosition;
+    private YandexAds _yandexAds;
 
     private bool _isStart;
 
@@ -33,6 +37,7 @@ public class Game : MonoBehaviour, IPauseHandler
     public void Initialaize(Player player, LevelProgress levelProgress, PlayerInput playerInput, PlayerPosition playerStartPosition)
     {
         _openableSkinHandler = GetComponent<OpenableSkinHandler>();
+        _yandexAds = new YandexAds();
         _openableSkinHandler.Initialize(_levelCompletePanel);
         _player = player;
         _playerInput = playerInput;
@@ -78,6 +83,7 @@ public class Game : MonoBehaviour, IPauseHandler
         _isStart = false;
         _levelProgress.DeleteSavedDistance();
         float percent = Mathf.Ceil(_levelProgress.CurrentDistance * 100f);
+        _pauseButton.Hide();
         _gameOverView.Show();
 
         if (_playerLastPosition == null || _playerLastPosition == _playerStartPosition)
@@ -98,10 +104,17 @@ public class Game : MonoBehaviour, IPauseHandler
     private void OnLevelCompleted()
     {
         _isStart = false;
+
+#if !UNITY_EDITOR && UNITY_WEBGL
+        _yandexAds.ShowInterstitial();
+#endif
+
         _levelProgress.DeleteSavedDistance();
+        _pauseButton.Hide();
         _pause.Enable();
         _levelProgressView.Hide();
         _levelCompletePanel.Show();
+        _wallet.AddMoney(_moneyOfLevel);
 
         if (_openableSkinHandler.GetOpenableSkin() != null)
         {

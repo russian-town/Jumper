@@ -5,6 +5,8 @@ public class RewardedVideo : MonoBehaviour
 {
     public event UnityAction RewardedVideoEnded;
 
+    [SerializeField] private ApplicationStatusChecker _applicationStatusChecker;
+
     private YandexAds _yandexAds;
 
     private void Awake()
@@ -14,6 +16,7 @@ public class RewardedVideo : MonoBehaviour
 
     private void OnEnable()
     {
+        _yandexAds.OpenCallback += OnOpenCallBack;
         _yandexAds.RewardedCallback += OnRewardedCallback;
         _yandexAds.CloseCallback += OnCloseCallback;
         _yandexAds.ErrorCallback += OnErrorCallback;
@@ -21,6 +24,7 @@ public class RewardedVideo : MonoBehaviour
 
     private void OnDisable()
     {
+        _yandexAds.OpenCallback -= OnOpenCallBack;
         _yandexAds.RewardedCallback -= OnRewardedCallback;
         _yandexAds.CloseCallback -= OnCloseCallback;
         _yandexAds.ErrorCallback -= OnErrorCallback;
@@ -31,6 +35,11 @@ public class RewardedVideo : MonoBehaviour
         _yandexAds.ShowRewardedVideo();
     }
 
+    private void OnOpenCallBack()
+    {
+        _applicationStatusChecker.OnInBackgroundChangeEvent(true);
+    }
+
     private void OnRewardedCallback()
     {
         RewardedVideoEnded?.Invoke();
@@ -38,9 +47,11 @@ public class RewardedVideo : MonoBehaviour
 
     private void OnCloseCallback()
     {
+        _applicationStatusChecker.OnInBackgroundChangeEvent(false);
     }
 
     private void OnErrorCallback(string errorText)
     {
+        _applicationStatusChecker.OnInBackgroundChangeEvent(false);
     }
 }

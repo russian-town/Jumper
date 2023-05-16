@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1987259890307408108}
   - component: {fileID: 2449423215096593095}
   - component: {fileID: 2386212276177350166}
+  - component: {fileID: 5325112546514885868}
   m_Layer: 0
   m_Name: Game
   m_TagString: Untagged
@@ -48,13 +49,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _gameOverView: {fileID: 0}
   _levelProgressView: {fileID: 0}
-  _menu: {fileID: 0}
-  _shop: {fileID: 0}
+  _level: {fileID: 0}
   _levelCompletePanel: {fileID: 0}
   _percentOpeningSkin: 0.1
+  _moneyOfLevel: 10
   _pause: {fileID: 0}
   _retryButton: {fileID: 0}
   _rewardedPanel: {fileID: 0}
+  _pauseButton: {fileID: 0}
+  _wallet: {fileID: 0}
 --- !u!114 &2449423215096593095
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -77,5 +80,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 78f8657b4446c984f98bfbc0233a405e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _skins: []
+--- !u!114 &5325112546514885868
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6853284102520430374}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca6500773e1d12346aed7f7daa9a9c1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

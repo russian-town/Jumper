@@ -20,7 +20,7 @@ public class ApplicationStatusChecker : MonoBehaviour
         WebApplication.InBackgroundChangeEvent -= OnInBackgroundChangeEvent;
     }
 
-    private void OnInBackgroundChangeEvent(bool isChange)
+    public void OnInBackgroundChangeEvent(bool isChange)
     {
         if (isChange == true)
             _masterGroup.audioMixer.SetFloat(MasterVolume, MuteVolume);

@@ -63,12 +63,12 @@ public class Player : MonoBehaviour, IPauseHandler
         if (_isPause == true || _isGameOver == true || _isLevelComleted == true)
             return;
 
-        if (_groundDetector.IsGrounded() == true && _jump == false)
+        if (_groundDetector.IsGrounded() && _jump == false)
         {
             _animator.Jump();
             _jump = true;
         }
-        else if (_groundDetector.IsGrounded() == false && _doubleJump == false)
+        else if (_doubleJump == false && _jump == true)
         {
             _animator.DoubleJump();
             _doubleJump = true;
@@ -80,12 +80,15 @@ public class Player : MonoBehaviour, IPauseHandler
         if (_isStart == false)
             return;
 
-        _jump = false;
-        _doubleJump = false;
-        _jumper.ResetVelocity();
         _fallParticle.Play();
 
-        if (collision.transform.TryGetComponent(out Ground ground))
+        if (collision.transform.TryGetComponent(out Props props))
+        {
+            _jump = false;
+            _doubleJump = false;
+            _jumper.ResetVelocity();
+        }
+        else if (collision.transform.TryGetComponent(out Ground ground))
         {
             if (_isLevelComleted == true)
                 return;
@@ -104,11 +107,8 @@ public class Player : MonoBehaviour, IPauseHandler
             if (_isGameOver == true)
                 return;
 
-            if (_jumper.VelocityY == 0)
-            {
-                _isLevelComleted = true;
-                LevelCompleted?.Invoke();
-            }
+            _isLevelComleted = true;
+            LevelCompleted?.Invoke();
         }
     }
 }

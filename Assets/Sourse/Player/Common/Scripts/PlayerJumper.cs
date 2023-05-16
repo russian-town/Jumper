@@ -24,11 +24,11 @@ public class PlayerJumper : MonoBehaviour
 
     public void JumpUp()
     {
-        _rigidbody.velocity = new Vector3(_jumpLength, _jumpForce, 0f);
+        _rigidbody.AddForce(new Vector3(_jumpLength, _jumpForce, 0f), ForceMode.Impulse);
     }
 
     public void DoubleJumpUp()
     {
-        _rigidbody.velocity += new Vector3(_doubleJumpLength, _doubleJumpForce, 0f);
+        _rigidbody.AddForce(new Vector3(_doubleJumpLength, _doubleJumpForce, 0f), ForceMode.Impulse);
     }
 }

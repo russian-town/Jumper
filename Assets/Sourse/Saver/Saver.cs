@@ -3,9 +3,10 @@ using UnityEngine;
 public class Saver : MonoBehaviour
 {
     private const string SelectedIDKey = "SelectedID";
-    private const int DefaultPlayerID = 6;
     private const string LanguageKey = "LanguageKey";
     private const string RusLanguage = "Rus";
+    private const string TutorialCompleteKey = "TutorialComplete";
+    private const int DefaultPlayerID = 6;
 
     public void SaveSelectedID(int id)
     {
@@ -25,6 +26,29 @@ public class Saver : MonoBehaviour
     {
         PlayerPrefs.SetFloat(key, value);
         PlayerPrefs.Save();
+    }
+
+    public void SaveTutorialState(bool isComlete)
+    {
+        if (isComlete == true)
+            PlayerPrefs.SetInt(TutorialCompleteKey, 1);
+        else
+            PlayerPrefs.SetInt(TutorialCompleteKey, 0);
+
+        PlayerPrefs.Save();
+    }
+
+    public bool GetTutorialState()
+    {
+        if (PlayerPrefs.HasKey(TutorialCompleteKey))
+        {
+            if (PlayerPrefs.GetInt(TutorialCompleteKey) == 1)
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     public void Save(string key, int value)

@@ -5,8 +5,7 @@ public class Wallet : MonoBehaviour
 {
     private const string MoneyKey = "Money";
 
-    [SerializeField] private int _money;
-
+    private int _money;
     private WalletView _walletView;
     private Saver _saver;
 
@@ -33,7 +32,7 @@ public class Wallet : MonoBehaviour
         _walletView.UpdateMoneyText(_money);
     }
 
-    private void AddMoney(int money)
+    public void AddMoney(int money)
     {
         if (money <= 0)
             return;

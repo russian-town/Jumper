@@ -13,6 +13,7 @@ public class Root : MonoBehaviour
     [SerializeField] private RewardedVideo _rewardedVideo;
     [SerializeField] private PlayerInput _playerInput;
     [SerializeField] private Level _level;
+    [SerializeField] private ApplicationStatusChecker _applicationStatusChecker;
 
     private Vector3 _targetRotation = new Vector3(0f, 90f, 0f);
     private PlayerSpawner _playerSpawner;

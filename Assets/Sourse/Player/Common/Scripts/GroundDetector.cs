@@ -23,6 +23,9 @@ public class GroundDetector : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        if (collision.transform.TryGetComponent(out Barrel barrel))
+            return;
+
         Fell?.Invoke(collision);
     }
 

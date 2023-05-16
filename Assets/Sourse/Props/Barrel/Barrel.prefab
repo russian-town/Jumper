@@ -14,8 +14,7 @@ GameObject:
   - component: {fileID: 2302851573914954097}
   - component: {fileID: 4641476208464908396}
   - component: {fileID: 2636105184340884855}
-  - component: {fileID: 3524613497356084319}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: Barrel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -129,20 +128,6 @@ CapsuleCollider:
   m_Height: 1.0432181
   m_Direction: 1
   m_Center: {x: 0.00000008940697, y: 0.52366054, z: 0.00000020861626}
---- !u!136 &3524613497356084319
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1038315879014445383}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.4816807
-  m_Height: 1.0432181
-  m_Direction: 1
-  m_Center: {x: 0.00000008940697, y: 0.52366054, z: 0.00000020861626}
 --- !u!1 &1598663740287526006
 GameObject:
   m_ObjectHideFlags: 0
@@ -156,6 +141,7 @@ GameObject:
   - component: {fileID: 1142222070}
   - component: {fileID: 1142222071}
   - component: {fileID: 1142222072}
+  - component: {fileID: 1656948671281089865}
   m_Layer: 6
   m_Name: Barrel
   m_TagString: Untagged
@@ -181,7 +167,6 @@ Transform:
   - {fileID: 5146030526029078781}
   - {fileID: 7837563350663736875}
   - {fileID: 370146633691556861}
-  - {fileID: 3625125523542637961}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -209,8 +194,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 0.24, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 1.4001083, y: 1.9926094, z: 1.661406}
+  m_Center: {x: -0.10282135, y: -0.8763047, z: 0.20905519}
 --- !u!114 &1142222071
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -250,10 +235,22 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1656948671281089865}
+        m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
+        m_MethodName: PlayOneShot
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 8300000, guid: 9ad4a0705db08614ba9460f990519e27, type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   CollisionExit:
     m_PersistentCalls:
       m_Calls: []
-  _playerPosition: {fileID: 5608096837027202513}
+  _playerPosition: {fileID: 0}
 --- !u!114 &1142222072
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -273,6 +270,102 @@ MonoBehaviour:
   - {fileID: 5200461961156062171}
   - {fileID: 5783817399871765287}
   - {fileID: 4641476208464908396}
+--- !u!82 &1656948671281089865
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1598663740287526006}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 8179410371896700620, guid: d8a608f9b1abbde4283823ca4d03a067, type: 2}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &4720463661535066568
 GameObject:
   m_ObjectHideFlags: 0
@@ -287,8 +380,7 @@ GameObject:
   - component: {fileID: 2507213165092747982}
   - component: {fileID: 3186084283325500563}
   - component: {fileID: 2488337175016591095}
-  - component: {fileID: 2339788621813564897}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: Barrel (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -402,20 +494,6 @@ CapsuleCollider:
   m_Height: 1.0432181
   m_Direction: 1
   m_Center: {x: 0.00000008940697, y: 0.52366054, z: 0.00000020861626}
---- !u!136 &2339788621813564897
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4720463661535066568}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.4816807
-  m_Height: 1.0432181
-  m_Direction: 1
-  m_Center: {x: 0.00000008940697, y: 0.52366054, z: 0.00000020861626}
 --- !u!1 &5485823958487398983
 GameObject:
   m_ObjectHideFlags: 0
@@ -430,8 +508,7 @@ GameObject:
   - component: {fileID: 1542504690229384446}
   - component: {fileID: 5200461961156062171}
   - component: {fileID: 3592683379332061303}
-  - component: {fileID: 6934987008957861513}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: Barrel (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -545,20 +622,6 @@ CapsuleCollider:
   m_Height: 1.0432181
   m_Direction: 1
   m_Center: {x: 0.00000008940697, y: 0.52366054, z: 0.00000020861626}
---- !u!136 &6934987008957861513
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5485823958487398983}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.4816807
-  m_Height: 1.0432181
-  m_Direction: 1
-  m_Center: {x: 0.00000008940697, y: 0.52366054, z: 0.00000020861626}
 --- !u!1 &6598562732293453048
 GameObject:
   m_ObjectHideFlags: 0
@@ -573,8 +636,7 @@ GameObject:
   - component: {fileID: 2844351614567505697}
   - component: {fileID: 5131665494823530835}
   - component: {fileID: 970196509509184560}
-  - component: {fileID: 6912557981281084994}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: Barrel (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -688,64 +750,6 @@ CapsuleCollider:
   m_Height: 1.0432181
   m_Direction: 1
   m_Center: {x: 0.00000008940697, y: 0.52366054, z: 0.00000020861626}
---- !u!136 &6912557981281084994
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6598562732293453048}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.4816807
-  m_Height: 1.0432181
-  m_Direction: 1
-  m_Center: {x: 0.00000008940697, y: 0.52366054, z: 0.00000020861626}
---- !u!1 &6786194343622457216
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 3625125523542637961}
-  - component: {fileID: 5608096837027202513}
-  m_Layer: 6
-  m_Name: PlayerPosition
-  m_TagString: Untagged
-  m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &3625125523542637961
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6786194343622457216}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.11582565, y: 0.21, z: 0.11574566}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 7265572506259761647}
-  m_RootOrder: 6
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5608096837027202513
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6786194343622457216}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6d0ef1568aa1172428fca51d0d87b0c2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &7462269947626845329
 GameObject:
   m_ObjectHideFlags: 0
@@ -760,7 +764,7 @@ GameObject:
   - component: {fileID: 7169766286249758745}
   - component: {fileID: 5783817399871765287}
   - component: {fileID: 7077183914752108844}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: Barrel (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -888,8 +892,7 @@ GameObject:
   - component: {fileID: 4888440423012406822}
   - component: {fileID: 6534414847507110593}
   - component: {fileID: 239989808575931567}
-  - component: {fileID: 5669824005269186193}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: Barrel (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -990,20 +993,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!136 &239989808575931567
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7473718364478216581}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.4816807
-  m_Height: 1.0432181
-  m_Direction: 1
-  m_Center: {x: 0.00000008940697, y: 0.52366054, z: 0.00000020861626}
---- !u!136 &5669824005269186193
 CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
