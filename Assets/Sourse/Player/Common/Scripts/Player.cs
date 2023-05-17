@@ -68,11 +68,17 @@ public class Player : MonoBehaviour, IPauseHandler
             _animator.Jump();
             _jump = true;
         }
-        else if (_doubleJump == false && _jump == true)
+        else if (_doubleJump == false && _jump == true || _doubleJump == false && _groundDetector.IsGrounded() == false)
         {
             _animator.DoubleJump();
             _doubleJump = true;
         }
+    }
+
+    public void Bounce()
+    {
+        _jumper.JumpUp();
+        //_jump = true;
     }
 
     private void OnFell(Collision collision)
@@ -80,10 +86,9 @@ public class Player : MonoBehaviour, IPauseHandler
         if (_isStart == false)
             return;
 
-        _fallParticle.Play();
-
         if (collision.transform.TryGetComponent(out Props props))
         {
+            _fallParticle.Play();
             _jump = false;
             _doubleJump = false;
             _jumper.ResetVelocity();
@@ -93,6 +98,7 @@ public class Player : MonoBehaviour, IPauseHandler
             if (_isLevelComleted == true)
                 return;
 
+            _fallParticle.Play();
             _isGameOver = true;
 
             if (collision.relativeVelocity.y >= MaxRelativeVelocityY)
@@ -107,6 +113,7 @@ public class Player : MonoBehaviour, IPauseHandler
             if (_isGameOver == true)
                 return;
 
+            _fallParticle.Play();
             _isLevelComleted = true;
             LevelCompleted?.Invoke();
         }

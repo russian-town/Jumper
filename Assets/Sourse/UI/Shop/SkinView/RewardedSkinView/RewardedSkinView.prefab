@@ -382,7 +382,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.2392157, g: 0.5764706, b: 0.6666667, a: 1}
+  m_Color: {r: 0.5529412, g: 0.90588236, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -417,7 +417,7 @@ MonoBehaviour:
   _selectIcon: {fileID: 4867932094481091396}
   _selectButtonImage: {fileID: 6922850344138863253}
   _selectColor: {r: 0.07058824, g: 1, b: 0, a: 1}
-  _defaultColor: {r: 0.12156863, g: 0.30588236, b: 0.36078432, a: 1}
+  _defaultColor: {r: 0.14509805, g: 0.3647059, b: 0.43137255, a: 1}
   _rewardedButton: {fileID: 5515869270947051513}
 --- !u!1 &3261739904870112246
 GameObject:
@@ -559,7 +559,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.14509805, g: 0.3647059, b: 0.43137258, a: 1}
+  m_Color: {r: 0.20392157, g: 0.8156863, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1

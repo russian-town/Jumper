@@ -287,7 +287,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.2392157, g: 0.5764706, b: 0.6666667, a: 1}
+  m_Color: {r: 0.5529412, g: 0.90588236, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -322,7 +322,7 @@ MonoBehaviour:
   _selectIcon: {fileID: 8293411272927901264}
   _selectButtonImage: {fileID: 5801942933305610113}
   _selectColor: {r: 0.072496295, g: 1, b: 0, a: 1}
-  _defaultColor: {r: 0.121568635, g: 0.30588236, b: 0.36078432, a: 1}
+  _defaultColor: {r: 0.14509805, g: 0.3647059, b: 0.43137255, a: 1}
   _byButton: {fileID: 9130736292921581524}
   _priceText: {fileID: 8020038527319780700}
 --- !u!1 &2148855595479688930
@@ -951,7 +951,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.14509805, g: 0.3647059, b: 0.43137258, a: 1}
+  m_Color: {r: 0.20392157, g: 0.8156863, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1

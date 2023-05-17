@@ -138,7 +138,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.2392157, g: 0.5764706, b: 0.6666667, a: 1}
+  m_Color: {r: 0.5529412, g: 0.90588236, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -173,7 +173,7 @@ MonoBehaviour:
   _selectIcon: {fileID: 8087413578792026781}
   _selectButtonImage: {fileID: 6026091223658494796}
   _selectColor: {r: 0.07058824, g: 1, b: 0, a: 1}
-  _defaultColor: {r: 0.12156863, g: 0.30588236, b: 0.36078432, a: 1}
+  _defaultColor: {r: 0.14509805, g: 0.3647059, b: 0.43137255, a: 1}
 --- !u!1 &2230999899685179951
 GameObject:
   m_ObjectHideFlags: 0
@@ -317,7 +317,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: SELECT
+  m_text: "\u0412\u042B\u0411\u0420\u0410\u0422\u042C"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -464,7 +464,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.14509805, g: 0.3647059, b: 0.43137258, a: 1}
+  m_Color: {r: 0.20392157, g: 0.8156863, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
