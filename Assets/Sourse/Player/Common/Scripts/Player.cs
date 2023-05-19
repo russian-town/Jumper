@@ -10,6 +10,7 @@ public class Player : MonoBehaviour, IPauseHandler
     private const float MaxRelativeVelocityY = 5f;
 
     [SerializeField] private ParticleSystem _fallParticle;
+    [SerializeField] private ParticleSystem _fallOnGroundParticle;
     [SerializeField] private int _id;
 
     private PlayerAnimator _animator;
@@ -95,11 +96,10 @@ public class Player : MonoBehaviour, IPauseHandler
         }
         else if (collision.transform.TryGetComponent(out Ground ground))
         {
-            if (_isLevelComleted == true)
+            if (_isLevelComleted == true || _isGameOver == true)
                 return;
 
-            _fallParticle.Play();
-            _isGameOver = true;
+            _fallOnGroundParticle.Play();
 
             if (collision.relativeVelocity.y >= MaxRelativeVelocityY)
                 _animator.HardFall();
@@ -107,15 +107,16 @@ public class Player : MonoBehaviour, IPauseHandler
                 _animator.Defeat();
 
             Died?.Invoke();
+            _isGameOver = true;
         }
         else if (collision.transform.TryGetComponent(out Finish finish))
         {
-            if (_isGameOver == true)
+            if (_isLevelComleted == true || _isGameOver == true)
                 return;
 
             _fallParticle.Play();
-            _isLevelComleted = true;
             LevelCompleted?.Invoke();
+            _isLevelComleted = true;
         }
     }
 }

@@ -1778,10 +1778,10 @@ LightingSettings:
   m_IndirectOutputScale: 1
   m_UsingShadowmask: 0
   m_BakeBackend: 1
-  m_LightmapMaxSize: 512
+  m_LightmapMaxSize: 256
   m_BakeResolution: 40
   m_Padding: 2
-  m_LightmapCompression: 2
+  m_LightmapCompression: 1
   m_AO: 0
   m_AOMaxDistance: 1
   m_CompAOExponent: 1
@@ -3183,7 +3183,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76cecc98253a0d14087a9a0ecfd68fbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playerFallSound: {fileID: 0}
+  _playerFallSound: {fileID: 8300000, guid: 72777cf3f30c69a4a876ae1a40a7a8d5, type: 3}
 --- !u!82 &5040241199311871474
 AudioSource:
   m_ObjectHideFlags: 0
@@ -3194,7 +3194,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 8179410371896700620, guid: d8a608f9b1abbde4283823ca4d03a067, type: 2}
-  m_audioClip: {fileID: 8300000, guid: 72777cf3f30c69a4a876ae1a40a7a8d5, type: 3}
+  m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1

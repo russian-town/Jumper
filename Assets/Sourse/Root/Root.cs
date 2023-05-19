@@ -76,8 +76,5 @@ public class Root : MonoBehaviour
     {
         _game.SetLastPosition(playerPosition);
         _lastPlayerPosition = playerPosition;
-
-        if (playerPosition == null)
-            Debug.LogError("Null. Player position not found!");
     }
 }

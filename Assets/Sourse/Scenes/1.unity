@@ -1775,10 +1775,10 @@ LightingSettings:
   m_IndirectOutputScale: 1
   m_UsingShadowmask: 0
   m_BakeBackend: 1
-  m_LightmapMaxSize: 512
+  m_LightmapMaxSize: 256
   m_BakeResolution: 40
   m_Padding: 2
-  m_LightmapCompression: 2
+  m_LightmapCompression: 1
   m_AO: 0
   m_AOMaxDistance: 1
   m_CompAOExponent: 1
@@ -2780,7 +2780,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3483554549394398113, guid: cf2d3bcaf424b9049a030aa385ad8d59, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -0.5001221
+      value: -0.5
       objectReference: {fileID: 0}
     - target: {fileID: 4674197534554460007, guid: cf2d3bcaf424b9049a030aa385ad8d59, type: 3}
       propertyPath: _playerStartPosition
@@ -2858,6 +2858,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: Common
       objectReference: {fileID: 0}
+    - target: {fileID: 4674197536032411677, guid: cf2d3bcaf424b9049a030aa385ad8d59, type: 3}
+      propertyPath: _widthOrHeight
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4674197536032411677, guid: cf2d3bcaf424b9049a030aa385ad8d59, type: 3}
+      propertyPath: _defaultResolution.x
+      value: 1080
+      objectReference: {fileID: 0}
+    - target: {fileID: 4674197536032411677, guid: cf2d3bcaf424b9049a030aa385ad8d59, type: 3}
+      propertyPath: _defaultResolution.y
+      value: 1920
+      objectReference: {fileID: 0}
+    - target: {fileID: 4674197536032411678, guid: cf2d3bcaf424b9049a030aa385ad8d59, type: 3}
+      propertyPath: _offSet.x
+      value: -1
+      objectReference: {fileID: 0}
     - target: {fileID: 5082417071084958885, guid: cf2d3bcaf424b9049a030aa385ad8d59, type: 3}
       propertyPath: m_SizeDelta.x
       value: 0
@@ -2865,6 +2881,10 @@ PrefabInstance:
     - target: {fileID: 5082417071084958885, guid: cf2d3bcaf424b9049a030aa385ad8d59, type: 3}
       propertyPath: m_SizeDelta.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5144746170466127710, guid: cf2d3bcaf424b9049a030aa385ad8d59, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0.9999695
       objectReference: {fileID: 0}
     - target: {fileID: 5594833669098684322, guid: cf2d3bcaf424b9049a030aa385ad8d59, type: 3}
       propertyPath: m_AnchoredPosition.y

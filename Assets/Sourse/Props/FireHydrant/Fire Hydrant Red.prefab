@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 2698874383305740412}
   - component: {fileID: 5885860463469047195}
   - component: {fileID: 3277082249074878930}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Fire Hydrant Red
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -251,7 +251,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1893513178068787351}
   - component: {fileID: 5588454063845564381}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: PlayerPosition
   m_TagString: Untagged
   m_Icon: {fileID: 0}

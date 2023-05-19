@@ -1248,34 +1248,17 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!1 &553064426 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8626759539542381828, guid: 63e11361b9d611b42a0b4dc0d49b28cd, type: 3}
-  m_PrefabInstance: {fileID: 2599924511671117710}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &553064427 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5544905917944685282, guid: 63e11361b9d611b42a0b4dc0d49b28cd, type: 3}
   m_PrefabInstance: {fileID: 2599924511671117710}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &553064428
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 553064426}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3b3dd2a641fc2ac49a98175a217f11d3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &553064431 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6071325446323100458, guid: 63e11361b9d611b42a0b4dc0d49b28cd, type: 3}
   m_PrefabInstance: {fileID: 2599924511671117710}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 553064426}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: aa153a33f0b89b747a9903f4eb241cb7, type: 3}
@@ -2308,10 +2291,10 @@ LightingSettings:
   m_IndirectOutputScale: 1
   m_UsingShadowmask: 0
   m_BakeBackend: 1
-  m_LightmapMaxSize: 512
+  m_LightmapMaxSize: 256
   m_BakeResolution: 40
   m_Padding: 2
-  m_LightmapCompression: 2
+  m_LightmapCompression: 1
   m_AO: 0
   m_AOMaxDistance: 1
   m_CompAOExponent: 1
@@ -3277,14 +3260,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Tires
       objectReference: {fileID: 0}
-    - target: {fileID: 9083604053737331874, guid: 63e11361b9d611b42a0b4dc0d49b28cd, type: 3}
-      propertyPath: m_PlayOnAwake
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9083604053737331874, guid: 63e11361b9d611b42a0b4dc0d49b28cd, type: 3}
-      propertyPath: OutputAudioMixerGroup
-      value: 
-      objectReference: {fileID: 8179410371896700620, guid: d8a608f9b1abbde4283823ca4d03a067, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 63e11361b9d611b42a0b4dc0d49b28cd, type: 3}
 --- !u!1001 &3811592572719093131

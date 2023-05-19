@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2492282689907146714}
   - component: {fileID: 4595197338551100156}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: PlayerPosition
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -55,7 +55,7 @@ GameObject:
   - component: {fileID: 3528702863736764345}
   - component: {fileID: 3503518368585055905}
   - component: {fileID: 3511238324582076347}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Tire
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -138,7 +138,7 @@ GameObject:
   - component: {fileID: 4053043310182198534}
   - component: {fileID: 4060499196125471774}
   - component: {fileID: 4070507780601271556}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Tire (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -221,7 +221,7 @@ GameObject:
   - component: {fileID: 4631804290913784437}
   - component: {fileID: 4621254645547031405}
   - component: {fileID: 4613213645711010423}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Tire (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -304,7 +304,7 @@ GameObject:
   - component: {fileID: 8112226851289676543}
   - component: {fileID: 8138827771125052391}
   - component: {fileID: 8130826362381173501}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Tire (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -388,7 +388,8 @@ GameObject:
   - component: {fileID: 6071325446323100458}
   - component: {fileID: 2950013086228373579}
   - component: {fileID: 9083604053737331874}
-  m_Layer: 0
+  - component: {fileID: 553064428}
+  m_Layer: 6
   m_Name: Tires
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -555,3 +556,15 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &553064428
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8626759539542381828}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b3dd2a641fc2ac49a98175a217f11d3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
