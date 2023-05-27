@@ -5,12 +5,19 @@ public class RewardedSkinView : SkinView
     [SerializeField] private RewardedButton _rewardedButton;
 
     private YandexAds _yandexAds;
+    private ApplicationStatusChecker _applicationStatusChecker;
+
+    public void SetApplicationStatusChecker(ApplicationStatusChecker applicationStatusChecker )
+    {
+        _applicationStatusChecker = applicationStatusChecker;
+    }
 
     protected override void Subscribe()
     {
         _yandexAds = new YandexAds();
         _rewardedButton.ButtonClicked += OnButtonClicked;
         _yandexAds.RewardedCallback += OnRewardedCallback;
+        _yandexAds.OpenCallback += OnOpenCallback;
     }
 
     protected override void UpdateChildView()
@@ -31,6 +38,7 @@ public class RewardedSkinView : SkinView
     {
         _rewardedButton.ButtonClicked -= OnButtonClicked;
         _yandexAds.RewardedCallback -= OnRewardedCallback;
+        _yandexAds.OpenCallback -= OnOpenCallback;
     }
 
     private void OnButtonClicked()
@@ -38,8 +46,14 @@ public class RewardedSkinView : SkinView
         _yandexAds.ShowRewardedVideo();
     }
 
+    private void OnOpenCallback()
+    {
+        _applicationStatusChecker.OnInBackgroundChangeEvent(true);
+    }
+
     private void OnRewardedCallback()
     {
+        _applicationStatusChecker.OnInBackgroundChangeEvent(false);
         By();
     }
 }

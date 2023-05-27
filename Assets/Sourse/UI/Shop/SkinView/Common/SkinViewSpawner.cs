@@ -7,6 +7,7 @@ public class SkinViewSpawner : MonoBehaviour
     [SerializeField] private PaidSkinView _paidSkinView;
     [SerializeField] private RewardedSkinView _rewardedSkinView;
     [SerializeField] private OpenableSkinView _openableSkinView;
+    [SerializeField] private ApplicationStatusChecker _applicationStatusChecker;
 
     public SkinView DefaultSkin { get; private set; }
 
@@ -19,7 +20,9 @@ public class SkinViewSpawner : MonoBehaviour
             case SkinType.Paid:
                 return Instantiate(_paidSkinView, _content);
             case SkinType.Rewarded:
-                return Instantiate(_rewardedSkinView, _content);
+                RewardedSkinView rewardedSkinView = Instantiate(_rewardedSkinView, _content);
+                rewardedSkinView.SetApplicationStatusChecker(_applicationStatusChecker);
+                return rewardedSkinView;
             case SkinType.Openable:
                 return Instantiate(_openableSkinView, _content);
         }

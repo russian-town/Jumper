@@ -1,49 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &3132802934389254583
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2492282689907146714}
-  - component: {fileID: 4595197338551100156}
-  m_Layer: 6
-  m_Name: PlayerPosition
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2492282689907146714
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3132802934389254583}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.057, y: 0.775, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 5544905917944685282}
-  m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4595197338551100156
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3132802934389254583}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6d0ef1568aa1172428fca51d0d87b0c2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &3525633286536270441
 GameObject:
   m_ObjectHideFlags: 0
@@ -389,6 +345,7 @@ GameObject:
   - component: {fileID: 2950013086228373579}
   - component: {fileID: 9083604053737331874}
   - component: {fileID: 553064428}
+  - component: {fileID: 8942469981072853632}
   m_Layer: 6
   m_Name: Tires
   m_TagString: Untagged
@@ -412,7 +369,6 @@ Transform:
   - {fileID: 8112226851289676543}
   - {fileID: 4631804290913784437}
   - {fileID: 3528702863736764345}
-  - {fileID: 2492282689907146714}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -446,7 +402,7 @@ MonoBehaviour:
   CollisionExit:
     m_PersistentCalls:
       m_Calls: []
-  _playerPosition: {fileID: 4595197338551100156}
+  _playerPosition: {fileID: 0}
 --- !u!65 &2950013086228373579
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -458,8 +414,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 2.471985, y: 0.7790328, z: 1}
-  m_Center: {x: -0.19728339, y: -0.11048359, z: 0}
+  m_Size: {x: 2.982038, y: 0.7790328, z: 1}
+  m_Center: {x: -0.45230985, y: -0.11048359, z: 0}
 --- !u!82 &9083604053737331874
 AudioSource:
   m_ObjectHideFlags: 0
@@ -568,3 +524,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b3dd2a641fc2ac49a98175a217f11d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!65 &8942469981072853632
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8626759539542381828}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 3.026802, y: 1, z: 1}
+  m_Center: {x: -0.4177742, y: 0, z: 0}

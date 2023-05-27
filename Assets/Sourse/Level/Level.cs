@@ -7,17 +7,30 @@ public class Level : MonoBehaviour
     public const string SavedIndexKey = "SavedIndex";
 
     [SerializeField] private LevelNumberText _levelNumberText;
+    [SerializeField] private RewardedVideo _rewardedVideo;
 
     private int _currentLevelNumber;
     private Saver _saver;
     private PlayerSceneLoader _sceneLoader;
+    private LevelProgress _levelProgress;
+    private PlayerPositionHandler _playerPositionHandler;
 
     public int CurrentLevelNumber => _currentLevelNumber;
 
-    public void Initialize()
+    private void OnDisable()
+    {
+        _rewardedVideo.RewardedVideoEnded -= RestartLevelOnLastPosition;
+        _rewardedVideo.RewardedVideoOpened -= _playerPositionHandler.SaveCurrentPropsID;
+    }
+
+    public void Initialize(LevelProgress levelProgress, PlayerPositionHandler playerPositionHandler)
     {
         _saver = GetComponent<Saver>();
         _sceneLoader = GetComponent<PlayerSceneLoader>();
+        _levelProgress = levelProgress;
+        _playerPositionHandler = playerPositionHandler;
+        _rewardedVideo.RewardedVideoEnded += RestartLevelOnLastPosition;
+        _rewardedVideo.RewardedVideoOpened += _playerPositionHandler.SaveCurrentPropsID;
 
         if (int.TryParse(_sceneLoader.CurrentSceneName, out int level))
             _currentLevelNumber = level;
@@ -35,5 +48,11 @@ public class Level : MonoBehaviour
     {
         _currentLevelNumber++;
         _sceneLoader.LoadSceneByName(_currentLevelNumber);
+    }
+
+    private void RestartLevelOnLastPosition()
+    {
+        _levelProgress.SaveDistance();
+        RestartLevel();
     }
 }

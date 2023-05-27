@@ -4,6 +4,7 @@ using UnityEngine.Events;
 public class RewardedVideo : MonoBehaviour
 {
     public event UnityAction RewardedVideoEnded;
+    public event UnityAction RewardedVideoOpened;
 
     [SerializeField] private ApplicationStatusChecker _applicationStatusChecker;
 
@@ -38,6 +39,7 @@ public class RewardedVideo : MonoBehaviour
     private void OnOpenCallBack()
     {
         _applicationStatusChecker.OnInBackgroundChangeEvent(true);
+        RewardedVideoOpened?.Invoke();
     }
 
     private void OnRewardedCallback()

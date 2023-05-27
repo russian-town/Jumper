@@ -3,12 +3,14 @@ using UnityEngine.Events;
 
 public class Props : MonoBehaviour
 {
-    public event UnityAction<PlayerPosition> PlayerFell;
+    public event UnityAction<PlayerPosition, Props> PlayerFell;
 
     public CollisionEvent CollisionEnter;
     public CollisionEvent CollisionExit;
 
     [SerializeField] private PlayerPosition _playerPosition;
+
+    public PlayerPosition PlayerPosition => _playerPosition;
 
     private void OnCollisionEnter(Collision collision)
     {
@@ -28,7 +30,7 @@ public class Props : MonoBehaviour
     {
         if (other.transform.TryGetComponent(out Player player))
             if (player.IsStart)
-                PlayerFell?.Invoke(_playerPosition);
+                PlayerFell?.Invoke(_playerPosition, this);
     }
 }
 

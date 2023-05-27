@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class OpenableSkinView : SkinView
 {
+    [SerializeField] private LockImage _lockImage;
+
     private Color _openSkinColor = Color.white;
     private Color _closeSkinColor = Color.black;
 
@@ -16,6 +18,7 @@ public class OpenableSkinView : SkinView
         {
             SetIconColor(_openSkinColor);
             SelectButton.Show();
+            _lockImage.Hide();
         }
     }
 

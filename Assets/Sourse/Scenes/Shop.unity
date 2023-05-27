@@ -540,6 +540,7 @@ MonoBehaviour:
   _paidSkinView: {fileID: 1905043202509073869, guid: fa9e9856006895f49b8d32bf04a564e6, type: 3}
   _rewardedSkinView: {fileID: 5456287646794051159, guid: 74b89ece7545a0e43ae332edd7d19042, type: 3}
   _openableSkinView: {fileID: 5562235286200616612, guid: e55b577b18e10644399b7e60658738dc, type: 3}
+  _applicationStatusChecker: {fileID: 2052125222}
 --- !u!114 &1351587774
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -933,6 +934,17 @@ MonoBehaviour:
   - Language: Turkish
     Text: "\rSE\xC7MEK"
     Object: {fileID: 0}
+--- !u!114 &2052125222 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5949312333470460963, guid: 3939fb43fe1a48a429e6df97f6380145, type: 3}
+  m_PrefabInstance: {fileID: 261673430}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae8d01d26d820a14a813873c1e202b1f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &2059445975
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -987,6 +999,10 @@ PrefabInstance:
     - target: {fileID: 5019935222793720175, guid: 5379decfc610698468942397dfb00a08, type: 3}
       propertyPath: m_Name
       value: GlobalAudio
+      objectReference: {fileID: 0}
+    - target: {fileID: 8178902819313678257, guid: 5379decfc610698468942397dfb00a08, type: 3}
+      propertyPath: m_Volume
+      value: 0.2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5379decfc610698468942397dfb00a08, type: 3}
@@ -1170,7 +1186,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 60.7
+  m_fontSize: 34.05
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1

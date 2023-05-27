@@ -79,7 +79,6 @@ public class Player : MonoBehaviour, IPauseHandler
     public void Bounce()
     {
         _jumper.JumpUp();
-        //_jump = true;
     }
 
     private void OnFell(Collision collision)
@@ -89,10 +88,10 @@ public class Player : MonoBehaviour, IPauseHandler
 
         if (collision.transform.TryGetComponent(out Props props))
         {
+            _jumper.ResetVelocity();
             _fallParticle.Play();
             _jump = false;
             _doubleJump = false;
-            _jumper.ResetVelocity();
         }
         else if (collision.transform.TryGetComponent(out Ground ground))
         {
@@ -108,6 +107,7 @@ public class Player : MonoBehaviour, IPauseHandler
 
             Died?.Invoke();
             _isGameOver = true;
+            Debug.Log($"{gameObject.name}: game over!");
         }
         else if (collision.transform.TryGetComponent(out Finish finish))
         {
@@ -117,6 +117,7 @@ public class Player : MonoBehaviour, IPauseHandler
             _fallParticle.Play();
             LevelCompleted?.Invoke();
             _isLevelComleted = true;
+            Debug.Log($"{gameObject.name}: Level complete!");
         }
     }
 }

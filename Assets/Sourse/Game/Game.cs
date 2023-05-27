@@ -31,7 +31,11 @@ public class Game : MonoBehaviour, IPauseHandler
         if (_player == null)
             return;
 
-        Deinitialize();
+        _isStart = false;
+        _player.Died -= OnPlayerDied;
+        _player.LevelCompleted -= OnLevelCompleted;
+        _playerInput.Tap -= StartGame;
+        _gameOverView.Hide();
     }
 
     public void Initialaize(Player player, LevelProgress levelProgress, PlayerInput playerInput, PlayerPosition playerStartPosition)
@@ -47,14 +51,6 @@ public class Game : MonoBehaviour, IPauseHandler
         _playerInput.Tap += StartGame;
         _levelProgress = levelProgress;
         _pause.Initialize(new IPauseHandler[] { player, this });
-    }
-
-    public void Deinitialize()
-    {
-        _isStart = false;
-        _player.Died -= OnPlayerDied;
-        _playerInput.Tap -= StartGame;
-        _gameOverView.Hide();
     }
 
     public void StartGame()
@@ -80,9 +76,9 @@ public class Game : MonoBehaviour, IPauseHandler
 
     private void OnPlayerDied()
     {
-        _isStart = false;
         _levelProgress.DeleteSavedDistance();
         float percent = Mathf.Ceil(_levelProgress.CurrentDistance * 100f);
+        _pause.Enable();
         _pauseButton.Hide();
         _gameOverView.Show();
 
@@ -99,12 +95,11 @@ public class Game : MonoBehaviour, IPauseHandler
 
         _gameOverView.ShowProgress(percent);
         _levelProgressView.Hide();
+        Debug.Log($"{gameObject.name}: game over!");
     }
 
     private void OnLevelCompleted()
     {
-        _isStart = false;
-
 #if !UNITY_EDITOR && UNITY_WEBGL
         _yandexAds.ShowInterstitial();
 #endif
@@ -127,5 +122,6 @@ public class Game : MonoBehaviour, IPauseHandler
         }
 
         _levelCompletePanel.SetText(_level.CurrentLevelNumber);
+        Debug.Log($"{gameObject.name}: level comlete!");
     }
 }
