@@ -12,12 +12,14 @@ public class RewardedSkinView : SkinView
         _applicationStatusChecker = applicationStatusChecker;
     }
 
-    protected override void Subscribe()
+    protected override void Initialize()
     {
         _yandexAds = new YandexAds();
+        _rewardedButton.Initialize();
         _rewardedButton.ButtonClicked += OnButtonClicked;
         _yandexAds.RewardedCallback += OnRewardedCallback;
         _yandexAds.OpenCallback += OnOpenCallback;
+        _yandexAds.CloseCallback += OnCloseCallback;
     }
 
     protected override void UpdateChildView()
@@ -39,6 +41,7 @@ public class RewardedSkinView : SkinView
         _rewardedButton.ButtonClicked -= OnButtonClicked;
         _yandexAds.RewardedCallback -= OnRewardedCallback;
         _yandexAds.OpenCallback -= OnOpenCallback;
+        _yandexAds.CloseCallback -= OnCloseCallback;
     }
 
     private void OnButtonClicked()
@@ -48,12 +51,18 @@ public class RewardedSkinView : SkinView
 
     private void OnOpenCallback()
     {
-        _applicationStatusChecker.OnInBackgroundChangeEvent(true);
+        _applicationStatusChecker.SetIsPlayRewarded(true);
+        _applicationStatusChecker.ChangeSoundStatus(true);
     }
 
     private void OnRewardedCallback()
     {
-        _applicationStatusChecker.OnInBackgroundChangeEvent(false);
         By();
+    }
+
+    private void OnCloseCallback()
+    {
+        _applicationStatusChecker.SetIsPlayRewarded(false);
+        _applicationStatusChecker.ChangeSoundStatus(false);
     }
 }

@@ -38,7 +38,8 @@ public class RewardedVideo : MonoBehaviour
 
     private void OnOpenCallBack()
     {
-        _applicationStatusChecker.OnInBackgroundChangeEvent(true);
+        _applicationStatusChecker.SetIsPlayRewarded(true);
+        _applicationStatusChecker.ChangeSoundStatus(true);
         RewardedVideoOpened?.Invoke();
     }
 
@@ -49,7 +50,8 @@ public class RewardedVideo : MonoBehaviour
 
     private void OnCloseCallback()
     {
-        _applicationStatusChecker.OnInBackgroundChangeEvent(false);
+        _applicationStatusChecker.SetIsPlayRewarded(false);
+        _applicationStatusChecker.ChangeSoundStatus(false);
     }
 
     private void OnErrorCallback(string errorText)

@@ -7,6 +7,10 @@ public class YandexAds
     public Action RewardedCallback;
     public Action CloseCallback;
     public Action<string> ErrorCallback;
+    public Action OpenInterstitialCallback;
+    public Action<bool> CloseInterstitialCallback;
+    public Action<string> ErrorInterstitialCallback;
+    public Action OfflineCallback;
 
     public void ShowRewardedVideo()
     {
@@ -17,6 +21,6 @@ public class YandexAds
     public void ShowInterstitial()
     {
         if (YandexGamesSdk.IsInitialized == true)
-            InterstitialAd.Show();
+            InterstitialAd.Show(OpenInterstitialCallback, CloseInterstitialCallback, ErrorInterstitialCallback, OfflineCallback);
     }
 }

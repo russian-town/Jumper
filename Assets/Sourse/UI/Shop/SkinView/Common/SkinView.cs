@@ -31,11 +31,12 @@ public abstract class SkinView : MonoBehaviour
 
     public void Initialize(Skin skin)
     {
+        _selectButton.Initialize();
         _selectButton.ButtonClicked += OnButtonClicked;
         _icon.sprite = skin.Icon;
         _skin = skin;
         UpdateView();
-        Subscribe();
+        Initialize();
         UpdateChildView();
 
         if (_skin.IsBy && _skin.IsSelect)
@@ -57,7 +58,7 @@ public abstract class SkinView : MonoBehaviour
         ByButtonClicked?.Invoke(_skin, this);
     }
 
-    protected abstract void Subscribe();
+    protected abstract void Initialize();
 
     protected abstract void UpdateChildView();
 

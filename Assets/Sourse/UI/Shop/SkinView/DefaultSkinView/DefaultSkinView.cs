@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class DefaultSkinView : SkinView
 {
-    protected override void Subscribe() {}
+    protected override void Initialize() {}
 
     protected override void UpdateChildView() {}
 

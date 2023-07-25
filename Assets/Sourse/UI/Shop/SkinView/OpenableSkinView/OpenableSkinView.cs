@@ -22,7 +22,7 @@ public class OpenableSkinView : SkinView
         }
     }
 
-    protected override void Subscribe() {}
+    protected override void Initialize() {}
 
     protected override void Deinitialize() {}
 }

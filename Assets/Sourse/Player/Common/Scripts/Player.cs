@@ -107,7 +107,6 @@ public class Player : MonoBehaviour, IPauseHandler
 
             Died?.Invoke();
             _isGameOver = true;
-            Debug.Log($"{gameObject.name}: game over!");
         }
         else if (collision.transform.TryGetComponent(out Finish finish))
         {
@@ -117,7 +116,6 @@ public class Player : MonoBehaviour, IPauseHandler
             _fallParticle.Play();
             LevelCompleted?.Invoke();
             _isLevelComleted = true;
-            Debug.Log($"{gameObject.name}: Level complete!");
         }
     }
 }

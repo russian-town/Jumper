@@ -8,23 +8,29 @@ public abstract class UIButton : UIElement
     public event UnityAction ButtonClicked;
 
     private Button _button;
-
-    private void Awake()
-    {
-        _button = GetComponent<Button>();
-    }
-
-    private void OnEnable()
-    {
-        _button.onClick.AddListener(ButtonClick);
-    }
+    private bool _isInitialized;
 
     private void OnDisable()
     {
+        if (_isInitialized == false)
+            return;
+
         _button.onClick.RemoveListener(ButtonClick);
     }
 
-    public void ButtonClick()
+    public void Initialize()
+    {
+        _button = GetComponent<Button>();
+        _button.onClick.AddListener(ButtonClick);
+        _isInitialized = true;
+    }
+
+    protected void SwitchEnableState(bool isEnable)
+    {
+        _button.enabled = isEnable;
+    }
+
+    private void ButtonClick()
     {
         ButtonClicked?.Invoke();
     }

@@ -19,8 +19,9 @@ public class PaidSkinView : SkinView
         }
     }
 
-    protected override void Subscribe()
+    protected override void Initialize()
     {
+        _byButton.Initialize();
         _byButton.ButtonClicked += OnButtonClicked;
     }
 

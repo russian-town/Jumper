@@ -14,7 +14,8 @@ GameObject:
   - component: {fileID: 7859004226662894173}
   - component: {fileID: 7859004226662894161}
   - component: {fileID: 7859004226662894186}
-  - component: {fileID: 7859004226537407972}
+  - component: {fileID: 4577061248037900818}
+  - component: {fileID: 1388551409656079319}
   m_Layer: 6
   m_Name: Well
   m_TagString: Untagged
@@ -99,8 +100,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 2.5257812, y: 0.38213515, z: 1.754653}
-  m_Center: {x: -0.012109518, y: 3.1375709, z: -0.06511998}
+  m_Size: {x: 2.495112, y: 0.6896992, z: 2.35022}
+  m_Center: {x: -0.027444124, y: 2.6829681, z: -0.07536423}
 --- !u!82 &7859004226662894161
 AudioSource:
   m_ObjectHideFlags: 0
@@ -121,7 +122,7 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
-  MinDistance: 1.6495004
+  MinDistance: 1.2072569
   MaxDistance: 500
   Pan2D: 0
   rolloffMode: 0
@@ -228,7 +229,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   _playerPosition: {fileID: 7859004227758646096}
---- !u!65 &7859004226537407972
+--- !u!65 &4577061248037900818
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -239,8 +240,21 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 2.4939058, y: 3.3455384, z: 2.381876}
-  m_Center: {x: -0.013047099, y: 1.3537439, z: -0.059062004}
+  m_Size: {x: 3.4499974, y: 1.2084155, z: 2.5436056}
+  m_Center: {x: 0.07145095, y: 2.4647653, z: 0.03186667}
+--- !u!65 &1388551409656079319
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 345151224542933382}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2.4977827, y: 1.8402413, z: 3.384265}
+  m_Center: {x: 0.26511908, y: 0.9443075, z: 0}
 --- !u!1 &7859004227758646098
 GameObject:
   m_ObjectHideFlags: 0

@@ -59,6 +59,7 @@ GameObject:
   - component: {fileID: 6028116953983467340}
   - component: {fileID: 6028116953983467341}
   - component: {fileID: 6028116953983467330}
+  - component: {fileID: 5029633048985173968}
   m_Layer: 6
   m_Name: Pizza Shop
   m_TagString: Untagged
@@ -143,8 +144,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 2.5263443, y: 3.6200109, z: 4.7078147}
-  m_Center: {x: -4.9606056, y: 1.8996234, z: 5.863246}
+  m_Size: {x: 2.6481094, y: 3.6918488, z: 4.7606287}
+  m_Center: {x: -4.899723, y: 1.8637044, z: 5.8896527}
 --- !u!65 &6028116953983467340
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -285,3 +286,16 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!65 &5029633048985173968
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8019828294110079580}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.7703104, y: 0.81749916, z: 4.0517445}
+  m_Center: {x: -3.15, y: 3.0013442, z: 6.2112284}

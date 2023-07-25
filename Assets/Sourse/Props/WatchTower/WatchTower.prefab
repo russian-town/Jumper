@@ -59,6 +59,7 @@ GameObject:
   - component: {fileID: 40534975187973105}
   - component: {fileID: 937870806698592168}
   - component: {fileID: 1619279349662563768}
+  - component: {fileID: 3800602096114769865}
   m_Layer: 6
   m_Name: WatchTower
   m_TagString: Untagged
@@ -156,8 +157,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 5.6115284, y: 1.909378, z: 5.6010847}
-  m_Center: {x: -0.006708145, y: 9.825188, z: 0}
+  m_Size: {x: 6.0092373, y: 2.4938073, z: 5.6010847}
+  m_Center: {x: -0.03375113, y: 9.533006, z: 0}
 --- !u!114 &937870806698592168
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -209,7 +210,7 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
-  MinDistance: 1
+  MinDistance: 0.83156097
   MaxDistance: 500
   Pan2D: 0
   rolloffMode: 0
@@ -285,3 +286,16 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!65 &3800602096114769865
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8221993715382228369}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 4.9234786, y: 7.9924707, z: 5.6010847}
+  m_Center: {x: 0.002693335, y: 4.277008, z: 0}

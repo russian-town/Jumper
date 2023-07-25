@@ -13,6 +13,9 @@ public class Game : MonoBehaviour, IPauseHandler
     [SerializeField] private RetryButton _retryButton;
     [SerializeField] private RewardedPanel _rewardedPanel;
     [SerializeField] private PauseButton _pauseButton;
+    [SerializeField] private NoThanksButton _noThanksButton;
+    [SerializeField] private RewardedButton _rewardedButton;
+    [SerializeField] private NextLevelButton _nextLevelButton;
     [SerializeField] private Wallet _wallet;
 
     private OpenableSkinHandler _openableSkinHandler;
@@ -23,8 +26,11 @@ public class Game : MonoBehaviour, IPauseHandler
     private PlayerPosition _playerLastPosition;
     private PlayerPosition _playerStartPosition;
     private YandexAds _yandexAds;
+    private ApplicationStatusChecker _applicationStatusChecker;
 
     private bool _isStart;
+
+    public bool IsLevelComplete { get; private set; }
 
     private void OnDisable()
     {
@@ -35,13 +41,19 @@ public class Game : MonoBehaviour, IPauseHandler
         _player.Died -= OnPlayerDied;
         _player.LevelCompleted -= OnLevelCompleted;
         _playerInput.Tap -= StartGame;
+        _yandexAds.OpenInterstitialCallback -= OnOpenInterstitialCallback;
+        _yandexAds.CloseInterstitialCallback -= OnCloseInterstitialCallback;
         _gameOverView.Hide();
     }
 
-    public void Initialaize(Player player, LevelProgress levelProgress, PlayerInput playerInput, PlayerPosition playerStartPosition)
+    public void Initialaize(Player player, LevelProgress levelProgress, PlayerInput playerInput, PlayerPosition playerStartPosition, ApplicationStatusChecker applicationStatusChecker)
     {
         _openableSkinHandler = GetComponent<OpenableSkinHandler>();
         _yandexAds = new YandexAds();
+        _applicationStatusChecker = applicationStatusChecker;
+        _applicationStatusChecker.Initialize(_yandexAds);
+        _yandexAds.OpenInterstitialCallback += OnOpenInterstitialCallback;
+        _yandexAds.CloseInterstitialCallback += OnCloseInterstitialCallback;
         _openableSkinHandler.Initialize(_levelCompletePanel);
         _player = player;
         _playerInput = playerInput;
@@ -50,7 +62,11 @@ public class Game : MonoBehaviour, IPauseHandler
         player.LevelCompleted += OnLevelCompleted;
         _playerInput.Tap += StartGame;
         _levelProgress = levelProgress;
-        _pause.Initialize(new IPauseHandler[] { player, this });
+        _nextLevelButton.Initialize();
+        _rewardedButton.Initialize();
+        _noThanksButton.Initialize();
+        _retryButton.Initialize();
+        _pause.Initialize(new IPauseHandler[] { player, this, _nextLevelButton, _retryButton, _noThanksButton, _rewardedButton }, this);
     }
 
     public void StartGame()
@@ -74,12 +90,20 @@ public class Game : MonoBehaviour, IPauseHandler
         _playerLastPosition = playerLastPosition;
     }
 
+    private void OnOpenInterstitialCallback()
+    {
+        _applicationStatusChecker.ChangeSoundStatus(true);
+    }
+
+    private void OnCloseInterstitialCallback(bool isClose)
+    {
+        _applicationStatusChecker.ChangeSoundStatus(false);
+    }
+
     private void OnPlayerDied()
     {
         _levelProgress.DeleteSavedDistance();
         float percent = Mathf.Ceil(_levelProgress.CurrentDistance * 100f);
-        _pause.Enable();
-        _pauseButton.Hide();
         _gameOverView.Show();
 
         if (_playerLastPosition == null || _playerLastPosition == _playerStartPosition)
@@ -95,7 +119,6 @@ public class Game : MonoBehaviour, IPauseHandler
 
         _gameOverView.ShowProgress(percent);
         _levelProgressView.Hide();
-        Debug.Log($"{gameObject.name}: game over!");
     }
 
     private void OnLevelCompleted()
@@ -103,10 +126,8 @@ public class Game : MonoBehaviour, IPauseHandler
 #if !UNITY_EDITOR && UNITY_WEBGL
         _yandexAds.ShowInterstitial();
 #endif
-
+        IsLevelComplete = true;
         _levelProgress.DeleteSavedDistance();
-        _pauseButton.Hide();
-        _pause.Enable();
         _levelProgressView.Hide();
         _levelCompletePanel.Show();
         _wallet.AddMoney(_moneyOfLevel);
@@ -122,6 +143,5 @@ public class Game : MonoBehaviour, IPauseHandler
         }
 
         _levelCompletePanel.SetText(_level.CurrentLevelNumber);
-        Debug.Log($"{gameObject.name}: level comlete!");
     }
 }

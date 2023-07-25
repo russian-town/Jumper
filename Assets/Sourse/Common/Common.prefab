@@ -547,13 +547,14 @@ MonoBehaviour:
   data: 0
   entries:
   - Language: English
-    Text: CONTINUE?
+    Text: CONTINUE FROM LAST CHECKPOINT?
     Object: {fileID: 0}
   - Language: Russian
-    Text: "\u041F\u0420\u041E\u0414\u041E\u041B\u0416\u0418\u0422\u042C?"
+    Text: "\u041F\u0420\u041E\u0414\u041E\u041B\u0416\u0418\u0422\u042C \u0421 \u041F\u041E\u0421\u041B\u0415\u0414\u041D\u0415\u0419
+      \u041A\u041E\u041D\u0422\u0420\u041E\u041B\u042C\u041D\u041E\u0419 \u0422\u041E\u0427\u041A\u0418?"
     Object: {fileID: 0}
   - Language: Turkish
-    Text: DEVAM ETMEK?
+    Text: "\rSON KONTROL NOKTASINDAN DEVAM ETMEL\u0130 M\u0130?"
     Object: {fileID: 0}
 --- !u!1 &411710104979781871
 GameObject:
@@ -567,6 +568,7 @@ GameObject:
   - component: {fileID: 4638288094204256214}
   - component: {fileID: 2075089627671361390}
   - component: {fileID: 1300340451333687352}
+  - component: {fileID: 9117000263733703016}
   m_Layer: 5
   m_Name: PausePanel
   m_TagString: Untagged
@@ -591,10 +593,10 @@ RectTransform:
   m_Father: {fileID: 4674197535088758537}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.08777778, y: 0.582}
-  m_AnchorMax: {x: 0.91600007, y: 0.83512497}
-  m_AnchoredPosition: {x: -0.5, y: 0}
-  m_SizeDelta: {x: 0.7312919, y: -0.7660217}
+  m_AnchorMin: {x: 0.08762963, y: 0.46368757}
+  m_AnchorMax: {x: 0.9124815, y: 0.7187778}
+  m_AnchoredPosition: {x: -0.5, y: 0.94999695}
+  m_SizeDelta: {x: 3.953148, y: -4.7660217}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4638288094204256214
 CanvasRenderer:
@@ -648,6 +650,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_AspectMode: 2
   m_AspectRatio: 1.844907
+--- !u!114 &9117000263733703016
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 411710104979781871}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d55cf5af5951bcf42af741f85e1c83dc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _restartButton: {fileID: 8570797881765973045}
+  _exitButton: {fileID: 8539402323067920441}
 --- !u!1 &686903319293489713
 GameObject:
   m_ObjectHideFlags: 0
@@ -1172,6 +1188,9 @@ MonoBehaviour:
   _retryButton: {fileID: 4674197534731186803}
   _rewardedPanel: {fileID: 4674197535250671688}
   _pauseButton: {fileID: 8267919103148882659}
+  _noThanksButton: {fileID: 7523796881791975207}
+  _rewardedButton: {fileID: 3545420808043878673}
+  _nextLevelButton: {fileID: 1149804489407474526}
   _wallet: {fileID: 157831624858757419}
 --- !u!114 &5307958142101819413
 MonoBehaviour:
@@ -1493,10 +1512,10 @@ RectTransform:
   m_Father: {fileID: 4674197534990173381}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -29}
-  m_SizeDelta: {x: 165.2341, y: 151.848}
+  m_AnchorMin: {x: 0.30666667, y: 0.14}
+  m_AnchorMax: {x: 0.6933334, y: 0.4766667}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0.23410034, y: 0.5979996}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4674197534510011204
 CanvasRenderer:
@@ -2212,6 +2231,7 @@ GameObject:
   - component: {fileID: 4674197534964806661}
   - component: {fileID: 4674197534964806662}
   - component: {fileID: 4674197535883984237}
+  - component: {fileID: 1149804489407474526}
   m_Layer: 5
   m_Name: NextLevelButton
   m_TagString: Untagged
@@ -2360,6 +2380,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_AspectMode: 2
   m_AspectRatio: 1
+--- !u!114 &1149804489407474526
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4674197534964806656}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 709fe1b61866ad64e8be34c5311f34fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4674197534989957736
 GameObject:
   m_ObjectHideFlags: 0
@@ -2521,6 +2553,7 @@ GameObject:
   - component: {fileID: 4674197534990173403}
   - component: {fileID: 4674197534990173380}
   - component: {fileID: 4606922271556606711}
+  - component: {fileID: 3545420808043878673}
   m_Layer: 5
   m_Name: RewardedButton
   m_TagString: Untagged
@@ -2740,6 +2773,18 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &3545420808043878673
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4674197534990173382}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c2da576a8a2ddf428a701cbe3a50bb7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4674197535044823479
 GameObject:
   m_ObjectHideFlags: 0
@@ -3053,6 +3098,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 013067a33efd92a43879064ae81e9d47, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _pauseButton: {fileID: 8267919103148882659}
+  _pausePanel: {fileID: 9117000263733703016}
 --- !u!1 &4674197535749950463
 GameObject:
   m_ObjectHideFlags: 0
@@ -3180,9 +3227,9 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.74}
-  m_AnchorMax: {x: 0.5, y: 0.91}
-  m_AnchoredPosition: {x: 75.000015, y: 0.80000305}
-  m_SizeDelta: {x: 150, y: -1}
+  m_AnchorMax: {x: 1, y: 0.91}
+  m_AnchoredPosition: {x: 0, y: -33}
+  m_SizeDelta: {x: 0, y: -1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4674197535833656988
 CanvasRenderer:
@@ -3212,7 +3259,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u041F\u0420\u041E\u0414\u041E\u041B\u0416\u0418\u0422\u042C?"
+  m_text: "\u041F\u0420\u041E\u0414\u041E\u041B\u0416\u0418\u0422\u042C \u0421 \u041F\u041E\u0421\u041B\u0415\u0414\u041D\u0415\u0419
+    \u041A\u041E\u041D\u0422\u0420\u041E\u041B\u042C\u041D\u041E\u0419 \u0422\u041E\u0427\u041A\u0418?"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -3239,7 +3287,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 39.1
+  m_fontSize: 28.3
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -3275,7 +3323,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: 0, y: -50.670654, z: 0, w: -28.726318}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -3350,6 +3398,7 @@ GameObject:
   - component: {fileID: 4674197535987492647}
   - component: {fileID: 4674197535987492640}
   - component: {fileID: 4674197535987492641}
+  - component: {fileID: 7523796881791975207}
   m_Layer: 5
   m_Name: NoThanksButton
   m_TagString: Untagged
@@ -3484,6 +3533,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &7523796881791975207
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4674197535987492643}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9085b87c5453a3c49b5aa46f7419a130, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4674197536027497861
 GameObject:
   m_ObjectHideFlags: 0
@@ -4636,6 +4697,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4674197535848503238}
     m_Modifications:
+    - target: {fileID: 5949312333470460963, guid: 3939fb43fe1a48a429e6df97f6380145, type: 3}
+      propertyPath: _pause
+      value: 
+      objectReference: {fileID: 4674197535662549678}
+    - target: {fileID: 5949312333470460963, guid: 3939fb43fe1a48a429e6df97f6380145, type: 3}
+      propertyPath: _pausePanel
+      value: 
+      objectReference: {fileID: 9117000263733703016}
     - target: {fileID: 7625701022362013642, guid: 3939fb43fe1a48a429e6df97f6380145, type: 3}
       propertyPath: m_RootOrder
       value: 8
