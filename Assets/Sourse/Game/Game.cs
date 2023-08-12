@@ -29,6 +29,7 @@ public class Game : MonoBehaviour, IPauseHandler
     private ApplicationStatusChecker _applicationStatusChecker;
 
     private bool _isStart;
+    private bool _isRewarded = false;
 
     public bool IsLevelComplete { get; private set; }
 
@@ -83,6 +84,18 @@ public class Game : MonoBehaviour, IPauseHandler
     public void SetPause(bool isPause)
     {
         _isPause = isPause;
+
+        if (_isPause == true && IsLevelComplete == true)
+            _nextLevelButton.Hide();
+        else
+            _nextLevelButton.Show();
+
+        if (_isStart == false && _isPause == true)
+            _retryButton.Hide();
+        else if (_isStart == false && _isPause == true && _isRewarded == true)
+            _retryButton.Hide();
+        else if (_isPause == false && _isRewarded == false)
+            _retryButton.Show();
     }
 
     public void SetLastPosition(PlayerPosition playerLastPosition)
@@ -102,6 +115,7 @@ public class Game : MonoBehaviour, IPauseHandler
 
     private void OnPlayerDied()
     {
+        _isStart = false;
         _levelProgress.DeleteSavedDistance();
         float percent = Mathf.Ceil(_levelProgress.CurrentDistance * 100f);
         _gameOverView.Show();
@@ -109,10 +123,13 @@ public class Game : MonoBehaviour, IPauseHandler
         if (_playerLastPosition == null || _playerLastPosition == _playerStartPosition)
         {
             _rewardedPanel.Hide();
-            _retryButton.Show();
+
+            if (!_isPause)
+                _retryButton.Show();
         }
         else
         {
+            _isRewarded = true;
             _rewardedPanel.Show();
             _retryButton.Hide();
         }

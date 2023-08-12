@@ -55,8 +55,8 @@ GameObject:
   - component: {fileID: 8741965251331378987}
   - component: {fileID: 5692101882343145614}
   - component: {fileID: 7573541408619213892}
-  - component: {fileID: 6035720499824013068}
   - component: {fileID: 40534975187973105}
+  - component: {fileID: 6035720499824013068}
   - component: {fileID: 937870806698592168}
   - component: {fileID: 1619279349662563768}
   - component: {fileID: 3800602096114769865}
@@ -133,7 +133,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &6035720499824013068
+--- !u!65 &40534975187973105
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -144,9 +144,9 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 5.0912294, y: 0.9284458, z: 4.5288897}
-  m_Center: {x: -0.031473637, y: 10.907254, z: -0.12249231}
---- !u!65 &40534975187973105
+  m_Size: {x: 6.0092373, y: 2.4938073, z: 5.6010847}
+  m_Center: {x: -0.03375113, y: 9.533006, z: 0}
+--- !u!65 &6035720499824013068
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -157,8 +157,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 6.0092373, y: 2.4938073, z: 5.6010847}
-  m_Center: {x: -0.03375113, y: 9.533006, z: 0}
+  m_Size: {x: 5.0912294, y: 0.9284458, z: 4.5288897}
+  m_Center: {x: -0.031473637, y: 10.907254, z: -0.12249231}
 --- !u!114 &937870806698592168
 MonoBehaviour:
   m_ObjectHideFlags: 0

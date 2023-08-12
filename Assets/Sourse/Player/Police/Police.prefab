@@ -315,6 +315,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 687783978485978895}
+  - component: {fileID: 256051296035251298}
   m_Layer: 8
   m_Name: head
   m_TagString: Untagged
@@ -337,6 +338,19 @@ Transform:
   m_Father: {fileID: 687783978485978943}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &256051296035251298
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 687783978485877551}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.38
+  m_Center: {x: 0.03, y: 0.26, z: 0}
 --- !u!1 &687783978485877553
 GameObject:
   m_ObjectHideFlags: 0
@@ -474,6 +488,7 @@ GameObject:
   m_Component:
   - component: {fileID: 687783978485978905}
   - component: {fileID: 687783978472277565}
+  - component: {fileID: 7234479320766176399}
   m_Layer: 8
   m_Name: Cap_01
   m_TagString: Untagged
@@ -580,6 +595,19 @@ SkinnedMeshRenderer:
     m_Center: {x: 0.00000014901161, y: 1.8368459, z: -0.042832226}
     m_Extent: {x: 0.35757214, y: 0.2059043, z: 0.38477495}
   m_DirtyAABB: 0
+--- !u!65 &7234479320766176399
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 687783978485877561}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.7151478, y: 0.4118089, z: 0.76955324}
+  m_Center: {x: -0.0000002002725, y: -0.063033104, z: -0.0317808}
 --- !u!1 &687783978485877563
 GameObject:
   m_ObjectHideFlags: 0

@@ -1126,6 +1126,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5037728429609395877}
+  - component: {fileID: 3250006220528951366}
   m_Layer: 8
   m_Name: head
   m_TagString: Untagged
@@ -1148,6 +1149,19 @@ Transform:
   m_Father: {fileID: 5037728429162922652}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &3250006220528951366
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5037728429609395882}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.35
+  m_Center: {x: 0.03, y: 0.26, z: 0}
 --- !u!1 &5037728429649199569
 GameObject:
   m_ObjectHideFlags: 0
@@ -1351,6 +1365,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5037728430015016013}
   - component: {fileID: 5037728430015016012}
+  - component: {fileID: 7169485845303075539}
   m_Layer: 8
   m_Name: Form_of the prisoner_hats
   m_TagString: Untagged
@@ -1456,6 +1471,19 @@ SkinnedMeshRenderer:
     m_Center: {x: 0, y: 1.8582547, z: -0.00003568828}
     m_Extent: {x: 0.21481046, y: 0.09944987, z: 0.22080748}
   m_DirtyAABB: 0
+--- !u!65 &7169485845303075539
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5037728430015016050}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.42962277, y: 0.19889992, z: 0.44161677}
+  m_Center: {x: 0.00000016259979, y: 0.09831023, z: 0.00003513448}
 --- !u!1 &5037728430052362391
 GameObject:
   m_ObjectHideFlags: 0

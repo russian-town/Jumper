@@ -6,10 +6,9 @@ public abstract class BounceProps : MonoBehaviour
     {
         if (collision.transform.TryGetComponent(out Player player))
         {
-            player.Bounce();
-            Action();
+            Action(collision, player);
         }
     }
 
-    protected abstract void Action();
+    protected abstract void Action(Collision collision, Player player);
 }

@@ -554,6 +554,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1613558886326648323}
   - component: {fileID: 1613558886326648320}
+  - component: {fileID: 7234848995501913682}
   m_Layer: 8
   m_Name: Hat
   m_TagString: Untagged
@@ -659,6 +660,19 @@ SkinnedMeshRenderer:
     m_Center: {x: -0.000000059604645, y: 1.8027647, z: -0.00048804283}
     m_Extent: {x: 0.5210045, y: 0.20669729, z: 0.5287031}
   m_DirtyAABB: 0
+--- !u!65 &7234848995501913682
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1613558886326648322}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.0420134, y: 0.413395, z: 1.0574106}
+  m_Center: {x: 3.0000002, y: 0.09717405, z: -2.9995124}
 --- !u!1 &1613558886399716659
 GameObject:
   m_ObjectHideFlags: 0
@@ -668,6 +682,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1613558886399716656}
+  - component: {fileID: 4247545701926029176}
   m_Layer: 8
   m_Name: head
   m_TagString: Untagged
@@ -690,6 +705,19 @@ Transform:
   m_Father: {fileID: 1613558886992162587}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &4247545701926029176
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1613558886399716659}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.35
+  m_Center: {x: 0.03, y: 0.26, z: 0}
 --- !u!1 &1613558886456460334
 GameObject:
   m_ObjectHideFlags: 0

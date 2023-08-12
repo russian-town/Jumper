@@ -4,8 +4,9 @@ public class RedBarrel : BounceProps
 {
     [SerializeField] private ParticleSystem _explosionEffect;
 
-    protected override void Action()
+    protected override void Action(Collision collision, Player player)
     {
+        player.Bounce();
         MakeExplosion();
 
         Collider[] hitCollides = Physics.OverlapBox(transform.position, transform.localScale);
@@ -14,7 +15,7 @@ public class RedBarrel : BounceProps
         {
             foreach (var hitCollider in hitCollides)
             {
-                if(hitCollider.TryGetComponent(out RedBarrel redBarrel))
+                if (hitCollider.TryGetComponent(out RedBarrel redBarrel))
                 {
                     redBarrel.MakeExplosion();
                 }

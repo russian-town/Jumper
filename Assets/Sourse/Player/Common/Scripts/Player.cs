@@ -2,7 +2,8 @@ using UnityEngine;
 using UnityEngine.Events;
 
 [RequireComponent(typeof(PlayerAnimator), typeof(PlayerJumper), typeof(GroundDetector))]
-public class Player : MonoBehaviour, IPauseHandler
+[RequireComponent(typeof(PlayerIK))]
+public class Player : MonoBehaviour, IPauseHandler, IGroundedHandler
 {
     public event UnityAction Died;
     public event UnityAction LevelCompleted;
@@ -12,7 +13,9 @@ public class Player : MonoBehaviour, IPauseHandler
     [SerializeField] private ParticleSystem _fallParticle;
     [SerializeField] private ParticleSystem _fallOnGroundParticle;
     [SerializeField] private int _id;
+    [SerializeField] private Head _head;
 
+    private PlayerIK _playerIK;
     private PlayerAnimator _animator;
     private PlayerJumper _jumper;
     private GroundDetector _groundDetector;
@@ -22,16 +25,21 @@ public class Player : MonoBehaviour, IPauseHandler
     private bool _isStart = false;
     private bool _isGameOver = false;
     private bool _isLevelComleted = false;
+    private bool _isGrounded;
 
     public int ID => _id;
     public bool IsStart => _isStart;
 
     private void Awake()
     {
+        _playerIK = GetComponent<PlayerIK>();
         _animator = GetComponent<PlayerAnimator>();
         _groundDetector = GetComponent<GroundDetector>();
         _jumper = GetComponent<PlayerJumper>();
-        _groundDetector.Initialize();
+        _playerIK.Initialize(_animator.Current);
+        _head.Initialize(_playerIK);
+        _groundDetector.Initialize(new IGroundedHandler[] { _animator, this });
+        _playerIK.Disable();
     }
 
     private void OnEnable()
@@ -42,11 +50,6 @@ public class Player : MonoBehaviour, IPauseHandler
     private void OnDisable()
     {
         _groundDetector.Fell -= OnFell;
-    }
-
-    private void Update()
-    {
-        _animator.SetGrounded(_groundDetector.IsGrounded());
     }
 
     public void SetPause(bool isPause)
@@ -64,12 +67,12 @@ public class Player : MonoBehaviour, IPauseHandler
         if (_isPause == true || _isGameOver == true || _isLevelComleted == true)
             return;
 
-        if (_groundDetector.IsGrounded() && _jump == false)
+        if (_jump == false && _isGrounded)
         {
             _animator.Jump();
             _jump = true;
         }
-        else if (_doubleJump == false && _jump == true || _doubleJump == false && _groundDetector.IsGrounded() == false)
+        else if (_doubleJump == false && _jump == true || _doubleJump == false && _isGrounded == false)
         {
             _animator.DoubleJump();
             _doubleJump = true;
@@ -81,8 +84,15 @@ public class Player : MonoBehaviour, IPauseHandler
         _jumper.JumpUp();
     }
 
+    public void SetGrounded(bool isGrounded)
+    {
+        _isGrounded = isGrounded;
+    }
+
     private void OnFell(Collision collision)
     {
+        _playerIK.Disable();
+
         if (_isStart == false)
             return;
 
@@ -98,6 +108,7 @@ public class Player : MonoBehaviour, IPauseHandler
             if (_isLevelComleted == true || _isGameOver == true)
                 return;
 
+            _head.Disable();
             _fallOnGroundParticle.Play();
 
             if (collision.relativeVelocity.y >= MaxRelativeVelocityY)

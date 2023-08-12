@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(Animator))]
-public class PlayerAnimator : MonoBehaviour
+public class PlayerAnimator : MonoBehaviour, IGroundedHandler
 {
     [SerializeField] private float _animationDelay;
 
@@ -14,6 +14,8 @@ public class PlayerAnimator : MonoBehaviour
 
     private Animator _animator;
     private Coroutine StartResetTriggers;
+
+    public Animator Current => _animator;
 
     private void Awake()
     {
