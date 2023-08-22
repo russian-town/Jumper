@@ -41,6 +41,7 @@ public class Root : MonoBehaviour
     {
         _startPlayer = _playerSpawner.GetPlayer(id, playerPosition);
         _startPlayer.transform.localRotation = Quaternion.Euler(_targetRotation);
+        _startPlayer.Initialize(_playerPositionHandler);
         _playerInput.Initialize(_startPlayer);
         _game.Initialaize(_startPlayer, _levelProgress, _playerInput, _startPlayerPosition, _applicationStatusChecker);
         _levelProgress.Initialize(_startPlayer);

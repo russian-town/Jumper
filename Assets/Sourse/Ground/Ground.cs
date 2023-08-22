@@ -14,7 +14,7 @@ public class Ground : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.transform.TryGetComponent(out Player player))
+        if (collision.transform.TryGetComponent(out Player player) && (collision.collider is SphereCollider) == false)
             _audioSource.PlayOneShot(_playerFallSound);
     }
 }

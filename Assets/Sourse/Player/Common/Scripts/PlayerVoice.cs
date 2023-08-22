@@ -14,12 +14,12 @@ public class PlayerVoice : MonoBehaviour
         _audioSource = GetComponent<AudioSource>();
     }
 
-    public void Jump()
+    public void JumpUp()
     {
         MakeSound(_jump);
     }
 
-    public void DoubleJump()
+    public void DoubleJumpUp()
     {
         MakeSound(_doubleJump);
     }

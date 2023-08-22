@@ -2,25 +2,14 @@ using UnityEngine;
 
 public class PlayerIK : MonoBehaviour
 {
-    [Range(0f, 1f)] [SerializeField] private float _weight;
-    [SerializeField] private HeadPosition _headPosition;
+    [SerializeField] private SphereCollider _head;
+    [SerializeField] private float _distance;
+    [SerializeField] private LayerMask _layerMask;
 
-    private Animator _animator;
-    private float _startWeight;
+    private PlayerAnimator _playerAnimator;
 
-    private void OnAnimatorIK()
+    public void Initialize(PlayerAnimator playerAnimator)
     {
-        _animator.SetLookAtWeight(_weight);
-        _animator.SetLookAtPosition(_headPosition.Current);
+        _playerAnimator = playerAnimator;
     }
-
-    public void Initialize(Animator animator)
-    {
-        _animator = animator;
-        _startWeight = _weight;
-    }
-
-    public void Enable() => _weight = _startWeight;
-
-    public void Disable() => _weight = 0f;
 }

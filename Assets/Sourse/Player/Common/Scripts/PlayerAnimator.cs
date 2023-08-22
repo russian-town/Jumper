@@ -4,22 +4,38 @@ using UnityEngine;
 [RequireComponent(typeof(Animator))]
 public class PlayerAnimator : MonoBehaviour, IGroundedHandler
 {
-    [SerializeField] private float _animationDelay;
-
+    private const float MaxWeight = 1f;
+    private const float MinWeight = 0f;
     private const string JumpParametr = "Jump";
     private const string DoubleJumpParametr = "DoubleJump";
     private const string IsGroundedParametr = "IsGrounded";
     private const string HardFallParametr = "HardFall";
     private const string DefeatParametr = "Defeat";
 
+    [SerializeField] private float _animationDelay;
+    [SerializeField] private HeadPosition _headPosition;
+
     private Animator _animator;
-    private Coroutine StartResetTriggers;
+    private Coroutine _startResetTriggers;
+    private float _weight;
 
     public Animator Current => _animator;
 
-    private void Awake()
+    private void OnAnimatorIK()
+    {
+        _animator.SetLookAtWeight(_weight);
+        _animator.SetLookAtPosition(_headPosition.Current);
+    }
+
+    public void Initialize()
     {
         _animator = GetComponent<Animator>();
+        _weight = MaxWeight;
+    }
+
+    public void DisableIK()
+    {
+        _weight = MinWeight;
     }
 
     public void SetGrounded(bool isGrounded)
@@ -30,7 +46,7 @@ public class PlayerAnimator : MonoBehaviour, IGroundedHandler
     public void Jump()
     {
         _animator.SetTrigger(JumpParametr);
-        StartResetTriggers = StartCoroutine(ResetTriggers());
+        _startResetTriggers = StartCoroutine(ResetTriggers());
     }
 
     public void Defeat()
@@ -41,7 +57,7 @@ public class PlayerAnimator : MonoBehaviour, IGroundedHandler
     public void DoubleJump()
     {
         _animator.SetTrigger(DoubleJumpParametr);
-        StartResetTriggers = StartCoroutine(ResetTriggers());
+        _startResetTriggers = StartCoroutine(ResetTriggers());
     }
 
     public void HardFall()
@@ -51,8 +67,8 @@ public class PlayerAnimator : MonoBehaviour, IGroundedHandler
 
     private IEnumerator ResetTriggers()
     {
-        if (StartResetTriggers != null)
-            StopCoroutine(StartResetTriggers);
+        if (_startResetTriggers != null)
+            StopCoroutine(_startResetTriggers);
 
         yield return new WaitForSeconds(_animationDelay);
         _animator.ResetTrigger(JumpParametr);

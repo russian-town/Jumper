@@ -17,6 +17,7 @@ public class Game : MonoBehaviour, IPauseHandler
     [SerializeField] private RewardedButton _rewardedButton;
     [SerializeField] private NextLevelButton _nextLevelButton;
     [SerializeField] private Wallet _wallet;
+    [SerializeField] private bool _hideHUD;
 
     private OpenableSkinHandler _openableSkinHandler;
     private Player _player;
@@ -27,7 +28,6 @@ public class Game : MonoBehaviour, IPauseHandler
     private PlayerPosition _playerStartPosition;
     private YandexAds _yandexAds;
     private ApplicationStatusChecker _applicationStatusChecker;
-
     private bool _isStart;
     private bool _isRewarded = false;
 
@@ -77,6 +77,15 @@ public class Game : MonoBehaviour, IPauseHandler
 
         _isStart = true;
         _player.SetStart(_isStart);
+
+        if(_hideHUD)
+        {
+            //_levelProgressView.Hide();
+            _gameOverView.Hide();
+            _pauseButton.Hide();
+            return;
+        }
+
         _levelProgressView.Show();
         _gameOverView.Hide();
     }
@@ -143,10 +152,15 @@ public class Game : MonoBehaviour, IPauseHandler
 #if !UNITY_EDITOR && UNITY_WEBGL
         _yandexAds.ShowInterstitial();
 #endif
+
+        if (_hideHUD)
+            return;
+
         IsLevelComplete = true;
         _levelProgress.DeleteSavedDistance();
         _levelProgressView.Hide();
         _levelCompletePanel.Show();
+
         _wallet.AddMoney(_moneyOfLevel);
 
         if (_openableSkinHandler.GetOpenableSkin() != null)

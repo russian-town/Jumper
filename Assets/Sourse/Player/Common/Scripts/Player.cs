@@ -2,7 +2,6 @@ using UnityEngine;
 using UnityEngine.Events;
 
 [RequireComponent(typeof(PlayerAnimator), typeof(PlayerJumper), typeof(GroundDetector))]
-[RequireComponent(typeof(PlayerIK))]
 public class Player : MonoBehaviour, IPauseHandler, IGroundedHandler
 {
     public event UnityAction Died;
@@ -13,12 +12,11 @@ public class Player : MonoBehaviour, IPauseHandler, IGroundedHandler
     [SerializeField] private ParticleSystem _fallParticle;
     [SerializeField] private ParticleSystem _fallOnGroundParticle;
     [SerializeField] private int _id;
-    [SerializeField] private Head _head;
 
-    private PlayerIK _playerIK;
     private PlayerAnimator _animator;
     private PlayerJumper _jumper;
     private GroundDetector _groundDetector;
+    private PlayerPositionHandler _positionHandler;
     private bool _doubleJump;
     private bool _jump;
     private bool _isPause;
@@ -29,27 +27,23 @@ public class Player : MonoBehaviour, IPauseHandler, IGroundedHandler
 
     public int ID => _id;
     public bool IsStart => _isStart;
-
-    private void Awake()
-    {
-        _playerIK = GetComponent<PlayerIK>();
-        _animator = GetComponent<PlayerAnimator>();
-        _groundDetector = GetComponent<GroundDetector>();
-        _jumper = GetComponent<PlayerJumper>();
-        _playerIK.Initialize(_animator.Current);
-        _head.Initialize(_playerIK);
-        _groundDetector.Initialize(new IGroundedHandler[] { _animator, this });
-        _playerIK.Disable();
-    }
-
-    private void OnEnable()
-    {
-        _groundDetector.Fell += OnFell;
-    }
+    public Vector3 Normal { get; private set; }
 
     private void OnDisable()
     {
         _groundDetector.Fell -= OnFell;
+    }
+
+    public void Initialize(PlayerPositionHandler positionHandler)
+    {
+        _animator = GetComponent<PlayerAnimator>();
+        _groundDetector = GetComponent<GroundDetector>();
+        _groundDetector.Fell += OnFell;
+        _jumper = GetComponent<PlayerJumper>();
+        _animator.Initialize();
+        _jumper.Initialize();
+        _groundDetector.Initialize(new IGroundedHandler[] { _animator, this });
+        _positionHandler = positionHandler;
     }
 
     public void SetPause(bool isPause)
@@ -91,13 +85,12 @@ public class Player : MonoBehaviour, IPauseHandler, IGroundedHandler
 
     private void OnFell(Collision collision)
     {
-        _playerIK.Disable();
-
-        if (_isStart == false)
+        if (_isStart == false || _isGameOver == true)
             return;
 
         if (collision.transform.TryGetComponent(out Props props))
         {
+            _positionHandler.OnPlayerFell(props.PlayerPosition, props);
             _jumper.ResetVelocity();
             _fallParticle.Play();
             _jump = false;
@@ -105,10 +98,11 @@ public class Player : MonoBehaviour, IPauseHandler, IGroundedHandler
         }
         else if (collision.transform.TryGetComponent(out Ground ground))
         {
+            _animator.DisableIK();
+
             if (_isLevelComleted == true || _isGameOver == true)
                 return;
 
-            _head.Disable();
             _fallOnGroundParticle.Play();
 
             if (collision.relativeVelocity.y >= MaxRelativeVelocityY)

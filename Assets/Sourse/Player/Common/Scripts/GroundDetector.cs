@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.Events;
-using System;
 
 [RequireComponent(typeof(BoxCollider))]
 public class GroundDetector : MonoBehaviour
@@ -8,11 +7,12 @@ public class GroundDetector : MonoBehaviour
     public event UnityAction<Collision> Fell;
 
     [SerializeField] private float _distance;
-    [SerializeField] private LayerMask _layerMask;
-    [SerializeField] private Head _head;
+    [SerializeField] private LayerMask _groundLayerMask;
+    [SerializeField] private SphereCollider _head;
 
     private BoxCollider _boxCollider;
     private IGroundedHandler[] _groundedHandlers;
+    private bool _canDetect = true;
 
     public void Initialize(IGroundedHandler[] groundedHandlers)
     {
@@ -33,34 +33,24 @@ public class GroundDetector : MonoBehaviour
         if (collision.transform.TryGetComponent(out Barrel barrel))
             return;
 
-        Vector3 colliderPosition = collision.gameObject.transform.position;
-        Quaternion colliderRotation = collision.gameObject.transform.rotation;
-        float distance;
-        Vector3 direction;
+        _canDetect = !Physics.ComputePenetration(_head, _head.transform.position, _head.transform.rotation, collision.collider, collision.transform.position, collision.transform.rotation, out Vector3 direction, out float distance);
 
-        bool canDetect = !Physics.ComputePenetration(collision.collider, colliderPosition, colliderRotation, _head.Collider, _head.Position, _head.Rotation, out direction, out distance);
-
-        if (canDetect == false)
-            return;
-
-        if (collision.contacts.Length > 0f)
+        if (Vector3.Dot(collision.GetContact(0).normal, Vector3.up) > 0.5f && _canDetect)
         {
-            if (Vector3.Dot(collision.GetContact(0).normal, Vector3.up) > 0.5f)
-            {
-                Fell?.Invoke(collision);
-            }
+            Fell?.Invoke(collision);
         }
     }
 
     private bool IsGrounded()
     {
-        if (Physics.BoxCast(_boxCollider.bounds.center, transform.localScale / 2, -transform.up, out RaycastHit hit, transform.rotation, _distance, _layerMask, QueryTriggerInteraction.Ignore))
+        if (Physics.BoxCast(_boxCollider.bounds.center, transform.localScale / 2, -transform.up, out RaycastHit hit, transform.rotation, _distance, _groundLayerMask, QueryTriggerInteraction.Ignore))
         {
-            return true;
+            if (Vector3.Dot(hit.normal, transform.up) > 0.5f)
+            {
+                return true;
+            }
         }
-        else
-        {
-            return false;
-        }
+
+        return false;
     }
 }

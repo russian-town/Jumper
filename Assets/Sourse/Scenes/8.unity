@@ -378,17 +378,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2636262237217317369, guid: cf12136ba50e1c647a7fe10e4e0a4e8d, type: 3}
   m_PrefabInstance: {fileID: 164907552}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &148506833 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2938396546906707509, guid: cf12136ba50e1c647a7fe10e4e0a4e8d, type: 3}
-  m_PrefabInstance: {fileID: 164907552}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa153a33f0b89b747a9903f4eb241cb7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &155197153
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -501,10 +490,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2938396546906707509, guid: cf12136ba50e1c647a7fe10e4e0a4e8d, type: 3}
-      propertyPath: _playerPosition
-      value: 
-      objectReference: {fileID: 1776768490}
     - target: {fileID: 6462448515326119046, guid: cf12136ba50e1c647a7fe10e4e0a4e8d, type: 3}
       propertyPath: m_Name
       value: Carboard
@@ -991,7 +976,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 549210781}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 19.23, y: 0.5, z: 2.73}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2348,7 +2333,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1421619587}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.27, y: 0, z: 0}
+  m_LocalPosition: {x: 18.96, y: 0.5, z: 2.73}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2356,6 +2341,17 @@ Transform:
   m_Father: {fileID: 451988126}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1542208113 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8148424238335819608, guid: cf12136ba50e1c647a7fe10e4e0a4e8d, type: 3}
+  m_PrefabInstance: {fileID: 164907552}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa153a33f0b89b747a9903f4eb241cb7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &1560777129 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4285392453313009497, guid: 57a3de2199d3924469a06290bd9253f8, type: 3}
@@ -2649,17 +2645,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3811592574407104714, guid: 13b83746380198d429e3c69809789f13, type: 3}
   m_PrefabInstance: {fileID: 1776768488}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1776768490 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8554024051546848181, guid: 13b83746380198d429e3c69809789f13, type: 3}
-  m_PrefabInstance: {fileID: 1776768488}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6d0ef1568aa1172428fca51d0d87b0c2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &1836948856 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 751169143402935961, guid: d08b6294a747f1346827ca6e23df4f2c, type: 3}
@@ -3379,7 +3364,15 @@ PrefabInstance:
     - target: {fileID: 1934897855, guid: cf2d3bcaf424b9049a030aa385ad8d59, type: 3}
       propertyPath: _props.Array.data[3]
       value: 
-      objectReference: {fileID: 148506833}
+      objectReference: {fileID: 1542208113}
+    - target: {fileID: 1934897855, guid: cf2d3bcaf424b9049a030aa385ad8d59, type: 3}
+      propertyPath: _props.Array.data[4]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1934897855, guid: cf2d3bcaf424b9049a030aa385ad8d59, type: 3}
+      propertyPath: _props.Array.data[5]
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 157831623728803079, guid: cf2d3bcaf424b9049a030aa385ad8d59, type: 3}
       propertyPath: m_SizeDelta.x
       value: 0
@@ -3431,7 +3424,7 @@ PrefabInstance:
     - target: {fileID: 4674197534554460007, guid: cf2d3bcaf424b9049a030aa385ad8d59, type: 3}
       propertyPath: _props.Array.data[0]
       value: 
-      objectReference: {fileID: 148506833}
+      objectReference: {fileID: 0}
     - target: {fileID: 4674197534554460007, guid: cf2d3bcaf424b9049a030aa385ad8d59, type: 3}
       propertyPath: _props.Array.data[1]
       value: 

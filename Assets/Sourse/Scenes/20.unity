@@ -240,6 +240,38 @@ PrefabInstance:
       propertyPath: _playerPosition
       value: 
       objectReference: {fileID: 1414543873}
+    - target: {fileID: 2938396546906707509, guid: cf12136ba50e1c647a7fe10e4e0a4e8d, type: 3}
+      propertyPath: CollisionExit.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2938396546906707509, guid: cf12136ba50e1c647a7fe10e4e0a4e8d, type: 3}
+      propertyPath: CollisionEnter.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2938396546906707509, guid: cf12136ba50e1c647a7fe10e4e0a4e8d, type: 3}
+      propertyPath: CollisionExit.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2938396546906707509, guid: cf12136ba50e1c647a7fe10e4e0a4e8d, type: 3}
+      propertyPath: CollisionExit.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1592693747}
+    - target: {fileID: 2938396546906707509, guid: cf12136ba50e1c647a7fe10e4e0a4e8d, type: 3}
+      propertyPath: CollisionExit.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2938396546906707509, guid: cf12136ba50e1c647a7fe10e4e0a4e8d, type: 3}
+      propertyPath: CollisionExit.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: RemoveBoxes
+      objectReference: {fileID: 0}
+    - target: {fileID: 2938396546906707509, guid: cf12136ba50e1c647a7fe10e4e0a4e8d, type: 3}
+      propertyPath: CollisionExit.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: CarboardBox, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2938396546906707509, guid: cf12136ba50e1c647a7fe10e4e0a4e8d, type: 3}
+      propertyPath: CollisionExit.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 6462448515326119046, guid: cf12136ba50e1c647a7fe10e4e0a4e8d, type: 3}
       propertyPath: m_Name
       value: Carboard
@@ -251,17 +283,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2636262237217317369, guid: cf12136ba50e1c647a7fe10e4e0a4e8d, type: 3}
   m_PrefabInstance: {fileID: 126295868}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &126295870 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2938396546906707509, guid: cf12136ba50e1c647a7fe10e4e0a4e8d, type: 3}
-  m_PrefabInstance: {fileID: 126295868}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa153a33f0b89b747a9903f4eb241cb7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &250110343
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -547,7 +568,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 549210781}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 25.73, y: 0.5, z: 2.73}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1860,7 +1881,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 3193252703641370819, guid: 250fcae7fdc3b0f438c8004f40a6f45f, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 250fcae7fdc3b0f438c8004f40a6f45f, type: 3}
 --- !u!4 &1414543872 stripped
 Transform:
@@ -1979,7 +2001,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1421619587}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.23, y: 0, z: 0}
+  m_LocalPosition: {x: 29.96, y: 0.5, z: 2.73}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2136,6 +2158,17 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1570938174}
   m_Mesh: {fileID: 4300000, guid: 391ef46e275c80b408f222be809688a5, type: 3}
+--- !u!114 &1592693747 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 509756565, guid: cf12136ba50e1c647a7fe10e4e0a4e8d, type: 3}
+  m_PrefabInstance: {fileID: 126295868}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 93212fd563526964886c15f682dafc82, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1663967651
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2477,7 +2510,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: Table
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 2236953195457309422, guid: 2160eb57080a3f94684fed370e8dfe82, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 2160eb57080a3f94684fed370e8dfe82, type: 3}
 --- !u!114 &1774214287 stripped
 MonoBehaviour:
@@ -3110,7 +3144,7 @@ PrefabInstance:
     - target: {fileID: 1934897855, guid: cf2d3bcaf424b9049a030aa385ad8d59, type: 3}
       propertyPath: _props.Array.data[2]
       value: 
-      objectReference: {fileID: 126295870}
+      objectReference: {fileID: 0}
     - target: {fileID: 1934897855, guid: cf2d3bcaf424b9049a030aa385ad8d59, type: 3}
       propertyPath: _props.Array.data[3]
       value: 

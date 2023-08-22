@@ -10,9 +10,7 @@ public class PlayerJumper : MonoBehaviour
 
     private Rigidbody _rigidbody;
 
-    public float VelocityY => _rigidbody.velocity.y;
-
-    private void Awake()
+    public void Initialize()
     {
         _rigidbody = GetComponent<Rigidbody>();
     }

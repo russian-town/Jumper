@@ -9,7 +9,7 @@ public class Audio : MonoBehaviour
     private const string MusicVolume = "MusicVolume";
     private const string SoundVolumeKey = "SoundVolumeKey";
     private const string MusicVolumeKey = "MusicVolumeKey";
-    private const float MuteVolume = -80f;
+    private const float MuteVolume = 0.0001f;
 
     [SerializeField] private Slider _soundSlider;
     [SerializeField] private Slider _musicSlider;
@@ -69,7 +69,7 @@ public class Audio : MonoBehaviour
 
     private void ChangeVolume(float value, AudioMixerGroup audioMixerGroup, string groupName, string key)
     {
-        audioMixerGroup.audioMixer.SetFloat(groupName, value);
+        audioMixerGroup.audioMixer.SetFloat(groupName, Mathf.Log10(value) * 20f);
         _saver.Save(key, value);
 
         if(value == MuteVolume)

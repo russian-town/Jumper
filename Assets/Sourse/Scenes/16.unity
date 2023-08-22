@@ -409,7 +409,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 549210781}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 25.73, y: 0.5, z: 2.73}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -986,17 +986,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 8139043035623145738, guid: 13b83746380198d429e3c69809789f13, type: 3}
   m_PrefabInstance: {fileID: 1059590275}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &820929805 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4607410137477375983, guid: 13b83746380198d429e3c69809789f13, type: 3}
-  m_PrefabInstance: {fileID: 1059590275}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 820929802}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa153a33f0b89b747a9903f4eb241cb7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!65 &820929810
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1446,6 +1435,14 @@ PrefabInstance:
     - target: {fileID: 3811592574407104715, guid: 13b83746380198d429e3c69809789f13, type: 3}
       propertyPath: m_Name
       value: Bench (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4607410137477375983, guid: 13b83746380198d429e3c69809789f13, type: 3}
+      propertyPath: _playerPosition
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4607410137477375983, guid: 13b83746380198d429e3c69809789f13, type: 3}
+      propertyPath: CollisionExit.m_PersistentCalls.m_Calls.Array.size
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 13b83746380198d429e3c69809789f13, type: 3}
@@ -1900,7 +1897,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1421619587}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.23, y: 0, z: 0}
+  m_LocalPosition: {x: 29.96, y: 0.5, z: 2.73}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3080,24 +3077,24 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1934897855, guid: cf2d3bcaf424b9049a030aa385ad8d59, type: 3}
       propertyPath: _props.Array.size
-      value: 5
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 1934897855, guid: cf2d3bcaf424b9049a030aa385ad8d59, type: 3}
       propertyPath: _props.Array.data[0]
       value: 
-      objectReference: {fileID: 820929805}
+      objectReference: {fileID: 2045744266}
     - target: {fileID: 1934897855, guid: cf2d3bcaf424b9049a030aa385ad8d59, type: 3}
       propertyPath: _props.Array.data[1]
       value: 
-      objectReference: {fileID: 2045744266}
+      objectReference: {fileID: 1516142281}
     - target: {fileID: 1934897855, guid: cf2d3bcaf424b9049a030aa385ad8d59, type: 3}
       propertyPath: _props.Array.data[2]
       value: 
-      objectReference: {fileID: 1516142281}
+      objectReference: {fileID: 814064894}
     - target: {fileID: 1934897855, guid: cf2d3bcaf424b9049a030aa385ad8d59, type: 3}
       propertyPath: _props.Array.data[3]
       value: 
-      objectReference: {fileID: 814064894}
+      objectReference: {fileID: 1663967653}
     - target: {fileID: 1934897855, guid: cf2d3bcaf424b9049a030aa385ad8d59, type: 3}
       propertyPath: _props.Array.data[4]
       value: 

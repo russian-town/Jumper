@@ -14,28 +14,9 @@ public class PlayerPositionHandler : MonoBehaviour
 
     public PlayerPosition LastPlayerPosition { get; private set; }
 
-    private void OnDisable()
-    {
-        if (_props.Count == 0)
-            return;
-
-        foreach (var props in _props)
-        {
-            props.PlayerFell -= OnPlayerFell;
-        }
-    }
-
     public void Initialize()
     {
         _saver = GetComponent<Saver>();
-
-        if (_props.Count == 0)
-            return;
-
-        foreach (var props in _props)
-        {
-            props.PlayerFell += OnPlayerFell;
-        }
     }
 
     public PlayerPosition GetLastPosition()
@@ -64,7 +45,7 @@ public class PlayerPositionHandler : MonoBehaviour
         _saver.Save(LastPropsIDKey, _currentPropsID);
     }
 
-    private void OnPlayerFell(PlayerPosition playerPosition, Props props)
+    public void OnPlayerFell(PlayerPosition playerPosition, Props props)
     {
         if (_props.Count == 0)
             return;

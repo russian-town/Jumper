@@ -15,7 +15,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &2118156459232061652
 Transform:
@@ -56,7 +56,6 @@ GameObject:
   - component: {fileID: 5692101882343145614}
   - component: {fileID: 7573541408619213892}
   - component: {fileID: 40534975187973105}
-  - component: {fileID: 6035720499824013068}
   - component: {fileID: 937870806698592168}
   - component: {fileID: 1619279349662563768}
   - component: {fileID: 3800602096114769865}
@@ -65,7 +64,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &8741965251331378987
 Transform:
@@ -140,25 +139,12 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8221993715382228369}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: bd950977788cc2846baa9e7077162ced, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 6.0092373, y: 2.4938073, z: 5.6010847}
   m_Center: {x: -0.03375113, y: 9.533006, z: 0}
---- !u!65 &6035720499824013068
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8221993715382228369}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 5.0912294, y: 0.9284458, z: 4.5288897}
-  m_Center: {x: -0.031473637, y: 10.907254, z: -0.12249231}
 --- !u!114 &937870806698592168
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -293,7 +279,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8221993715382228369}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: bd950977788cc2846baa9e7077162ced, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
