@@ -1,11 +1,9 @@
 using UnityEngine;
-using UnityEngine.Events;
 
 public class Props : MonoBehaviour
 {
-    public CollisionEvent CollisionEnter;
-    public CollisionEvent CollisionExit;
-
+    [SerializeField] private CollisionEvent CollisionEnter;
+    [SerializeField] private CollisionEvent CollisionExit;
     [SerializeField] private PlayerPosition _playerPosition;
 
     public PlayerPosition PlayerPosition => _playerPosition;

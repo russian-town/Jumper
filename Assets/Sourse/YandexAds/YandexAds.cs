@@ -3,14 +3,14 @@ using Agava.YandexGames;
 
 public class YandexAds
 {
-    public Action OpenCallback;
-    public Action RewardedCallback;
-    public Action CloseCallback;
-    public Action<string> ErrorCallback;
-    public Action OpenInterstitialCallback;
-    public Action<bool> CloseInterstitialCallback;
-    public Action<string> ErrorInterstitialCallback;
-    public Action OfflineCallback;
+    public event Action OpenCallback;
+    public event Action RewardedCallback;
+    public event Action CloseCallback;
+    public event Action<string> ErrorCallback;
+    public event Action OpenInterstitialCallback;
+    public event Action<bool> CloseInterstitialCallback;
+    public event Action<string> ErrorInterstitialCallback;
+    public event Action OfflineCallback;
 
     public void ShowRewardedVideo()
     {
