@@ -1,12 +1,9 @@
+using System;
 using UnityEngine;
-using UnityEngine.Events;
 
 [RequireComponent(typeof(PlayerAnimator), typeof(PlayerJumper), typeof(GroundDetector))]
 public class Player : MonoBehaviour, IPauseHandler, IGroundedHandler
 {
-    public event UnityAction Died;
-    public event UnityAction LevelCompleted;
-
     private const float MaxRelativeVelocityY = 5f;
 
     [SerializeField] private ParticleSystem _fallParticle;
@@ -27,12 +24,11 @@ public class Player : MonoBehaviour, IPauseHandler, IGroundedHandler
 
     public int ID => _id;
     public bool IsStart => _isStart;
-    public Vector3 Normal { get; private set; }
 
-    private void OnDisable()
-    {
-        _groundDetector.Fell -= OnFell;
-    }
+    public event Action Died;
+    public event Action LevelCompleted;
+
+    private void OnDisable() => _groundDetector.Fell -= OnFell;
 
     public void Initialize(PlayerPositionHandler positionHandler)
     {
@@ -46,15 +42,9 @@ public class Player : MonoBehaviour, IPauseHandler, IGroundedHandler
         _positionHandler = positionHandler;
     }
 
-    public void SetPause(bool isPause)
-    {
-        _isPause = isPause;
-    }
+    public void SetPause(bool isPause) => _isPause = isPause;
 
-    public void SetStart(bool isStart)
-    {
-        _isStart = isStart;
-    }
+    public void SetStart(bool isStart) => _isStart = isStart;
 
     public void Jump()
     {
@@ -73,15 +63,9 @@ public class Player : MonoBehaviour, IPauseHandler, IGroundedHandler
         }
     }
 
-    public void Bounce()
-    {
-        _jumper.JumpUp();
-    }
+    public void Bounce() => _jumper.JumpUp();
 
-    public void SetGrounded(bool isGrounded)
-    {
-        _isGrounded = isGrounded;
-    }
+    public void SetGrounded(bool isGrounded) => _isGrounded = isGrounded;
 
     private void OnFell(Collision collision)
     {

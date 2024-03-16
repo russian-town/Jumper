@@ -11,14 +11,22 @@ public class Props : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.transform.TryGetComponent(out Player player))
+        {
             if (player.IsStart)
+            {
                 CollisionEnter.Invoke();
+            }
+        }
     }
 
     private void OnCollisionExit(Collision collision)
     {
         if (collision.transform.TryGetComponent(out Player player))
+        {
             if (player.IsStart)
+            {
                 CollisionExit.Invoke();
+            }
+        }
     }
 }

@@ -1,13 +1,12 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "New skin",menuName = "Skins", order = 59)]
+[CreateAssetMenu(fileName = "New skin", menuName = "Skins", order = 59)]
 public class Skin : ScriptableObject
 {
     [SerializeField] private SkinType _type;
     [SerializeField] private Sprite _icon;
     [SerializeField] private int _price;
     [SerializeField] private int _id;
-
     [SerializeField] private bool _isSelect;
     [SerializeField] private bool _isBy;
 
@@ -40,20 +39,11 @@ public class Skin : ScriptableObject
         }
     }
 
-    public void By()
-    {
-        _isBy = true;
-    }
+    public void By() => _isBy = true;
 
-    public void Select()
-    {
-        _isSelect = true;
-    }
+    public void Select() => _isSelect = true;
 
-    public void Deselect()
-    {
-        _isSelect = false;
-    }
+    public void Deselect() => _isSelect = false;
 
     public void SetSaveData(bool isBy, bool isSelect)
     {
@@ -71,12 +61,4 @@ public class Skin : ScriptableObject
         _sortOrder = sortOrder;
         _isBy = isBy;
     }
-}
-
-public enum SkinType
-{
-    Default,
-    Paid,
-    Rewarded,
-    Openable
 }

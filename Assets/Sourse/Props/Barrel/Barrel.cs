@@ -17,7 +17,6 @@ public class Barrel : MonoBehaviour
         _audioSource = GetComponent<AudioSource>();
         _capsuleCollider.enabled = false;
         _rigidbody.isKinematic = true;
-
     }
 
     public void AddPhysics()

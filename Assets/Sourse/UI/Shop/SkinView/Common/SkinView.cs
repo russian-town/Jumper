@@ -1,14 +1,10 @@
+using System;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.UI;
 
 public abstract class SkinView : MonoBehaviour
 {
-    public event UnityAction<Skin, SkinView> ByButtonClicked;
-    public event UnityAction<Skin, SkinView> SelectButtonClicked;
-    public event UnityAction<Skin, SkinView> Selected;
-
     [SerializeField] private SelectButton _selectButton;
     [SerializeField] private TMP_Text _selectText;
     [SerializeField] private Image _icon;
@@ -21,7 +17,10 @@ public abstract class SkinView : MonoBehaviour
 
     protected Skin Skin => _skin;
     protected SelectButton SelectButton => _selectButton;
-    protected TMP_Text SelectText => _selectText;
+
+    public event Action<Skin, SkinView> ByButtonClicked;
+    public event Action<Skin, SkinView> SelectButtonClicked;
+    public event Action<Skin, SkinView> Selected;
 
     private void OnDisable()
     {
@@ -53,10 +52,7 @@ public abstract class SkinView : MonoBehaviour
             SwitchViewState(true, false, _defaultColor);
     }
 
-    protected void By()
-    {
-        ByButtonClicked?.Invoke(_skin, this);
-    }
+    protected void By() => ByButtonClicked?.Invoke(_skin, this);
 
     protected abstract void Initialize();
 
@@ -64,15 +60,9 @@ public abstract class SkinView : MonoBehaviour
 
     protected abstract void Deinitialize();
 
-    protected void SetIconColor(Color color)
-    {
-        _icon.color = color;
-    }
+    protected void SetIconColor(Color color) => _icon.color = color;
 
-    private void OnButtonClicked()
-    {
-        SelectButtonClicked?.Invoke(_skin, this);
-    }
+    private void OnButtonClicked() => SelectButtonClicked?.Invoke(_skin, this);
 
     private void SwitchViewState(bool enableText, bool enableIcon, Color buttonColor)
     {

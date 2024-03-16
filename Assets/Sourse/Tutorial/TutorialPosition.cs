@@ -47,9 +47,3 @@ public class TutorialPosition : MonoBehaviour
         }
     }
 }
-
-public enum TutorialType
-{
-    Clik,
-    DoubleClick
-}

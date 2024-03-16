@@ -1,16 +1,13 @@
+using System;
 using System.Collections;
 using TMPro;
-using UnityEngine;
-using UnityEngine.Events;
-using UnityEngine.UI;
 using Lean.Localization;
+using UnityEngine;
+using UnityEngine.UI;
 
 public class LevelCompletePanel : UIElement
 {
-    public event UnityAction<int> SkinOpened;
-
     private const string FillAmountKey = "FillAmount";
-
     private const float MaxPercent = 1f;
 
     [SerializeField] private float _speed;
@@ -19,6 +16,8 @@ public class LevelCompletePanel : UIElement
     [SerializeField] private TMP_Text _completeLevelText;
 
     private int _id;
+
+    public event Action<int> SkinOpened;
 
     public void Initialize(Skin skin)
     {
@@ -30,7 +29,8 @@ public class LevelCompletePanel : UIElement
 
     public void SetText(int levelNumber)
     {
-        _completeLevelText.text = LeanLocalization.GetTranslationText("LEVEL") + " " + levelNumber.ToString() + " " + LeanLocalization.GetTranslationText("COMPLETE");
+        string translationText = $"{LeanLocalization.GetTranslationText("LEVEL")} {levelNumber} {LeanLocalization.GetTranslationText("COMPLETE")}";
+        _completeLevelText.text = translationText;
     }
 
     public void HideOpeningSkinBar()

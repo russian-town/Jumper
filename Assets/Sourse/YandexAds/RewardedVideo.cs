@@ -1,19 +1,16 @@
+using System;
 using UnityEngine;
-using UnityEngine.Events;
 
 public class RewardedVideo : MonoBehaviour
 {
-    public event UnityAction RewardedVideoEnded;
-    public event UnityAction RewardedVideoOpened;
-
     [SerializeField] private ApplicationStatusChecker _applicationStatusChecker;
 
     private YandexAds _yandexAds;
 
-    private void Awake()
-    {
-        _yandexAds = new YandexAds();
-    }
+    public event Action RewardedVideoEnded;
+    public event Action RewardedVideoOpened;
+
+    private void Awake() => _yandexAds = new YandexAds();
 
     private void OnEnable()
     {
@@ -31,10 +28,7 @@ public class RewardedVideo : MonoBehaviour
         _yandexAds.ErrorCallback -= OnErrorCallback;
     }
 
-    public void Show()
-    {
-        _yandexAds.ShowRewardedVideo();
-    }
+    public void Show() => _yandexAds.ShowRewardedVideo();
 
     private void OnOpenCallBack()
     {
@@ -43,10 +37,7 @@ public class RewardedVideo : MonoBehaviour
         RewardedVideoOpened?.Invoke();
     }
 
-    private void OnRewardedCallback()
-    {
-        RewardedVideoEnded?.Invoke();
-    }
+    private void OnRewardedCallback() => RewardedVideoEnded?.Invoke();
 
     private void OnCloseCallback()
     {
@@ -54,8 +45,5 @@ public class RewardedVideo : MonoBehaviour
         _applicationStatusChecker.ChangeSoundStatus(false);
     }
 
-    private void OnErrorCallback(string errorText)
-    {
-        _applicationStatusChecker.OnInBackgroundChangeEvent(false);
-    }
+    private void OnErrorCallback(string errorText) => _applicationStatusChecker.OnInBackgroundChangeEvent(false);
 }

@@ -1,13 +1,10 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 
 [RequireComponent(typeof(SkinViewSpawner))]
 public class Shop : SkinHandler
 {
-    public event UnityAction<int> Selected;
-    public event UnityAction<int> Initialized;
-
     [SerializeField] private Transform _content;
     [SerializeField] private ShopScroll _shopScroll;
     [SerializeField] private Wallet _wallet;
@@ -19,7 +16,8 @@ public class Shop : SkinHandler
     private Skin _currentSkin;
     private int _selectedID;
 
-    public int SelectedID => _selectedID;
+    public event Action<int> Selected;
+    public event Action<int> Initialized;
 
     private void Awake()
     {

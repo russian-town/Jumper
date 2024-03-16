@@ -39,6 +39,10 @@ public class Audio : MonoBehaviour
 
     private void Start() => Initialize();
 
+    public void ChangeSoundVolume(float value) => ChangeVolume(value, _soundGroup, SoundVolume, SoundVolumeKey);
+
+    public void ChangeMusicVolume(float value) => ChangeVolume(value, _musicGroup, MusicVolume, MusicVolumeKey);
+
     private void Initialize()
     {
         if (_saver.TryGetValue(MusicVolumeKey, out float musicVolume))
@@ -53,10 +57,6 @@ public class Audio : MonoBehaviour
             _soundSlider.value = soundVolume;
         }
     }
-
-    public void ChangeSoundVolume(float value) => ChangeVolume(value, _soundGroup, SoundVolume, SoundVolumeKey);
-
-    public void ChangeMusicVolume(float value) => ChangeVolume(value, _musicGroup, MusicVolume, MusicVolumeKey);
 
     private void ChangeVolume(float value, AudioMixerGroup audioMixerGroup, string groupName, string key)
     {

@@ -1,14 +1,14 @@
+using System;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(Button))]
 public abstract class UIButton : UIElement
 {
-    public event UnityAction ButtonClicked;
-
     private Button _button;
     private bool _isInitialized;
+
+    public event Action ButtonClicked;
 
     private void OnDisable()
     {
@@ -25,13 +25,7 @@ public abstract class UIButton : UIElement
         _isInitialized = true;
     }
 
-    protected void SwitchEnableState(bool isEnable)
-    {
-        _button.enabled = isEnable;
-    }
+    protected void SwitchEnableState(bool isEnable) => _button.enabled = isEnable;
 
-    private void ButtonClick()
-    {
-        ButtonClicked?.Invoke();
-    }
+    private void ButtonClick() => ButtonClicked?.Invoke();
 }

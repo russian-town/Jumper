@@ -15,6 +15,15 @@ public class LevelProgress : MonoBehaviour
 
     public float CurrentDistance { get; private set; }
 
+    private void Update()
+    {
+        if (_player == null)
+            return;
+
+        CurrentDistance = _maxDistance - Vector3.Distance(_player.transform.position, _finishPosition.transform.position) / _distance;
+        _levelProgressView.UpdateProgressBar(CurrentDistance);
+    }
+
     public void Initialize(Player player)
     {
         _saver = GetComponent<Saver>();
@@ -27,22 +36,7 @@ public class LevelProgress : MonoBehaviour
             _distance = Vector3.Distance(player.transform.position, _finishPosition.transform.position);
     }
 
-    public void SaveDistance()
-    {
-        _saver.Save(LevelProgressKey, _distance);
-    }
+    public void SaveDistance() => _saver.Save(LevelProgressKey, _distance);
 
-    public void DeleteSavedDistance()
-    {
-        _saver.TryDeleteSaveData(LevelProgressKey);
-    }
-
-    private void Update()
-    {
-        if (_player == null)
-            return;
-
-        CurrentDistance = _maxDistance - Vector3.Distance(_player.transform.position, _finishPosition.transform.position) / _distance;
-        _levelProgressView.UpdateProgressBar(CurrentDistance);
-    }
+    public void DeleteSavedDistance() => _saver.TryDeleteSaveData(LevelProgressKey);
 }

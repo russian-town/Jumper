@@ -4,6 +4,12 @@ public class RedBarrel : BounceProps
 {
     [SerializeField] private ParticleSystem _explosionEffect;
 
+    public void MakeExplosion()
+    {
+        Instantiate(_explosionEffect, transform.position, Quaternion.identity);
+        gameObject.SetActive(false);
+    }
+
     protected override void Action(Collision collision, Player player)
     {
         player.Bounce();
@@ -21,11 +27,5 @@ public class RedBarrel : BounceProps
                 }
             }
         }
-    }
-
-    public void MakeExplosion()
-    {
-        Instantiate(_explosionEffect, transform.position, Quaternion.identity);
-        gameObject.SetActive(false);
     }
 }

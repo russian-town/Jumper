@@ -1,11 +1,9 @@
+using System;
 using UnityEngine;
-using UnityEngine.Events;
 
 [RequireComponent(typeof(BoxCollider))]
 public class GroundDetector : MonoBehaviour
 {
-    public event UnityAction<Collision> Fell;
-
     [SerializeField] private float _distance;
     [SerializeField] private LayerMask _groundLayerMask;
     [SerializeField] private SphereCollider _head;
@@ -14,18 +12,12 @@ public class GroundDetector : MonoBehaviour
     private IGroundedHandler[] _groundedHandlers;
     private bool _canDetect = true;
 
-    public void Initialize(IGroundedHandler[] groundedHandlers)
-    {
-        _boxCollider = GetComponent<BoxCollider>();
-        _groundedHandlers = groundedHandlers;
-    }
+    public event Action<Collision> Fell;
 
     private void FixedUpdate()
     {
         foreach (var groundedHandler in _groundedHandlers)
-        {
             groundedHandler.SetGrounded(IsGrounded());
-        }
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -36,9 +28,13 @@ public class GroundDetector : MonoBehaviour
         _canDetect = !Physics.ComputePenetration(_head, _head.transform.position, _head.transform.rotation, collision.collider, collision.transform.position, collision.transform.rotation, out Vector3 direction, out float distance);
 
         if (Vector3.Dot(collision.GetContact(0).normal, Vector3.up) > 0.5f && _canDetect)
-        {
             Fell?.Invoke(collision);
-        }
+    }
+
+    public void Initialize(IGroundedHandler[] groundedHandlers)
+    {
+        _boxCollider = GetComponent<BoxCollider>();
+        _groundedHandlers = groundedHandlers;
     }
 
     private bool IsGrounded()
