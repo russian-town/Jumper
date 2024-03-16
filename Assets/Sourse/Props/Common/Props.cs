@@ -24,8 +24,3 @@ public class Props : MonoBehaviour
                 CollisionExit.Invoke();
     }
 }
-
-[System.Serializable]
-public class CollisionEvent : UnityEvent
-{
-}
