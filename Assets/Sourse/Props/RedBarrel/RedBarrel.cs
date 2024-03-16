@@ -1,31 +1,35 @@
+using Sourse.Props.Common;
 using UnityEngine;
 
-public class RedBarrel : BounceProps
+namespace Sourse.Props.RedBarrel
 {
-    [SerializeField] private ParticleSystem _explosionEffect;
-
-    protected override void Action(Collision collision, Player player)
+    public class RedBarrel : BounceProps
     {
-        player.Bounce();
-        MakeExplosion();
+        [SerializeField] private ParticleSystem _explosionEffect;
 
-        Collider[] hitCollides = Physics.OverlapBox(transform.position, transform.localScale);
-
-        if (hitCollides.Length > 0)
+        public void MakeExplosion()
         {
-            foreach (var hitCollider in hitCollides)
+            Instantiate(_explosionEffect, transform.position, Quaternion.identity);
+            gameObject.SetActive(false);
+        }
+
+        protected override void Action(Collision collision, Player.Common.Scripts.Player player)
+        {
+            player.Bounce();
+            MakeExplosion();
+
+            Collider[] hitCollides = Physics.OverlapBox(transform.position, transform.localScale);
+
+            if (hitCollides.Length > 0)
             {
-                if (hitCollider.TryGetComponent(out RedBarrel redBarrel))
+                foreach (var hitCollider in hitCollides)
                 {
-                    redBarrel.MakeExplosion();
+                    if (hitCollider.TryGetComponent(out RedBarrel redBarrel))
+                    {
+                        redBarrel.MakeExplosion();
+                    }
                 }
             }
         }
-    }
-
-    public void MakeExplosion()
-    {
-        Instantiate(_explosionEffect, transform.position, Quaternion.identity);
-        gameObject.SetActive(false);
     }
 }

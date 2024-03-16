@@ -1,9 +1,12 @@
-using UnityEngine;
+using Sourse.UI.Shop.Scripts.Buttons;
 
-public class RetryButton : UIButton, IPauseHandler
+namespace Sourse.Game
 {
-    public void SetPause(bool isPause)
+    public class RetryButton : UIButton, IPauseHandler
     {
-        SwitchEnableState(!isPause);
+        public void SetPause(bool isPause)
+        {
+            SwitchEnableState(!isPause);
+        }
     }
 }

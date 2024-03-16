@@ -1,14 +1,17 @@
 using UnityEngine;
 
-public abstract class UIElement : MonoBehaviour
+namespace Sourse.UI
 {
-    public void Show()
+    public abstract class UIElement : MonoBehaviour
     {
-        gameObject.SetActive(true);
-    }
+        public void Show()
+        {
+            gameObject.SetActive(true);
+        }
 
-    public void Hide()
-    {
-        gameObject.SetActive(false);
+        public void Hide()
+        {
+            gameObject.SetActive(false);
+        }
     }
 }

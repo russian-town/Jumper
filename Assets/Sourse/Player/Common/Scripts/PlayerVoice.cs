@@ -1,36 +1,39 @@
 using UnityEngine;
 
-[RequireComponent(typeof(AudioSource))]
-public class PlayerVoice : MonoBehaviour
+namespace Sourse.Player.Common.Scripts
 {
-    [SerializeField] private AudioClip _jump;
-    [SerializeField] private AudioClip _doubleJump;
-    [SerializeField] private AudioClip _fall;
-
-    private AudioSource _audioSource;
-
-    private void Awake()
+    [RequireComponent(typeof(AudioSource))]
+    public class PlayerVoice : MonoBehaviour
     {
-        _audioSource = GetComponent<AudioSource>();
-    }
+        [SerializeField] private AudioClip _jump;
+        [SerializeField] private AudioClip _doubleJump;
+        [SerializeField] private AudioClip _fall;
 
-    public void JumpUp()
-    {
-        MakeSound(_jump);
-    }
+        private AudioSource _audioSource;
 
-    public void DoubleJumpUp()
-    {
-        MakeSound(_doubleJump);
-    }
+        private void Awake()
+        {
+            _audioSource = GetComponent<AudioSource>();
+        }
 
-    public void Fall()
-    {
-        MakeSound(_fall);
-    }
+        public void JumpUp()
+        {
+            MakeSound(_jump);
+        }
 
-    private void MakeSound(AudioClip audioClip)
-    {
-        _audioSource.PlayOneShot(audioClip);
+        public void DoubleJumpUp()
+        {
+            MakeSound(_doubleJump);
+        }
+
+        public void Fall()
+        {
+            MakeSound(_fall);
+        }
+
+        private void MakeSound(AudioClip audioClip)
+        {
+            _audioSource.PlayOneShot(audioClip);
+        }
     }
 }

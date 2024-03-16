@@ -1,5 +1,8 @@
-using UnityEngine;
+using Sourse.UI;
 
-public class PauseButton : UIElement
+namespace Sourse.Pause
 {
+    public class PauseButton : UIElement
+    {
+    }
 }

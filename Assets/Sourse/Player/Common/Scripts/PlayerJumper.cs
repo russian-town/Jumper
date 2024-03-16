@@ -1,32 +1,35 @@
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody))]
-public class PlayerJumper : MonoBehaviour
+namespace Sourse.Player.Common.Scripts
 {
-    [SerializeField] private float _jumpForce;
-    [SerializeField] private float _jumpLength;
-    [SerializeField] private float _doubleJumpForce;
-    [SerializeField] private float _doubleJumpLength;
-
-    private Rigidbody _rigidbody;
-
-    public void Initialize()
+    [RequireComponent(typeof(Rigidbody))]
+    public class PlayerJumper : MonoBehaviour
     {
-        _rigidbody = GetComponent<Rigidbody>();
-    }
+        [SerializeField] private float _jumpForce;
+        [SerializeField] private float _jumpLength;
+        [SerializeField] private float _doubleJumpForce;
+        [SerializeField] private float _doubleJumpLength;
 
-    public void ResetVelocity()
-    {
-        _rigidbody.velocity = Vector3.zero;
-    }
+        private Rigidbody _rigidbody;
 
-    public void JumpUp()
-    {
-        _rigidbody.AddForce(new Vector3(_jumpLength, _jumpForce, 0f), ForceMode.Impulse);
-    }
+        public void Initialize()
+        {
+            _rigidbody = GetComponent<Rigidbody>();
+        }
 
-    public void DoubleJumpUp()
-    {
-        _rigidbody.AddForce(new Vector3(_doubleJumpLength, _doubleJumpForce, 0f), ForceMode.Impulse);
+        public void ResetVelocity()
+        {
+            _rigidbody.velocity = Vector3.zero;
+        }
+
+        public void JumpUp()
+        {
+            _rigidbody.AddForce(new Vector3(_jumpLength, _jumpForce, 0f), ForceMode.Impulse);
+        }
+
+        public void DoubleJumpUp()
+        {
+            _rigidbody.AddForce(new Vector3(_doubleJumpLength, _doubleJumpForce, 0f), ForceMode.Impulse);
+        }
     }
 }

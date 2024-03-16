@@ -1,5 +1,8 @@
-using UnityEngine;
+using Sourse.UI;
 
-public class TutorialImage : UIElement
+namespace Sourse.Tutorial
 {
+    public class TutorialImage : UIElement
+    {
+    }
 }

@@ -1,12 +1,16 @@
+using Sourse.UI;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class LevelProgressView : UIElement
+namespace Sourse.Level
 {
-    [SerializeField] private Image _levelProgressBar;
-
-    public void UpdateProgressBar(float value)
+    public class LevelProgressView : UIElement
     {
-        _levelProgressBar.fillAmount = value;
+        [SerializeField] private Image _levelProgressBar;
+
+        public void UpdateProgressBar(float value)
+        {
+            _levelProgressBar.fillAmount = value;
+        }
     }
 }

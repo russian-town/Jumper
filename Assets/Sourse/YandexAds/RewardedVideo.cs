@@ -1,61 +1,52 @@
+using System;
 using UnityEngine;
-using UnityEngine.Events;
 
-public class RewardedVideo : MonoBehaviour
+namespace Sourse.YandexAds
 {
-    public event UnityAction RewardedVideoEnded;
-    public event UnityAction RewardedVideoOpened;
-
-    [SerializeField] private ApplicationStatusChecker _applicationStatusChecker;
-
-    private YandexAds _yandexAds;
-
-    private void Awake()
+    public class RewardedVideo : MonoBehaviour
     {
-        _yandexAds = new YandexAds();
-    }
+        [SerializeField] private ApplicationStatusChecker.ApplicationStatusChecker _applicationStatusChecker;
 
-    private void OnEnable()
-    {
-        _yandexAds.OpenCallback += OnOpenCallBack;
-        _yandexAds.RewardedCallback += OnRewardedCallback;
-        _yandexAds.CloseCallback += OnCloseCallback;
-        _yandexAds.ErrorCallback += OnErrorCallback;
-    }
+        private YandexAds _yandexAds;
 
-    private void OnDisable()
-    {
-        _yandexAds.OpenCallback -= OnOpenCallBack;
-        _yandexAds.RewardedCallback -= OnRewardedCallback;
-        _yandexAds.CloseCallback -= OnCloseCallback;
-        _yandexAds.ErrorCallback -= OnErrorCallback;
-    }
+        public event Action RewardedVideoEnded;
+        public event Action RewardedVideoOpened;
 
-    public void Show()
-    {
-        _yandexAds.ShowRewardedVideo();
-    }
+        private void Awake() => _yandexAds = new YandexAds();
 
-    private void OnOpenCallBack()
-    {
-        _applicationStatusChecker.SetIsPlayRewarded(true);
-        _applicationStatusChecker.ChangeSoundStatus(true);
-        RewardedVideoOpened?.Invoke();
-    }
+        private void OnEnable()
+        {
+            _yandexAds.OpenCallback += OnOpenCallBack;
+            _yandexAds.RewardedCallback += OnRewardedCallback;
+            _yandexAds.CloseCallback += OnCloseCallback;
+            _yandexAds.ErrorCallback += OnErrorCallback;
+        }
 
-    private void OnRewardedCallback()
-    {
-        RewardedVideoEnded?.Invoke();
-    }
+        private void OnDisable()
+        {
+            _yandexAds.OpenCallback -= OnOpenCallBack;
+            _yandexAds.RewardedCallback -= OnRewardedCallback;
+            _yandexAds.CloseCallback -= OnCloseCallback;
+            _yandexAds.ErrorCallback -= OnErrorCallback;
+        }
 
-    private void OnCloseCallback()
-    {
-        _applicationStatusChecker.SetIsPlayRewarded(false);
-        _applicationStatusChecker.ChangeSoundStatus(false);
-    }
+        public void Show() => _yandexAds.ShowRewardedVideo();
 
-    private void OnErrorCallback(string errorText)
-    {
-        _applicationStatusChecker.OnInBackgroundChangeEvent(false);
+        private void OnOpenCallBack()
+        {
+            _applicationStatusChecker.SetIsPlayRewarded(true);
+            _applicationStatusChecker.ChangeSoundStatus(true);
+            RewardedVideoOpened?.Invoke();
+        }
+
+        private void OnRewardedCallback() => RewardedVideoEnded?.Invoke();
+
+        private void OnCloseCallback()
+        {
+            _applicationStatusChecker.SetIsPlayRewarded(false);
+            _applicationStatusChecker.ChangeSoundStatus(false);
+        }
+
+        private void OnErrorCallback(string errorText) => _applicationStatusChecker.OnInBackgroundChangeEvent(false);
     }
 }

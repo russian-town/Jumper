@@ -1,5 +1,8 @@
-using UnityEngine;
+using Sourse.UI;
 
-public class RewardedPanel : UIElement
+namespace Sourse.Game
 {
+    public class RewardedPanel : UIElement
+    {
+    }
 }

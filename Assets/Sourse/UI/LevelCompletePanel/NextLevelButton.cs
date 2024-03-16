@@ -1,9 +1,13 @@
-using UnityEngine;
+using Sourse.Game;
+using Sourse.UI.Shop.Scripts.Buttons;
 
-public class NextLevelButton : UIButton, IPauseHandler
+namespace Sourse.UI.LevelCompletePanel
 {
-    public void SetPause(bool isPause)
+    public class NextLevelButton : UIButton, IPauseHandler
     {
-        SwitchEnableState(!isPause);
+        public void SetPause(bool isPause)
+        {
+            SwitchEnableState(!isPause);
+        }
     }
 }

@@ -1,28 +1,33 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerSpawner : MonoBehaviour
+namespace Sourse.Player.Common.Scripts
 {
-    [SerializeField] private List<Player> _players = new List<Player>();
-
-    public Player GetPlayer(int id, PlayerPosition playerPosition)
+    public class PlayerSpawner : MonoBehaviour
     {
-        if (playerPosition == null)
-            Debug.Log("Set player position");
+        [SerializeField] private List<Player> _players = new List<Player>();
 
-        return Instantiate(TrySearchPlayer(id), playerPosition.transform.position, Quaternion.identity);
-    }
-
-    private Player TrySearchPlayer(int id)
-    {
-        foreach (var player in _players)
+        public Player GetPlayer(int id, PlayerPosition playerPosition)
         {
-            if (player.ID == id)
-            {
-                return player;
-            }
+            if (TrySearchPlayer(id, out Player player))
+                return Instantiate(player, playerPosition.transform.position, Quaternion.identity);
+
+            return null;
         }
 
-        return null;
+        private bool TrySearchPlayer(int id, out Player searchPlayer)
+        {
+            foreach (var player in _players)
+            {
+                if (player.ID == id)
+                {
+                    searchPlayer = player;
+                    return true;
+                }
+            }
+
+            searchPlayer = null;
+            return false;
+        }
     }
 }

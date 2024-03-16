@@ -1,28 +1,31 @@
 using UnityEngine;
 
-public class OpenableSkinView : SkinView
+namespace Sourse.UI.Shop.SkinView.OpenableSkinView
 {
-    [SerializeField] private LockImage _lockImage;
-
-    private Color _openSkinColor = Color.white;
-    private Color _closeSkinColor = Color.black;
-
-    protected override void UpdateChildView()
+    public class OpenableSkinView : Common.SkinView
     {
-        if (Skin.IsBy == false)
+        [SerializeField] private LockImage _lockImage;
+
+        private Color _openSkinColor = Color.white;
+        private Color _closeSkinColor = Color.black;
+
+        protected override void UpdateChildView()
         {
-            SetIconColor(_closeSkinColor);
-            SelectButton.Hide();
+            if (Skin.IsBought == false)
+            {
+                SetIconColor(_closeSkinColor);
+                SelectButton.Hide();
+            }
+            else
+            {
+                SetIconColor(_openSkinColor);
+                SelectButton.Show();
+                _lockImage.Hide();
+            }
         }
-        else
-        {
-            SetIconColor(_openSkinColor);
-            SelectButton.Show();
-            _lockImage.Hide();
-        }
+
+        protected override void Initialize() { }
+
+        protected override void Deinitialize() { }
     }
-
-    protected override void Initialize() {}
-
-    protected override void Deinitialize() {}
 }

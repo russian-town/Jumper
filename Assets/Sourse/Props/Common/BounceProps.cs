@@ -1,14 +1,17 @@
 using UnityEngine;
 
-public abstract class BounceProps : MonoBehaviour
+namespace Sourse.Props.Common
 {
-    private void OnCollisionEnter(Collision collision)
+    public abstract class BounceProps : MonoBehaviour
     {
-        if (collision.transform.TryGetComponent(out Player player))
+        private void OnCollisionEnter(Collision collision)
         {
-            Action(collision, player);
+            if (collision.transform.TryGetComponent(out Player.Common.Scripts.Player player))
+            {
+                Action(collision, player);
+            }
         }
-    }
 
-    protected abstract void Action(Collision collision, Player player);
+        protected abstract void Action(Collision collision, Player.Common.Scripts.Player player);
+    }
 }

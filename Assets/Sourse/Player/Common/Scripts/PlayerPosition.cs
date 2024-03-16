@@ -1,5 +1,8 @@
 using UnityEngine;
 
-public class PlayerPosition : MonoBehaviour
+namespace Sourse.Player.Common.Scripts
 {
+    public class PlayerPosition : MonoBehaviour
+    {
+    }
 }

@@ -1,7 +1,17 @@
 using UnityEngine.UI;
 
-public class RaycastTarget : Graphic
+namespace Sourse.Camera
 {
-    public override void SetMaterialDirty() { return; }
-    public override void SetVerticesDirty() { return; }
+    public class RaycastTarget : Graphic
+    {
+        public override void SetMaterialDirty()
+        {
+            return;
+        }
+
+        public override void SetVerticesDirty()
+        {
+            return;
+        }
+    }
 }

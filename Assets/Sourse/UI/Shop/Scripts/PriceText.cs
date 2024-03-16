@@ -1,14 +1,17 @@
-using UnityEngine;
 using TMPro;
+using UnityEngine;
 
-[RequireComponent(typeof(TMP_Text))]
-public class PriceText : UIElement
+namespace Sourse.UI.Shop.Scripts
 {
-    private TMP_Text _text;
-
-    public void SetText(int price)
+    [RequireComponent(typeof(TMP_Text))]
+    public class PriceText : UIElement
     {
-        _text = GetComponent<TMP_Text>();
-        _text.text = price.ToString();
+        private TMP_Text _text;
+
+        public void SetText(int price)
+        {
+            _text = GetComponent<TMP_Text>();
+            _text.text = price.ToString();
+        }
     }
 }

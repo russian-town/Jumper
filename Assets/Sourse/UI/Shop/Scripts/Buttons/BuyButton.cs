@@ -1,6 +1,6 @@
 namespace Sourse.UI.Shop.Scripts.Buttons
 {
-    public class SelectButton : UIButton
+    public class BuyButton : UIButton
     {
     }
 }

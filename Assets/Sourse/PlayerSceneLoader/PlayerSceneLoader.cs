@@ -1,56 +1,59 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-[RequireComponent(typeof(Saver))]
-public class PlayerSceneLoader : MonoBehaviour
+namespace Sourse.PlayerSceneLoader
 {
-    private const string StartSceneName = "StartScene";
-    private const string SettingsSceneName = "SettingsScene";
-    private const string ShopSceneName = "Shop";
-    private const int FirstLevel = 1;
-
-    private Saver _saver;
-
-    public string CurrentSceneName => SceneManager.GetActiveScene().name;
-
-    private void Awake()
+    [RequireComponent(typeof(Saver.Saver))]
+    public class PlayerSceneLoader : MonoBehaviour
     {
-        _saver = GetComponent<Saver>();
-    }
+        private const string StartSceneName = "StartScene";
+        private const string SettingsSceneName = "SettingsScene";
+        private const string ShopSceneName = "Shop";
+        private const int FirstLevel = 1;
 
-    public void ReloadCurrentScene()
-    {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-    }
+        private Saver.Saver _saver;
 
-    public void LoadSceneByName(int levelNumber)
-    {
-        if (SceneUtility.GetBuildIndexByScenePath(levelNumber.ToString()) < 0)
-            SceneManager.LoadScene(Level.FirstLevelNumber);
-        else
-            SceneManager.LoadScene(levelNumber.ToString());
-    }
+        public string CurrentSceneName => SceneManager.GetActiveScene().name;
 
-    public void LoadLastScene()
-    {
-        if (_saver.TryGetValue(Level.SavedIndexKey, out int value))
-            LoadSceneByName(value);
-        else
-            LoadSceneByName(FirstLevel);
-    }
+        private void Awake()
+        {
+            _saver = GetComponent<Saver.Saver>();
+        }
 
-    public void LoadStartScene()
-    {
-        SceneManager.LoadScene(StartSceneName);
-    }
+        public void ReloadCurrentScene()
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }
 
-    public void LoadShopScene()
-    {
-        SceneManager.LoadScene(ShopSceneName);
-    }
+        public void LoadSceneByName(int levelNumber)
+        {
+            if (SceneUtility.GetBuildIndexByScenePath(levelNumber.ToString()) < 0)
+                SceneManager.LoadScene(Level.Level.FirstLevelNumber);
+            else
+                SceneManager.LoadScene(levelNumber.ToString());
+        }
 
-    public void LoadSettingsScene()
-    {
-        SceneManager.LoadScene(SettingsSceneName);
+        public void LoadLastScene()
+        {
+            if (_saver.TryGetValue(Level.Level.SavedIndexKey, out int value))
+                LoadSceneByName(value);
+            else
+                LoadSceneByName(FirstLevel);
+        }
+
+        public void LoadStartScene()
+        {
+            SceneManager.LoadScene(StartSceneName);
+        }
+
+        public void LoadShopScene()
+        {
+            SceneManager.LoadScene(ShopSceneName);
+        }
+
+        public void LoadSettingsScene()
+        {
+            SceneManager.LoadScene(SettingsSceneName);
+        }
     }
 }

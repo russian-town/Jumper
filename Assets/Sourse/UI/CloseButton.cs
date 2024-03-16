@@ -1,5 +1,8 @@
-using UnityEngine;
+using Sourse.UI.Shop.Scripts.Buttons;
 
-public class CloseButton : UIButton
+namespace Sourse.UI
 {
+    public class CloseButton : UIButton
+    {
+    }
 }

@@ -1,77 +1,79 @@
 using System.Collections;
+using Sourse.Common;
 using UnityEngine;
 
-[RequireComponent(typeof(Animator))]
-public class PlayerAnimator : MonoBehaviour, IGroundedHandler
+namespace Sourse.Player.Common.Scripts
 {
-    private const float MaxWeight = 1f;
-    private const float MinWeight = 0f;
-    private const string JumpParametr = "Jump";
-    private const string DoubleJumpParametr = "DoubleJump";
-    private const string IsGroundedParametr = "IsGrounded";
-    private const string HardFallParametr = "HardFall";
-    private const string DefeatParametr = "Defeat";
-
-    [SerializeField] private float _animationDelay;
-    [SerializeField] private HeadPosition _headPosition;
-
-    private Animator _animator;
-    private Coroutine _startResetTriggers;
-    private float _weight;
-
-    public Animator Current => _animator;
-
-    private void OnAnimatorIK()
+    [RequireComponent(typeof(Animator))]
+    public class PlayerAnimator : MonoBehaviour, IGroundedHandler
     {
-        _animator.SetLookAtWeight(_weight);
-        _animator.SetLookAtPosition(_headPosition.Current);
-    }
+        private const float MaxWeight = 1f;
+        private const float MinWeight = 0f;
+        private const string JumpParametr = "Jump";
+        private const string DoubleJumpParametr = "DoubleJump";
+        private const string IsGroundedParametr = "IsGrounded";
+        private const string HardFallParametr = "HardFall";
+        private const string DefeatParametr = "Defeat";
 
-    public void Initialize()
-    {
-        _animator = GetComponent<Animator>();
-        _weight = MaxWeight;
-    }
+        [SerializeField] private float _animationDelay;
+        [SerializeField] private HeadPosition _headPosition;
 
-    public void DisableIK()
-    {
-        _weight = MinWeight;
-    }
+        private Animator _animator;
+        private Coroutine _startResetTriggers;
+        private float _weight;
 
-    public void SetGrounded(bool isGrounded)
-    {
-        _animator.SetBool(IsGroundedParametr, isGrounded);
-    }
+        private void OnAnimatorIK()
+        {
+            _animator.SetLookAtWeight(_weight);
+            _animator.SetLookAtPosition(_headPosition.Current);
+        }
 
-    public void Jump()
-    {
-        _animator.SetTrigger(JumpParametr);
-        _startResetTriggers = StartCoroutine(ResetTriggers());
-    }
+        public void Initialize()
+        {
+            _animator = GetComponent<Animator>();
+            _weight = MaxWeight;
+        }
 
-    public void Defeat()
-    {
-        _animator.SetBool(DefeatParametr, true);
-    }
+        public void DisableIK()
+        {
+            _weight = MinWeight;
+        }
 
-    public void DoubleJump()
-    {
-        _animator.SetTrigger(DoubleJumpParametr);
-        _startResetTriggers = StartCoroutine(ResetTriggers());
-    }
+        public void SetGrounded(bool isGrounded)
+        {
+            _animator.SetBool(IsGroundedParametr, isGrounded);
+        }
 
-    public void HardFall()
-    {
-        _animator.SetTrigger(HardFallParametr);
-    }
+        public void Jump()
+        {
+            _animator.SetTrigger(JumpParametr);
+            _startResetTriggers = StartCoroutine(ResetTriggers());
+        }
 
-    private IEnumerator ResetTriggers()
-    {
-        if (_startResetTriggers != null)
-            StopCoroutine(_startResetTriggers);
+        public void Defeat()
+        {
+            _animator.SetBool(DefeatParametr, true);
+        }
 
-        yield return new WaitForSeconds(_animationDelay);
-        _animator.ResetTrigger(JumpParametr);
-        _animator.ResetTrigger(DoubleJumpParametr);
+        public void DoubleJump()
+        {
+            _animator.SetTrigger(DoubleJumpParametr);
+            _startResetTriggers = StartCoroutine(ResetTriggers());
+        }
+
+        public void HardFall()
+        {
+            _animator.SetTrigger(HardFallParametr);
+        }
+
+        private IEnumerator ResetTriggers()
+        {
+            if (_startResetTriggers != null)
+                StopCoroutine(_startResetTriggers);
+
+            yield return new WaitForSeconds(_animationDelay);
+            _animator.ResetTrigger(JumpParametr);
+            _animator.ResetTrigger(DoubleJumpParametr);
+        }
     }
 }

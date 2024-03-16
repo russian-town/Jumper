@@ -1,52 +1,46 @@
+using Sourse.Finish;
 using UnityEngine;
 
-[RequireComponent(typeof(LevelProgressView), typeof(Saver))]
-public class LevelProgress : MonoBehaviour
+namespace Sourse.Level
 {
-    private const string LevelProgressKey = "LevelProgress";
-
-    [SerializeField] private FinishPosition _finishPosition;
-
-    private LevelProgressView _levelProgressView;
-    private float _distance;
-    private float _maxDistance = 1f;
-    private Player _player;
-    private Saver _saver;
-
-    public float CurrentDistance { get; private set; }
-
-    public void Initialize(Player player)
+    [RequireComponent(typeof(LevelProgressView), typeof(Saver.Saver))]
+    public class LevelProgress : MonoBehaviour
     {
-        _saver = GetComponent<Saver>();
-        _levelProgressView = GetComponent<LevelProgressView>();
-        _player = player;
+        private const string LevelProgressKey = "LevelProgress";
 
-        if(_saver.TryGetValue(LevelProgressKey, out float value))
+        [SerializeField] private FinishPosition _finishPosition;
+
+        private LevelProgressView _levelProgressView;
+        private float _distance;
+        private float _maxDistance = 1f;
+        private Player.Common.Scripts.Player _player;
+        private Saver.Saver _saver;
+
+        public float CurrentDistance { get; private set; }
+
+        private void Update()
         {
-            _distance = value;
+            if (_player == null)
+                return;
+
+            CurrentDistance = _maxDistance - Vector3.Distance(_player.transform.position, _finishPosition.transform.position) / _distance;
+            _levelProgressView.UpdateProgressBar(CurrentDistance);
         }
-        else
+
+        public void Initialize(Player.Common.Scripts.Player player)
         {
-            _distance = Vector3.Distance(player.transform.position, _finishPosition.transform.position);     
+            _saver = GetComponent<Saver.Saver>();
+            _levelProgressView = GetComponent<LevelProgressView>();
+            _player = player;
+
+            if (_saver.TryGetValue(LevelProgressKey, out float value))
+                _distance = value;
+            else
+                _distance = Vector3.Distance(player.transform.position, _finishPosition.transform.position);
         }
-    }
 
-    public void SaveDistance()
-    {
-        _saver.Save(LevelProgressKey, _distance);
-    }
+        public void SaveDistance() => _saver.Save(LevelProgressKey, _distance);
 
-    public void DeleteSavedDistance()
-    {
-        _saver.TryDeleteSaveData(LevelProgressKey);
-    }
-
-    private void Update()
-    {
-        if (_player == null)
-            return;
-
-        CurrentDistance = _maxDistance - Vector3.Distance(_player.transform.position, _finishPosition.transform.position) / _distance;
-        _levelProgressView.UpdateProgressBar(CurrentDistance);
+        public void DeleteSavedDistance() => _saver.TryDeleteSaveData(LevelProgressKey);
     }
 }

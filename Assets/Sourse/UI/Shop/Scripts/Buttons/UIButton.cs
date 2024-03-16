@@ -1,37 +1,34 @@
+using System;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.UI;
 
-[RequireComponent(typeof(Button))]
-public abstract class UIButton : UIElement
+namespace Sourse.UI.Shop.Scripts.Buttons
 {
-    public event UnityAction ButtonClicked;
-
-    private Button _button;
-    private bool _isInitialized;
-
-    private void OnDisable()
+    [RequireComponent(typeof(Button))]
+    public abstract class UIButton : UIElement
     {
-        if (_isInitialized == false)
-            return;
+        private Button _button;
+        private bool _isInitialized;
 
-        _button.onClick.RemoveListener(ButtonClick);
-    }
+        public event Action ButtonClicked;
 
-    public void Initialize()
-    {
-        _button = GetComponent<Button>();
-        _button.onClick.AddListener(ButtonClick);
-        _isInitialized = true;
-    }
+        private void OnDisable()
+        {
+            if (_isInitialized == false)
+                return;
 
-    protected void SwitchEnableState(bool isEnable)
-    {
-        _button.enabled = isEnable;
-    }
+            _button.onClick.RemoveListener(OnButtonClick);
+        }
 
-    private void ButtonClick()
-    {
-        ButtonClicked?.Invoke();
+        public void Initialize()
+        {
+            _button = GetComponent<Button>();
+            _button.onClick.AddListener(OnButtonClick);
+            _isInitialized = true;
+        }
+
+        protected void SwitchEnableState(bool isEnable) => _button.enabled = isEnable;
+
+        private void OnButtonClick() => ButtonClicked?.Invoke();
     }
 }

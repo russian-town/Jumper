@@ -1,9 +1,12 @@
-using UnityEngine;
+using Sourse.Game;
 
-public class RewardedButton : UIButton, IPauseHandler
+namespace Sourse.UI.Shop.Scripts.Buttons
 {
-    public void SetPause(bool isPause)
+    public class RewardedButton : UIButton, IPauseHandler
     {
-        SwitchEnableState(!isPause);
+        public void SetPause(bool isPause)
+        {
+            SwitchEnableState(!isPause);
+        }
     }
 }

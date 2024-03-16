@@ -1,17 +1,20 @@
 using UnityEngine;
 
-[RequireComponent(typeof(Animator))]
-public class TutorialAnimaton : MonoBehaviour
+namespace Sourse.Tutorial
 {
-    private Animator _animator;
-
-    public void Initialize()
+    [RequireComponent(typeof(Animator))]
+    public class TutorialAnimaton : MonoBehaviour
     {
-        _animator = GetComponent<Animator>();
-    }
+        private Animator _animator;
 
-    public void Clik(string key)
-    {
-        _animator.SetTrigger(key);
+        public void Initialize()
+        {
+            _animator = GetComponent<Animator>();
+        }
+
+        public void Clik(string key)
+        {
+            _animator.SetTrigger(key);
+        }
     }
 }

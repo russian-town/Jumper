@@ -1,39 +1,45 @@
 using UnityEngine;
 
-[RequireComponent(typeof(Camera))]
-
-public class CameraScaler : MonoBehaviour
+namespace Sourse.Camera
 {
-    [Range(0f, 1f)][SerializeField] private float _widthOrHeight = 0;
-    [SerializeField] private Vector2 _defaultResolution;
+    [RequireComponent(typeof(UnityEngine.Camera))]
 
-    private Camera _camera;
-    private float _targetAspect;
-    private float _initialFov;
-    private float _horizontalFov;
-
-    private void Awake()
+    public class CameraScaler : MonoBehaviour
     {
-        _camera = GetComponent<Camera>();
-    }
+        [Range(0f, 1f)][SerializeField] private float _widthOrHeight = 0f;
+        [SerializeField] private Vector2 _defaultResolution;
 
-    private void Start()
-    {
-        _targetAspect = _defaultResolution.x / _defaultResolution.y;
-        _initialFov = _camera.fieldOfView;
-        _horizontalFov = CalculateVerticalFov(_initialFov, 1 / _targetAspect);
-    }
+        private UnityEngine.Camera _camera;
+        private float _targetAspect;
+        private float _initialFov;
+        private float _horizontalFov;
+        private float _screenOffset = 2f;
+        private float _fovOffset = 1f;
 
-    private void Update()
-    {
-        float constantWidthFov = CalculateVerticalFov(_horizontalFov, _camera.aspect);
-        _camera.fieldOfView = Mathf.Lerp(constantWidthFov, _initialFov, _widthOrHeight);
-    }
+        private void Awake()
+        {
+            _camera = GetComponent<UnityEngine.Camera>();
+        }
 
-    private float CalculateVerticalFov(float horizontalFovInDeg, float aspectRatio)
-    {
-        float horizontalFovInRad = horizontalFovInDeg * Mathf.Deg2Rad;
-        float verticalFovInRads = 2f * Mathf.Atan(Mathf.Tan(horizontalFovInRad / 2f) / aspectRatio);
-        return verticalFovInRads * Mathf.Rad2Deg;
+        private void Start()
+        {
+            _targetAspect = _defaultResolution.x / _defaultResolution.y;
+            _initialFov = _camera.fieldOfView;
+            _horizontalFov = CalculateVerticalFov(_initialFov, _fovOffset / _targetAspect);
+        }
+
+        private void Update()
+        {
+            float constantWidthFov = CalculateVerticalFov(_horizontalFov, _camera.aspect);
+            _camera.fieldOfView = Mathf.Lerp(constantWidthFov, _initialFov, _widthOrHeight);
+        }
+
+        private float CalculateVerticalFov(float horizontalFovInDeg, float aspectRatio)
+        {
+            float horizontalFovInRad = horizontalFovInDeg * Mathf.Deg2Rad;
+            float screenCenter = Mathf.Atan(Mathf.Tan(horizontalFovInRad / _screenOffset) / aspectRatio);
+            float verticalFovInRads = _screenOffset * screenCenter;
+            return verticalFovInRads * Mathf.Rad2Deg;
+        }
     }
 }

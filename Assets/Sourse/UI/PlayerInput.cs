@@ -1,24 +1,24 @@
+using System;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.EventSystems;
 
-public class PlayerInput : MonoBehaviour, IPointerDownHandler
+namespace Sourse.UI
 {
-    public event UnityAction Tap;
-
-    private Player _player;
-
-    public void Initialize(Player player)
+    public class PlayerInput : MonoBehaviour, IPointerDownHandler
     {
-        _player = player;
-    }
+        private Player.Common.Scripts.Player _player;
 
-    public void OnPointerDown(PointerEventData eventData)
-    {
-        if (_player == null)
-            return;
+        public event Action Pressed;
 
-        _player.Jump();
-        Tap?.Invoke();
+        public void Initialize(Player.Common.Scripts.Player player) => _player = player;
+
+        public void OnPointerDown(PointerEventData eventData)
+        {
+            if (_player == null)
+                return;
+
+            _player.Jump();
+            Pressed?.Invoke();
+        }
     }
 }

@@ -1,68 +1,72 @@
+using Sourse.UI.Shop.Scripts.Buttons;
 using UnityEngine;
 
-public class RewardedSkinView : SkinView
+namespace Sourse.UI.Shop.SkinView.RewardedSkinView
 {
-    [SerializeField] private RewardedButton _rewardedButton;
-
-    private YandexAds _yandexAds;
-    private ApplicationStatusChecker _applicationStatusChecker;
-
-    public void SetApplicationStatusChecker(ApplicationStatusChecker applicationStatusChecker )
+    public class RewardedSkinView : Common.SkinView
     {
-        _applicationStatusChecker = applicationStatusChecker;
-    }
+        [SerializeField] private RewardedButton _rewardedButton;
 
-    protected override void Initialize()
-    {
-        _yandexAds = new YandexAds();
-        _rewardedButton.Initialize();
-        _rewardedButton.ButtonClicked += OnButtonClicked;
-        _yandexAds.RewardedCallback += OnRewardedCallback;
-        _yandexAds.OpenCallback += OnOpenCallback;
-        _yandexAds.CloseCallback += OnCloseCallback;
-    }
+        private YandexAds.YandexAds _yandexAds;
+        private ApplicationStatusChecker.ApplicationStatusChecker _applicationStatusChecker;
 
-    protected override void UpdateChildView()
-    {
-        if (Skin.IsBy == true)
+        public void SetApplicationStatusChecker(ApplicationStatusChecker.ApplicationStatusChecker applicationStatusChecker)
         {
-            _rewardedButton.Hide();
-            SelectButton.Show();
+            _applicationStatusChecker = applicationStatusChecker;
         }
-        else if(Skin.IsBy == false)
+
+        protected override void Initialize()
         {
-            _rewardedButton.Show();
-            SelectButton.Hide();
+            _yandexAds = new YandexAds.YandexAds();
+            _rewardedButton.Initialize();
+            _rewardedButton.ButtonClicked += OnButtonClicked;
+            _yandexAds.RewardedCallback += OnRewardedCallback;
+            _yandexAds.OpenCallback += OnOpenCallback;
+            _yandexAds.CloseCallback += OnCloseCallback;
         }
-    }
 
-    protected override void Deinitialize()
-    {
-        _rewardedButton.ButtonClicked -= OnButtonClicked;
-        _yandexAds.RewardedCallback -= OnRewardedCallback;
-        _yandexAds.OpenCallback -= OnOpenCallback;
-        _yandexAds.CloseCallback -= OnCloseCallback;
-    }
+        protected override void UpdateChildView()
+        {
+            if (Skin.IsBought == true)
+            {
+                _rewardedButton.Hide();
+                SelectButton.Show();
+            }
+            else if (Skin.IsBought == false)
+            {
+                _rewardedButton.Show();
+                SelectButton.Hide();
+            }
+        }
 
-    private void OnButtonClicked()
-    {
-        _yandexAds.ShowRewardedVideo();
-    }
+        protected override void Deinitialize()
+        {
+            _rewardedButton.ButtonClicked -= OnButtonClicked;
+            _yandexAds.RewardedCallback -= OnRewardedCallback;
+            _yandexAds.OpenCallback -= OnOpenCallback;
+            _yandexAds.CloseCallback -= OnCloseCallback;
+        }
 
-    private void OnOpenCallback()
-    {
-        _applicationStatusChecker.SetIsPlayRewarded(true);
-        _applicationStatusChecker.ChangeSoundStatus(true);
-    }
+        private void OnButtonClicked()
+        {
+            _yandexAds.ShowRewardedVideo();
+        }
 
-    private void OnRewardedCallback()
-    {
-        By();
-    }
+        private void OnOpenCallback()
+        {
+            _applicationStatusChecker.SetIsPlayRewarded(true);
+            _applicationStatusChecker.ChangeSoundStatus(true);
+        }
 
-    private void OnCloseCallback()
-    {
-        _applicationStatusChecker.SetIsPlayRewarded(false);
-        _applicationStatusChecker.ChangeSoundStatus(false);
+        private void OnRewardedCallback()
+        {
+            By();
+        }
+
+        private void OnCloseCallback()
+        {
+            _applicationStatusChecker.SetIsPlayRewarded(false);
+            _applicationStatusChecker.ChangeSoundStatus(false);
+        }
     }
 }

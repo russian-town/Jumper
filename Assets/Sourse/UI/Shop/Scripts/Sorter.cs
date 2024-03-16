@@ -1,19 +1,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Sorter : MonoBehaviour
+namespace Sourse.UI.Shop.Scripts
 {
-    public void SortingSkins(ref List<Skin> skins)
+    public class Sorter : MonoBehaviour
     {
-        for (int i = 0; i < skins.Count; i++)
+        public void SortingSkins(ref List<Skin.Skin> skins)
         {
-            for (int j = i + 1; j < skins.Count; j++)
+            for (int i = 0; i < skins.Count; i++)
             {
-                if (skins[i].SortOrder > skins[j].SortOrder)
+                for (int j = i + 1; j < skins.Count; j++)
                 {
-                    var skin = skins[i];
-                    skins[i] = skins[j];
-                    skins[j] = skin;
+                    if (skins[i].SortOrder > skins[j].SortOrder)
+                    {
+                        var skin = skins[i];
+                        skins[i] = skins[j];
+                        skins[j] = skin;
+                    }
                 }
             }
         }
