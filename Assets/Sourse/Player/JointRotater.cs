@@ -13,7 +13,6 @@ public class JointRotater : MonoBehaviour
     [SerializeField] private ConfigurableJoint _rightKnee;
     [SerializeField] private ConfigurableJoint _leftHips;
     [SerializeField] private ConfigurableJoint _leftKnee;
-    [SerializeField] private Rigidbody _pelvisBody;
     [SerializeField] private Transform _headTarget;
     [SerializeField] private Transform _pelvisTarget;
     [SerializeField] private Transform _middleSpineTarget;
@@ -26,48 +25,57 @@ public class JointRotater : MonoBehaviour
     [SerializeField] private Transform _leftHipsTarget;
     [SerializeField] private Transform _leftKneeTarget;
     [SerializeField] private float _jumpForce;
+    [SerializeField] private Animator _animator;
+    [SerializeField] private Rigidbody _pelvisBody;
+    [SerializeField] private Transform _centerOfMass;
+
+
+    private Quaternion _startHeadRotation;
+    private Quaternion _startPelvisRotation;
+    private Quaternion _startMiddleSpineRotation;
+    private Quaternion _startLeftArmRotation;
+    private Quaternion _startLeftElbowRotation;
+    private Quaternion _startRightArmRotation;
+    private Quaternion _startRightElboweRotation;
+    private Quaternion _startRightHipsRotation;
+    private Quaternion _startRightKneeRotation;
+    private Quaternion _startLeftHipsRotation;
+    private Quaternion _startLeftKneeRotation;
 
     private void Start()
     {
-        //_headTarget.rotation = _head.targetRotation;
-        //_pelvisTarget.rotation = _pelvis.targetRotation;
-        //_middleSpineTarget.rotation = _middleSpine.targetRotation;
-        //_leftArmTarget.rotation = _leftArm.targetRotation;
-        //_leftElbowTarget.rotation = _leftElbow.targetRotation;
-        //_rightArmTarget.rotation = _rightArm.targetRotation;
-        //_rightElbowTarget.rotation = _rightElbow.targetRotation;
-        //_rightHipsTarget.rotation = _rightHips.targetRotation;
-        //_rightKneeTarget.rotation = _rightKnee.targetRotation;
-        //_leftHipsTarget.rotation = _leftHips.targetRotation;
-        //_leftKneeTarget.rotation = _leftKnee.targetRotation;
-        //_headTarget.position = _head.transform.position;
-        //_pelvisTarget.position = _pelvis.transform.position;
-        //_middleSpineTarget.position = _middleSpine.transform.position;
-        //_leftArmTarget.position = _leftArm.transform.position;
-        //_leftElbowTarget.position = _leftElbow.transform.position;
-        //_rightArmTarget.position = _rightArm.transform.position;
-        //_rightElbowTarget.position = _rightElbow.transform.position;
-        //_rightHipsTarget.position = _rightHips.transform.position;
-        //_rightKneeTarget.position = _rightKnee.transform.position;
-        //_leftHipsTarget.position = _leftHips.transform.position;
-        //_leftKneeTarget.position = _leftKnee.transform.position;
+        _pelvisBody.centerOfMass = _centerOfMass.localPosition;
+        _startHeadRotation = _head.transform.localRotation;
+        _startPelvisRotation = _pelvis.transform.localRotation;
+        _startMiddleSpineRotation = _middleSpine.transform.localRotation;
+        _startLeftArmRotation = _leftArm.transform.localRotation;
+        _startLeftElbowRotation = _leftElbow.transform.localRotation;
+        _startRightArmRotation = _rightArm.transform.localRotation;
+        _startRightElboweRotation = _rightElbow.transform.localRotation;
+        _startRightHipsRotation = _rightHips.transform.localRotation;
+        _startRightKneeRotation = _rightKnee.transform.localRotation;
+        _startLeftHipsRotation = _leftHips.transform.localRotation;
+        _startLeftKneeRotation = _leftKnee.transform.localRotation;
     }
 
     private void Update()
     {
-        //_head.targetRotation = _headTarget.rotation;
-        //_pelvis.targetRotation = _pelvisTarget.rotation;
-        //_middleSpine.targetRotation = _middleSpineTarget.rotation;
-        //_leftArm.targetRotation = _leftArmTarget.rotation;
-        //_leftElbow.targetRotation = _leftElbowTarget.rotation;
-        //_rightArm.targetRotation = _rightArmTarget.rotation;
-        //_rightElbow.targetRotation = _rightElbowTarget.rotation;
-        //_rightHips.targetRotation = _rightHipsTarget.rotation;
-        //_rightKnee.targetRotation = _rightKneeTarget.rotation;
-        //_leftHips.targetRotation = _leftHipsTarget.rotation;
-        //_leftKnee.targetRotation = _leftKneeTarget.rotation;
+        _head.targetRotation = Quaternion.Inverse(_headTarget.localRotation) * _startHeadRotation;
+        _pelvis.targetRotation = Quaternion.Inverse(_pelvisTarget.localRotation) * _startPelvisRotation;
+        _middleSpine.targetRotation = Quaternion.Inverse(_middleSpineTarget.localRotation) * _startMiddleSpineRotation;
+        _leftArm.targetRotation = Quaternion.Inverse(_leftArmTarget.localRotation) * _startLeftArmRotation;
+        _leftElbow.targetRotation = Quaternion.Inverse(_leftElbowTarget.localRotation) * _startLeftElbowRotation;
+        _rightArm.targetRotation = Quaternion.Inverse(_rightArmTarget.localRotation) * _startRightArmRotation;
+        _rightElbow.targetRotation = Quaternion.Inverse(_rightElbowTarget.localRotation) * _startRightElboweRotation;
+        _rightHips.targetRotation = Quaternion.Inverse(_rightHipsTarget.localRotation) * _startRightHipsRotation;
+        _rightKnee.targetRotation = Quaternion.Inverse(_rightKneeTarget.localRotation) * _startRightKneeRotation;
+        _leftHips.targetRotation = Quaternion.Inverse(_leftHipsTarget.localRotation) * _startLeftHipsRotation;
+        _leftKnee.targetRotation = Quaternion.Inverse(_leftKneeTarget.localRotation) * _startLeftKneeRotation;
 
-        //if (Input.GetMouseButtonDown(0))
-        //    _pelvisBody.AddForce(Vector3.up * _jumpForce);
+        if (Input.GetMouseButtonDown(0))
+        {
+            _animator.SetTrigger("Jump");
+            _pelvisBody.AddForce(Vector3.up * _jumpForce);
+        }
     }
 }
