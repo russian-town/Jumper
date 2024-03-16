@@ -16,7 +16,7 @@ public class Wallet : MonoBehaviour
         _walletView = GetComponent<WalletView>();
         _saver = GetComponent<Saver>();
 
-        if(_saver.TryGetValue(MoneyKey, out int money))
+        if (_saver.TryGetValue(MoneyKey, out int money))
             _money = money;
 
         _walletView.UpdateMoneyText(_money);

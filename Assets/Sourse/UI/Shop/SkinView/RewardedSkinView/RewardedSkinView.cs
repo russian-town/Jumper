@@ -7,7 +7,7 @@ public class RewardedSkinView : SkinView
     private YandexAds _yandexAds;
     private ApplicationStatusChecker _applicationStatusChecker;
 
-    public void SetApplicationStatusChecker(ApplicationStatusChecker applicationStatusChecker )
+    public void SetApplicationStatusChecker(ApplicationStatusChecker applicationStatusChecker)
     {
         _applicationStatusChecker = applicationStatusChecker;
     }
@@ -29,7 +29,7 @@ public class RewardedSkinView : SkinView
             _rewardedButton.Hide();
             SelectButton.Show();
         }
-        else if(Skin.IsBy == false)
+        else if (Skin.IsBy == false)
         {
             _rewardedButton.Show();
             SelectButton.Hide();

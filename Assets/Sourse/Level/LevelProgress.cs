@@ -21,14 +21,10 @@ public class LevelProgress : MonoBehaviour
         _levelProgressView = GetComponent<LevelProgressView>();
         _player = player;
 
-        if(_saver.TryGetValue(LevelProgressKey, out float value))
-        {
+        if (_saver.TryGetValue(LevelProgressKey, out float value))
             _distance = value;
-        }
         else
-        {
-            _distance = Vector3.Distance(player.transform.position, _finishPosition.transform.position);     
-        }
+            _distance = Vector3.Distance(player.transform.position, _finishPosition.transform.position);
     }
 
     public void SaveDistance()

@@ -22,15 +22,9 @@ public class PlayerPositionHandler : MonoBehaviour
     public PlayerPosition GetLastPosition()
     {
         if (_saver.TryGetValue(LastPropsIdKey, out int Id) == true)
-        {
             foreach (var props in _props)
-            {
                 if (_props.IndexOf(props) == Id)
-                {
                     return props.PlayerPosition;
-                }
-            }
-        }
 
         return null;
     }
@@ -51,12 +45,8 @@ public class PlayerPositionHandler : MonoBehaviour
             return;
 
         for (int i = 0; i < _props.Count; i++)
-        {
-            if(_props[i] == props)
-            {
+            if (_props[i] == props)
                 _currentPropsId = _props.IndexOf(props);
-            }
-        }
 
         _game.SetLastPosition(playerPosition);
     }

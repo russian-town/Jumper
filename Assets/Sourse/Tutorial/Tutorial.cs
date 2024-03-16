@@ -38,7 +38,7 @@ public class Tutorial : MonoBehaviour
     {
         WaitForSeconds delay = new WaitForSeconds(_delay);
 
-        while(_isWork)
+        while (_isWork)
         {
             if (tutorialType == TutorialType.Clik)
                 _tutorialAnimaton.Clik(ClickKey);

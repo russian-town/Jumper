@@ -9,10 +9,7 @@ public class OpenableSkinHandler : SkinHandler
     private LevelCompletePanel _levelCompletePanel;
     private int _currentIndex;
 
-    private void OnDisable()
-    {
-        _levelCompletePanel.SkinOpened -= OnSkinOpened;
-    }
+    private void OnDisable() => _levelCompletePanel.SkinOpened -= OnSkinOpened;
 
     public void Initialize(LevelCompletePanel levelCompletePanel)
     {
@@ -21,9 +18,7 @@ public class OpenableSkinHandler : SkinHandler
         _levelCompletePanel.SkinOpened += OnSkinOpened;
 
         foreach (var skin in Skins)
-        {
             AddOpenableSkin(skin);
-        }
     }
 
     public Skin GetOpenableSkin()
@@ -69,7 +64,7 @@ public class OpenableSkinHandler : SkinHandler
     {
         foreach (var skin in Skins)
         {
-            if(id == skin.ID)
+            if (id == skin.ID)
             {
                 skin.By();
                 Saver.SaveState(IsByKey, id, skin.IsBy);

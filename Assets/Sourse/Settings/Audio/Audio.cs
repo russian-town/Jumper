@@ -37,10 +37,7 @@ public class Audio : MonoBehaviour
         _musicSlider.onValueChanged.RemoveListener(ChangeMusicVolume);
     }
 
-    private void Start()
-    {
-        Initialize();
-    }
+    private void Start() => Initialize();
 
     private void Initialize()
     {
@@ -57,22 +54,16 @@ public class Audio : MonoBehaviour
         }
     }
 
-    public void ChangeSoundVolume(float value)
-    {
-        ChangeVolume(value, _soundGroup, SoundVolume, SoundVolumeKey);
-    }
+    public void ChangeSoundVolume(float value) => ChangeVolume(value, _soundGroup, SoundVolume, SoundVolumeKey);
 
-    public void ChangeMusicVolume(float value)
-    {
-        ChangeVolume(value, _musicGroup, MusicVolume, MusicVolumeKey);
-    }
+    public void ChangeMusicVolume(float value) => ChangeVolume(value, _musicGroup, MusicVolume, MusicVolumeKey);
 
     private void ChangeVolume(float value, AudioMixerGroup audioMixerGroup, string groupName, string key)
     {
         audioMixerGroup.audioMixer.SetFloat(groupName, Mathf.Log10(value) * 20f);
         _saver.Save(key, value);
 
-        if(value == MuteVolume)
+        if (value == MuteVolume)
         {
             if (audioMixerGroup == _soundGroup)
                 _audioView.MuteSound();

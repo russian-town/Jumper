@@ -78,9 +78,8 @@ public class Game : MonoBehaviour, IPauseHandler
         _isStart = true;
         _player.SetStart(_isStart);
 
-        if(_hideHUD)
+        if (_hideHUD)
         {
-            //_levelProgressView.Hide();
             _gameOverView.Hide();
             _pauseButton.Hide();
             return;

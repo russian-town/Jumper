@@ -14,7 +14,7 @@ public class Finish : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.transform.TryGetComponent(out Player player))
+        if (collision.transform.TryGetComponent(out Player player))
         {
             player.SetPause(true);
             _audioSource.PlayOneShot(_fallSound);

@@ -41,12 +41,8 @@ public class Saver : MonoBehaviour
     public bool GetTutorialState()
     {
         if (PlayerPrefs.HasKey(TutorialCompleteKey))
-        {
             if (PlayerPrefs.GetInt(TutorialCompleteKey) == 1)
-            {
                 return true;
-            }
-        }
 
         return false;
     }
@@ -109,10 +105,8 @@ public class Saver : MonoBehaviour
 
     public bool GetState(string key, int skinID)
     {
-        if(PlayerPrefs.HasKey($"{key}{skinID}"))
-        {
+        if (PlayerPrefs.HasKey($"{key}{skinID}"))
             return PlayerPrefs.GetInt($"{key}{skinID}") == 1;
-        }
 
         return false;
     }
