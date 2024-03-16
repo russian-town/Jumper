@@ -1,16 +1,13 @@
 using UnityEngine;
 
 [RequireComponent(typeof(AudioSource))]
-public class Finish : MonoBehaviour
+public class LevelCompleteSoundPlayer : MonoBehaviour
 {
     [SerializeField] private AudioClip _fallSound;
 
     private AudioSource _audioSource;
 
-    private void Awake()
-    {
-        _audioSource = GetComponent<AudioSource>();
-    }
+    private void Awake() => _audioSource = GetComponent<AudioSource>();
 
     private void OnCollisionEnter(Collision collision)
     {

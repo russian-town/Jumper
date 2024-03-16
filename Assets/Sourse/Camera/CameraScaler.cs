@@ -4,13 +4,15 @@ using UnityEngine;
 
 public class CameraScaler : MonoBehaviour
 {
-    [Range(0f, 1f)][SerializeField] private float _widthOrHeight = 0;
+    [Range(0f, 1f)][SerializeField] private float _widthOrHeight = 0f;
     [SerializeField] private Vector2 _defaultResolution;
 
     private Camera _camera;
     private float _targetAspect;
     private float _initialFov;
     private float _horizontalFov;
+    private float _screenOffset = 2f;
+    private float _fovOffset = 1f;
 
     private void Awake()
     {
@@ -21,7 +23,7 @@ public class CameraScaler : MonoBehaviour
     {
         _targetAspect = _defaultResolution.x / _defaultResolution.y;
         _initialFov = _camera.fieldOfView;
-        _horizontalFov = CalculateVerticalFov(_initialFov, 1 / _targetAspect);
+        _horizontalFov = CalculateVerticalFov(_initialFov, _fovOffset / _targetAspect);
     }
 
     private void Update()
@@ -33,7 +35,8 @@ public class CameraScaler : MonoBehaviour
     private float CalculateVerticalFov(float horizontalFovInDeg, float aspectRatio)
     {
         float horizontalFovInRad = horizontalFovInDeg * Mathf.Deg2Rad;
-        float verticalFovInRads = 2f * Mathf.Atan(Mathf.Tan(horizontalFovInRad / 2f) / aspectRatio);
+        float screenCenter = Mathf.Atan(Mathf.Tan(horizontalFovInRad / _screenOffset) / aspectRatio);
+        float verticalFovInRads = _screenOffset * screenCenter;
         return verticalFovInRads * Mathf.Rad2Deg;
     }
 }

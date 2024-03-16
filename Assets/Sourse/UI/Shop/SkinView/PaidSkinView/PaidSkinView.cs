@@ -3,17 +3,17 @@ using UnityEngine;
 
 public class PaidSkinView : SkinView
 {
-    [SerializeField] private ByButton _byButton;
+    [SerializeField] private BuyButton _byButton;
     [SerializeField] private PriceText _priceText;
 
     protected override void UpdateChildView()
     {
-        if (Skin.IsBy == true)
+        if (Skin.IsBought == true)
         {
             _byButton.Hide();
             SelectButton.Show();
         }
-        else if (Skin.IsBy == false)
+        else if (Skin.IsBought == false)
         {
             _priceText.SetText(Skin.Price);
             _byButton.Show();

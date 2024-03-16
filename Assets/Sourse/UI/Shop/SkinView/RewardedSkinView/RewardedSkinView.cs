@@ -25,12 +25,12 @@ public class RewardedSkinView : SkinView
 
     protected override void UpdateChildView()
     {
-        if (Skin.IsBy == true)
+        if (Skin.IsBought == true)
         {
             _rewardedButton.Hide();
             SelectButton.Show();
         }
-        else if (Skin.IsBy == false)
+        else if (Skin.IsBought == false)
         {
             _rewardedButton.Show();
             SelectButton.Hide();

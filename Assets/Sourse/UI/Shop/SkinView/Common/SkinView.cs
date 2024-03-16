@@ -38,7 +38,7 @@ public abstract class SkinView : MonoBehaviour
         Initialize();
         UpdateChildView();
 
-        if (_skin.IsBy && _skin.IsSelect)
+        if (_skin.IsBought && _skin.IsSelect)
             Selected?.Invoke(_skin, this);
     }
 
@@ -46,9 +46,9 @@ public abstract class SkinView : MonoBehaviour
     {
         UpdateChildView();
 
-        if (_skin.IsBy && _skin.IsSelect)
+        if (_skin.IsBought && _skin.IsSelect)
             SwitchViewState(false, true, _selectColor);
-        else if (_skin.IsBy && !_skin.IsSelect)
+        else if (_skin.IsBought && !_skin.IsSelect)
             SwitchViewState(true, false, _defaultColor);
     }
 

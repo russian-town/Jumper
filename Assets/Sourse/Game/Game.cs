@@ -16,7 +16,7 @@ public class Game : MonoBehaviour, IPauseHandler
     [SerializeField] private RetryButton _retryButton;
     [SerializeField] private RewardedPanel _rewardedPanel;
     [SerializeField] private PauseButton _pauseButton;
-    [SerializeField] private NoThanksButton _noThanksButton;
+    [SerializeField] private CloseAdOfferScreenButton _noThanksButton;
     [SerializeField] private RewardedButton _rewardedButton;
     [SerializeField] private NextLevelButton _nextLevelButton;
     [SerializeField] private Wallet _wallet;
@@ -33,10 +33,20 @@ public class Game : MonoBehaviour, IPauseHandler
     private ApplicationStatusChecker _applicationStatusChecker;
     private bool _isStart;
     private bool _isRewarded = false;
+    private float _percentRatio = 100f;
 
     public bool IsLevelComplete { get; private set; }
 
-    private void OnDisable()
+    public void Enable()
+    {
+        _yandexAds.OpenInterstitialCallback += OnOpenInterstitialCallback;
+        _yandexAds.CloseInterstitialCallback += OnCloseInterstitialCallback;
+        _player.Died += OnPlayerDied;
+        _player.LevelCompleted += OnLevelCompleted;
+        _playerInput.Pressed += StartGame;
+    }
+
+    public void Disable()
     {
         if (_player == null)
             return;
@@ -44,7 +54,7 @@ public class Game : MonoBehaviour, IPauseHandler
         _isStart = false;
         _player.Died -= OnPlayerDied;
         _player.LevelCompleted -= OnLevelCompleted;
-        _playerInput.Tap -= StartGame;
+        _playerInput.Pressed -= StartGame;
         _yandexAds.OpenInterstitialCallback -= OnOpenInterstitialCallback;
         _yandexAds.CloseInterstitialCallback -= OnCloseInterstitialCallback;
         _gameOverView.Hide();
@@ -56,21 +66,20 @@ public class Game : MonoBehaviour, IPauseHandler
         _yandexAds = new YandexAds();
         _applicationStatusChecker = applicationStatusChecker;
         _applicationStatusChecker.Initialize(_yandexAds);
-        _yandexAds.OpenInterstitialCallback += OnOpenInterstitialCallback;
-        _yandexAds.CloseInterstitialCallback += OnCloseInterstitialCallback;
         _openableSkinHandler.Initialize(_levelCompletePanel);
         _player = player;
         _playerInput = playerInput;
         _playerStartPosition = playerStartPosition;
-        player.Died += OnPlayerDied;
-        player.LevelCompleted += OnLevelCompleted;
-        _playerInput.Tap += StartGame;
         _levelProgress = levelProgress;
         _nextLevelButton.Initialize();
         _rewardedButton.Initialize();
         _noThanksButton.Initialize();
         _retryButton.Initialize();
-        _pause.Initialize(new IPauseHandler[] { player, this, _nextLevelButton, _retryButton, _noThanksButton, _rewardedButton }, this);
+        IPauseHandler[] pauseHandlers = new IPauseHandler[]
+        {
+            player, this, _nextLevelButton, _retryButton, _noThanksButton, _rewardedButton 
+        };
+        _pause.Initialize(pauseHandlers, this);
     }
 
     public void StartGame()
@@ -128,7 +137,7 @@ public class Game : MonoBehaviour, IPauseHandler
     {
         _isStart = false;
         _levelProgress.DeleteSavedDistance();
-        float percent = Mathf.Ceil(_levelProgress.CurrentDistance * 100f);
+        float percent = Mathf.Ceil(_levelProgress.CurrentDistance * _percentRatio);
         _gameOverView.Show();
 
         if (_playerLastPosition == null || _playerLastPosition == _playerStartPosition)
@@ -168,7 +177,7 @@ public class Game : MonoBehaviour, IPauseHandler
         if (_openableSkinHandler.GetOpenableSkin() != null)
         {
             _levelCompletePanel.Initialize(_openableSkinHandler.GetOpenableSkin());
-            _levelCompletePanel.StartFillSkinBar(_percentOpeningSkin);
+            _levelCompletePanel.StartFillSkinBarCoroutine(_percentOpeningSkin);
         }
         else
         {

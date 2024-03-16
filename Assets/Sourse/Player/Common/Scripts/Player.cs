@@ -97,7 +97,7 @@ public class Player : MonoBehaviour, IPauseHandler, IGroundedHandler
             Died?.Invoke();
             _isGameOver = true;
         }
-        else if (collision.transform.TryGetComponent(out Finish finish))
+        else if (collision.transform.TryGetComponent(out LevelCompleteSoundPlayer finish))
         {
             if (_isLevelComleted == true || _isGameOver == true)
                 return;

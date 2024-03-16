@@ -19,8 +19,6 @@ public class PlayerAnimator : MonoBehaviour, IGroundedHandler
     private Coroutine _startResetTriggers;
     private float _weight;
 
-    public Animator Current => _animator;
-
     private void OnAnimatorIK()
     {
         _animator.SetLookAtWeight(_weight);

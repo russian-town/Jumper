@@ -15,17 +15,17 @@ public abstract class UIButton : UIElement
         if (_isInitialized == false)
             return;
 
-        _button.onClick.RemoveListener(ButtonClick);
+        _button.onClick.RemoveListener(OnButtonClick);
     }
 
     public void Initialize()
     {
         _button = GetComponent<Button>();
-        _button.onClick.AddListener(ButtonClick);
+        _button.onClick.AddListener(OnButtonClick);
         _isInitialized = true;
     }
 
     protected void SwitchEnableState(bool isEnable) => _button.enabled = isEnable;
 
-    private void ButtonClick() => ButtonClicked?.Invoke();
+    private void OnButtonClick() => ButtonClicked?.Invoke();
 }

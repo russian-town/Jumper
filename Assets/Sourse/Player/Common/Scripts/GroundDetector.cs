@@ -8,6 +8,8 @@ public class GroundDetector : MonoBehaviour
     [SerializeField] private LayerMask _groundLayerMask;
     [SerializeField] private SphereCollider _head;
 
+    private readonly float _threshold = .5f;
+
     private BoxCollider _boxCollider;
     private IGroundedHandler[] _groundedHandlers;
     private bool _canDetect = true;
@@ -25,9 +27,19 @@ public class GroundDetector : MonoBehaviour
         if (collision.transform.TryGetComponent(out Barrel barrel))
             return;
 
-        _canDetect = !Physics.ComputePenetration(_head, _head.transform.position, _head.transform.rotation, collision.collider, collision.transform.position, collision.transform.rotation, out Vector3 direction, out float distance);
+        _canDetect = !Physics.ComputePenetration
+            (
+            _head,
+            _head.transform.position,
+            _head.transform.rotation,
+            collision.collider,
+            collision.transform.position,
+            collision.transform.rotation,
+            out Vector3 direction,
+            out float distance
+            );
 
-        if (Vector3.Dot(collision.GetContact(0).normal, Vector3.up) > 0.5f && _canDetect)
+        if (Vector3.Dot(collision.GetContact(0).normal, Vector3.up) > _threshold && _canDetect)
             Fell?.Invoke(collision);
     }
 
@@ -39,9 +51,11 @@ public class GroundDetector : MonoBehaviour
 
     private bool IsGrounded()
     {
-        if (Physics.BoxCast(_boxCollider.bounds.center, transform.localScale / 2, -transform.up, out RaycastHit hit, transform.rotation, _distance, _groundLayerMask, QueryTriggerInteraction.Ignore))
+        Vector3 halfScale = transform.localScale / 2f;
+
+        if (Physics.BoxCast(_boxCollider.bounds.center, halfScale, -transform.up, out RaycastHit hit, transform.rotation, _distance, _groundLayerMask, QueryTriggerInteraction.Ignore))
         {
-            if (Vector3.Dot(hit.normal, transform.up) > 0.5f)
+            if (Vector3.Dot(hit.normal, transform.up) > _threshold)
             {
                 return true;
             }

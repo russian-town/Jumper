@@ -20,22 +20,25 @@ namespace Sourse.UI.Shop.Scripts
         private float _correctivePositionX;
         private RectTransform _content;
         private List<RectTransform> _skins = new List<RectTransform>();
+        private float _calculateSizeStep = .5f;
+        private float _inversePositionX = -1f;
+        private float _minSize = 0f;
 
         private void Awake()
         {
             _content = _scrollRect.content;
-
             float center = -_scrollRect.viewport.transform.localPosition.x;
             _correctivePositionX = center - _maxItemSize;
-            _horizontalLayoutGroup.padding = new RectOffset((int)center, (int)center, _horizontalLayoutGroup.padding.top, _horizontalLayoutGroup.padding.bottom);
+            int topPadding = _horizontalLayoutGroup.padding.top;
+            int bottomPadding = _horizontalLayoutGroup.padding.bottom;
+            RectOffset rectOffset = new RectOffset((int)center, (int)center, topPadding, bottomPadding);
+            _horizontalLayoutGroup.padding = rectOffset;
         }
 
         private void Update()
         {
             if (_isInitialized == false)
-            {
                 return;
-            }
 
             int nearestIndex = 0;
             float nearestDistance = float.MaxValue;
@@ -56,12 +59,8 @@ namespace Sourse.UI.Shop.Scripts
             }
 
             if (_isDragging == false)
-            {
                 if (Mathf.Abs(_scrollRect.velocity.x) < _stopVelocityX)
-                {
                     ScrollTo(nearestIndex);
-                }
-            }
         }
 
         public void Initialize(List<SkinView> skins)
@@ -80,16 +79,15 @@ namespace Sourse.UI.Shop.Scripts
         }
 
         public void OnEndDrag(PointerEventData eventData)
-        {
-            _isDragging = false;
-        }
+            => _isDragging = false;
 
         private void ScrollTo(int index)
         {
             _scrollRect.inertia = false;
 
             RectTransform skin = _skins[index];
-            float contentTargetPositionX = -1 * Mathf.Clamp(skin.anchoredPosition.x - skin.sizeDelta.x - _correctivePositionX, 0, _content.sizeDelta.x);
+            float offset = skin.anchoredPosition.x - skin.sizeDelta.x - _correctivePositionX;
+            float contentTargetPositionX = _inversePositionX * Mathf.Clamp(offset, _minSize, _content.sizeDelta.x);
             Vector2 nextContentPosition = new Vector2(contentTargetPositionX, _content.anchoredPosition.y);
 
             _content.anchoredPosition = Vector2.Lerp(_content.anchoredPosition, nextContentPosition, _lerpSpeed * Time.deltaTime);
@@ -97,7 +95,7 @@ namespace Sourse.UI.Shop.Scripts
 
         private Vector2 CalculateSize(Vector2 from, float to)
         {
-            return Vector2.Lerp(from, Vector2.one * to, 0.5f);
+            return Vector2.Lerp(from, Vector2.one * to, _calculateSizeStep);
         }
     }
 }

@@ -10,6 +10,8 @@ namespace Sourse.UI.LevelCompletePanel
     public class LevelCompletePanel : UIElement
     {
         private const string FillAmountKey = "FillAmount";
+        private const string Level = "LEVEL";
+        private const string Complete = "COMPLETE";
         private const float MaxPercent = 1f;
 
         [SerializeField] private float _speed;
@@ -31,7 +33,9 @@ namespace Sourse.UI.LevelCompletePanel
 
         public void SetText(int levelNumber)
         {
-            string translationText = $"{LeanLocalization.GetTranslationText("LEVEL")} {levelNumber} {LeanLocalization.GetTranslationText("COMPLETE")}";
+            string translatedLevel = LeanLocalization.GetTranslationText(Level);
+            string translatedComplete = LeanLocalization.GetTranslationText(Complete);
+            string translationText = $"{translatedLevel} {levelNumber} {translatedComplete}";
             _completeLevelText.text = translationText;
         }
 
@@ -41,12 +45,10 @@ namespace Sourse.UI.LevelCompletePanel
             _openingSkinBarBackground.enabled = false;
         }
 
-        public void StartFillSkinBar(float percent)
-        {
-            StartCoroutine(FillSkinBar(percent));
-        }
+        public void StartFillSkinBarCoroutine(float percent)
+            => StartCoroutine(FillSkinBarOverTime(percent));
 
-        private IEnumerator FillSkinBar(float percent)
+        private IEnumerator FillSkinBarOverTime(float percent)
         {
             float targetFillAmount;
 
@@ -57,7 +59,10 @@ namespace Sourse.UI.LevelCompletePanel
 
             while (_openingSkinBar.fillAmount != targetFillAmount)
             {
-                _openingSkinBar.fillAmount = Mathf.MoveTowards(_openingSkinBar.fillAmount, targetFillAmount, _speed * Time.deltaTime);
+                _openingSkinBar.fillAmount = Mathf.MoveTowards(
+                    _openingSkinBar.fillAmount,
+                    targetFillAmount,
+                    _speed * Time.deltaTime);
                 PlayerPrefs.SetFloat(FillAmountKey, _openingSkinBar.fillAmount);
 
                 if (_openingSkinBar.fillAmount == MaxPercent)

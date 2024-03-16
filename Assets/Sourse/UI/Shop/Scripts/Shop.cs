@@ -6,7 +6,6 @@ using UnityEngine;
 [RequireComponent(typeof(SkinViewSpawner))]
 public class Shop : SkinHandler
 {
-    [SerializeField] private Transform _content;
     [SerializeField] private ShopScroll _shopScroll;
     [SerializeField] private Wallet _wallet;
     [SerializeField] private Skin _defaultSkin;
@@ -29,7 +28,7 @@ public class Shop : SkinHandler
         {
             var spawnedSkinView = _skinViewSpawner.GetSkinView(Skins[i]);
             spawnedSkinView.Selected += OnSkinViewSelected;
-            spawnedSkinView.ByButtonClicked += OnByButtonClicked;
+            spawnedSkinView.ByButtonClicked += OnBuyButtonClicked;
             spawnedSkinView.SelectButtonClicked += OnSelectButtonClicked;
             spawnedSkinView.Initialize(Skins[i]);
             _spawnedSkinsView.Add(spawnedSkinView);
@@ -53,22 +52,22 @@ public class Shop : SkinHandler
         foreach (var skinView in _spawnedSkinsView)
         {
             skinView.Selected -= OnSkinViewSelected;
-            skinView.ByButtonClicked -= OnByButtonClicked;
+            skinView.ByButtonClicked -= OnBuyButtonClicked;
             skinView.SelectButtonClicked -= OnSelectButtonClicked;
         }
     }
 
-    public void OpenSkin(int id) => TryBySkin(id);
+    public void OpenSkin(int id) => TryBuySkin(id);
 
-    public bool TryBySkin(int id)
+    public bool TryBuySkin(int id)
     {
         if (TrySearchByID(id, out Skin skin) == true)
         {
             if (skin.Price <= _wallet.Money)
             {
                 _wallet.DicreaseMoney(skin.Price);
-                skin.By();
-                Saver.SaveState(IsByKey, skin.ID, skin.IsBy);
+                skin.Buy();
+                Saver.SaveState(IsByKey, skin.ID, skin.IsBought);
                 return true;
             }
         }
@@ -80,7 +79,7 @@ public class Shop : SkinHandler
     {
         if (TrySearchByID(id, out Skin skin))
         {
-            if (skin.IsBy == true)
+            if (skin.IsBought == true)
             {
                 DeselectSkin(_selectedID);
                 skin.Select();
@@ -117,9 +116,9 @@ public class Shop : SkinHandler
         _selectedID = skin.ID;
     }
 
-    private void OnByButtonClicked(Skin skin, SkinView skinView)
+    private void OnBuyButtonClicked(Skin skin, SkinView skinView)
     {
-        if (TryBySkin(skin.ID))
+        if (TryBuySkin(skin.ID))
             skinView.UpdateView();
     }
 

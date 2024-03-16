@@ -7,22 +7,24 @@ public class PlayerSpawner : MonoBehaviour
 
     public Player GetPlayer(int id, PlayerPosition playerPosition)
     {
-        if (playerPosition == null)
-            Debug.Log("Set player position");
+        if (TrySearchPlayer(id, out Player player))
+            return Instantiate(player, playerPosition.transform.position, Quaternion.identity);
 
-        return Instantiate(TrySearchPlayer(id), playerPosition.transform.position, Quaternion.identity);
+        return null;
     }
 
-    private Player TrySearchPlayer(int id)
+    private bool TrySearchPlayer(int id, out Player searchPlayer)
     {
         foreach (var player in _players)
         {
             if (player.ID == id)
             {
-                return player;
+                searchPlayer = player;
+                return true;
             }
         }
 
-        return null;
+        searchPlayer = null;
+        return false;
     }
 }

@@ -1,5 +1,3 @@
-using UnityEngine;
-
 public class DefaultSkinView : SkinView
 {
     protected override void Initialize() { }

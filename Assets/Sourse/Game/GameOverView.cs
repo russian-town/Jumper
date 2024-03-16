@@ -6,11 +6,14 @@ namespace Sourse.Game
 {
     public class GameOverView : UIElement
     {
+        private string Completed = "COMPLETED";
+
         [SerializeField] private TMP_Text _progressText;
 
         public void ShowProgress(float progress)
         {
-            _progressText.text = $"{progress} % {LeanLocalization.GetTranslationText("COMPLETED")}";
+            string translatedCompleted = LeanLocalization.GetTranslationText(Completed);
+            _progressText.text = $"{progress} % {translatedCompleted}";
         }
     }
 }

@@ -6,7 +6,6 @@ public class Root : MonoBehaviour
 {
     [SerializeField] private FollowCamera _followCamera;
     [SerializeField] private Game _game;
-    [SerializeField] private OpenableSkinHandler _openableSkinHandler;
     [SerializeField] private LevelProgress _levelProgress;
     [SerializeField] private PlayerInput _playerInput;
     [SerializeField] private Level _level;
@@ -23,6 +22,11 @@ public class Root : MonoBehaviour
     {
         _playerSpawner = GetComponent<PlayerSpawner>();
         _saver = GetComponent<Saver>();
+    }
+
+    private void OnDisable()
+    {
+        _game.Disable();
     }
 
     private void Start()
@@ -45,6 +49,7 @@ public class Root : MonoBehaviour
         _startPlayer.Initialize(_playerPositionHandler);
         _playerInput.Initialize(_startPlayer);
         _game.Initialaize(_startPlayer, _levelProgress, _playerInput, _startPlayerPosition, _applicationStatusChecker);
+        _game.Enable();
         _levelProgress.Initialize(_startPlayer);
         _followCamera.SetTarget(_startPlayer);
     }

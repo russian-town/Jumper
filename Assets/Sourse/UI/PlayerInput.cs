@@ -6,7 +6,7 @@ public class PlayerInput : MonoBehaviour, IPointerDownHandler
 {
     private Player _player;
 
-    public event Action Tap;
+    public event Action Pressed;
 
     public void Initialize(Player player) => _player = player;
 
@@ -16,6 +16,6 @@ public class PlayerInput : MonoBehaviour, IPointerDownHandler
             return;
 
         _player.Jump();
-        Tap?.Invoke();
+        Pressed?.Invoke();
     }
 }

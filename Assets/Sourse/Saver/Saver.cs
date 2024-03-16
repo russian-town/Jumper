@@ -111,9 +111,14 @@ public class Saver : MonoBehaviour
         return false;
     }
 
-    public void TryDeleteSaveData(string key)
+    public bool TryDeleteSaveData(string key)
     {
         if (PlayerPrefs.HasKey(key))
+        {
             PlayerPrefs.DeleteKey(key);
+            return true;
+        }
+
+        return false;
     }
 }

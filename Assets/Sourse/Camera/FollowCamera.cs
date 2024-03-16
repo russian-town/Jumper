@@ -5,19 +5,21 @@ public class FollowCamera : MonoBehaviour
     [SerializeField] private float _speed;
     [SerializeField] private Vector3 _offSet;
 
-    private Player _target;
+    private Transform _target;
 
     private void Update()
     {
         if (_target == null)
             return;
 
-        Vector3 targetPosition = new Vector3(_target.transform.position.x, _target.transform.position.y, transform.position.z) + new Vector3(_offSet.x, _offSet.y, 0f);
-        transform.position = Vector3.Lerp(transform.position, targetPosition, _speed * Time.deltaTime);
+        Vector3 targetPosition = new Vector3(_target.position.x, _target.position.y, transform.position.z);
+        Vector3 offSet = new Vector3(_offSet.x, _offSet.y, 0f);
+        Vector3 followPosition = targetPosition + offSet; 
+        transform.position = Vector3.Lerp(transform.position, followPosition, _speed * Time.deltaTime);
     }
 
-    public void SetTarget(Player target)
+    public void SetTarget(Player player)
     {
-        _target = target;
+        _target = player.transform;
     }
 }

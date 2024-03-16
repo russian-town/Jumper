@@ -42,7 +42,7 @@ public class OpenableSkinHandler : SkinHandler
 
     private void AddOpenableSkin(Skin skin)
     {
-        if (skin.Type == SkinType.Openable && skin.IsBy == false)
+        if (skin.Type == SkinType.Openable && skin.IsBought == false)
             _openableSkins.Add(skin);
     }
 
@@ -67,8 +67,8 @@ public class OpenableSkinHandler : SkinHandler
         {
             if (id == skin.ID)
             {
-                skin.By();
-                Saver.SaveState(IsByKey, id, skin.IsBy);
+                skin.Buy();
+                Saver.SaveState(IsByKey, id, skin.IsBought);
             }
         }
     }

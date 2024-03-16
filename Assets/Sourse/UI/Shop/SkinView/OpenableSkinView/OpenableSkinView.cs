@@ -9,7 +9,7 @@ public class OpenableSkinView : SkinView
 
     protected override void UpdateChildView()
     {
-        if (Skin.IsBy == false)
+        if (Skin.IsBought == false)
         {
             SetIconColor(_closeSkinColor);
             SelectButton.Hide();

@@ -40,10 +40,15 @@ public class Tutorial : MonoBehaviour
 
         while (_isWork)
         {
-            if (tutorialType == TutorialType.Clik)
-                _tutorialAnimaton.Clik(ClickKey);
-            else if (tutorialType == TutorialType.DoubleClick)
-                _tutorialAnimaton.Clik(DoubleClickKey);
+            switch (tutorialType)
+            {
+                case TutorialType.Clik:
+                    _tutorialAnimaton.Clik(ClickKey);
+                    break;
+                case TutorialType.DoubleClick:
+                    _tutorialAnimaton.Clik(DoubleClickKey);
+                    break;
+            }  
 
             yield return delay;
         }
