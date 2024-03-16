@@ -1,4 +1,5 @@
 using System;
+using Sourse.ApplicationStatusChecker;
 using UnityEngine;
 
 public class RewardedVideo : MonoBehaviour

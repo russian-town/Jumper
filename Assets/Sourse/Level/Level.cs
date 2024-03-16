@@ -1,3 +1,4 @@
+using Sourse.Level;
 using UnityEngine;
 
 [RequireComponent(typeof(Saver), typeof(PlayerSceneLoader))]

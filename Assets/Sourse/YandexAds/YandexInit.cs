@@ -1,5 +1,6 @@
 using System.Collections;
 using Agava.YandexGames;
+using Sourse.Settings.Language;
 using UnityEngine;
 
 public class YandexInit : MonoBehaviour

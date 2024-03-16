@@ -1,13 +1,16 @@
+using Lean.Localization;
 using TMPro;
 using UnityEngine;
-using Lean.Localization;
 
-public class GameOverView : UIElement
+namespace Sourse.Game
 {
-    [SerializeField] private TMP_Text _progressText;
-
-    public void ShowProgress(float progress)
+    public class GameOverView : UIElement
     {
-        _progressText.text = $"{progress} % {LeanLocalization.GetTranslationText("COMPLETED")}";
+        [SerializeField] private TMP_Text _progressText;
+
+        public void ShowProgress(float progress)
+        {
+            _progressText.text = $"{progress} % {LeanLocalization.GetTranslationText("COMPLETED")}";
+        }
     }
 }

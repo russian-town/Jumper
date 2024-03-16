@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Sourse.UI.LevelCompletePanel;
 using UnityEngine;
 
 public class OpenableSkinHandler : SkinHandler

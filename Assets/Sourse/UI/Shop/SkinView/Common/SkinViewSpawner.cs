@@ -1,3 +1,4 @@
+using Sourse.ApplicationStatusChecker;
 using UnityEngine;
 
 public class SkinViewSpawner : MonoBehaviour

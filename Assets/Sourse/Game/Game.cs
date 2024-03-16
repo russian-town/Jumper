@@ -1,3 +1,6 @@
+using Sourse.ApplicationStatusChecker;
+using Sourse.Game;
+using Sourse.UI.LevelCompletePanel;
 using UnityEngine;
 
 [RequireComponent(typeof(OpenableSkinHandler))]

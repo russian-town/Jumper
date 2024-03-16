@@ -1,86 +1,89 @@
-using UnityEngine;
 using Agava.WebUtility;
+using UnityEngine;
 using UnityEngine.Audio;
 
-public class ApplicationStatusChecker : MonoBehaviour
+namespace Sourse.ApplicationStatusChecker
 {
-    private const string MasterVolume = "MasterVolume";
-    private const float FullVolume = 0f;
-    private const float MuteVolume = -80f;
-
-    [SerializeField] private AudioMixerGroup _masterGroup;
-    [SerializeField] private Pause _pause;
-    [SerializeField] private PausePanel _pausePanel;
-
-    private bool _isPlayInterstitial = false;
-    private bool _isPlayRewarded = false;
-    private YandexAds _yandexAds;
-
-    private void OnEnable()
+    public class ApplicationStatusChecker : MonoBehaviour
     {
-        WebApplication.InBackgroundChangeEvent += OnInBackgroundChangeEvent;
-    }
+        private const string MasterVolume = "MasterVolume";
+        private const float FullVolume = 0f;
+        private const float MuteVolume = -80f;
 
-    private void OnDisable()
-    {
-        WebApplication.InBackgroundChangeEvent -= OnInBackgroundChangeEvent;
+        [SerializeField] private AudioMixerGroup _masterGroup;
+        [SerializeField] private Pause _pause;
+        [SerializeField] private PausePanel _pausePanel;
 
-        if (_yandexAds == null)
-            return;
+        private bool _isPlayInterstitial = false;
+        private bool _isPlayRewarded = false;
+        private YandexAds _yandexAds;
 
-        _yandexAds.OpenInterstitialCallback -= OnOpenInterstitial;
-        _yandexAds.CloseInterstitialCallback -= OnCloseInterstiital;
-    }
-
-    private void OnApplicationFocus(bool focus)
-    {
-        OnInBackgroundChangeEvent(!focus);
-
-        if (focus == false)
+        private void OnEnable()
         {
-            if (_pause == null)
+            WebApplication.InBackgroundChangeEvent += OnInBackgroundChangeEvent;
+        }
+
+        private void OnDisable()
+        {
+            WebApplication.InBackgroundChangeEvent -= OnInBackgroundChangeEvent;
+
+            if (_yandexAds == null)
                 return;
 
-            _pause.Enable();
-            _pausePanel.Show();
+            _yandexAds.OpenInterstitialCallback -= OnOpenInterstitial;
+            _yandexAds.CloseInterstitialCallback -= OnCloseInterstiital;
         }
-    }
 
-    public void Initialize(YandexAds yandexAds)
-    {
-        _yandexAds = yandexAds;
-        _yandexAds.OpenInterstitialCallback += OnOpenInterstitial;
-        _yandexAds.CloseInterstitialCallback += OnCloseInterstiital;
-    }
+        private void OnApplicationFocus(bool focus)
+        {
+            OnInBackgroundChangeEvent(!focus);
 
-    public void OnInBackgroundChangeEvent(bool isChange)
-    {
-        if (_isPlayInterstitial || _isPlayRewarded)
-            return;
+            if (focus == false)
+            {
+                if (_pause == null)
+                    return;
 
-        ChangeSoundStatus(isChange);
-    }
+                _pause.Enable();
+                _pausePanel.Show();
+            }
+        }
 
-    public void ChangeSoundStatus(bool isMute)
-    {
-        if (isMute == true)
-            _masterGroup.audioMixer.SetFloat(MasterVolume, MuteVolume);
-        else
-            _masterGroup.audioMixer.SetFloat(MasterVolume, FullVolume);
-    }
+        public void Initialize(YandexAds yandexAds)
+        {
+            _yandexAds = yandexAds;
+            _yandexAds.OpenInterstitialCallback += OnOpenInterstitial;
+            _yandexAds.CloseInterstitialCallback += OnCloseInterstiital;
+        }
 
-    public void SetIsPlayRewarded(bool isPlayRewaeded)
-    {
-        _isPlayRewarded = isPlayRewaeded;
-    }
+        public void OnInBackgroundChangeEvent(bool isChange)
+        {
+            if (_isPlayInterstitial || _isPlayRewarded)
+                return;
 
-    private void OnOpenInterstitial()
-    {
-        _isPlayInterstitial = true;
-    }
+            ChangeSoundStatus(isChange);
+        }
 
-    private void OnCloseInterstiital(bool isClose)
-    {
-        _isPlayInterstitial = false;
+        public void ChangeSoundStatus(bool isMute)
+        {
+            if (isMute == true)
+                _masterGroup.audioMixer.SetFloat(MasterVolume, MuteVolume);
+            else
+                _masterGroup.audioMixer.SetFloat(MasterVolume, FullVolume);
+        }
+
+        public void SetIsPlayRewarded(bool isPlayRewaeded)
+        {
+            _isPlayRewarded = isPlayRewaeded;
+        }
+
+        private void OnOpenInterstitial()
+        {
+            _isPlayInterstitial = true;
+        }
+
+        private void OnCloseInterstiital(bool isClose)
+        {
+            _isPlayInterstitial = false;
+        }
     }
 }

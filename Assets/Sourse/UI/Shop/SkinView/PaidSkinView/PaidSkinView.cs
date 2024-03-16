@@ -1,3 +1,4 @@
+using Sourse.UI.Shop.Scripts;
 using UnityEngine;
 
 public class PaidSkinView : SkinView

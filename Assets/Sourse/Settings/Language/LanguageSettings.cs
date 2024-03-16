@@ -1,9 +1,12 @@
-using UnityEngine;
 using Lean.Localization;
+using UnityEngine;
 
-public class LanguageSettings : MonoBehaviour
+namespace Sourse.Settings.Language
 {
-    [SerializeField] private LeanLocalization _leanLocalization;
+    public class LanguageSettings : MonoBehaviour
+    {
+        [SerializeField] private LeanLocalization _leanLocalization;
 
-    public void SetLanguage(string languageName) => _leanLocalization.SetCurrentLanguage(languageName);
+        public void SetLanguage(string languageName) => _leanLocalization.SetCurrentLanguage(languageName);
+    }
 }

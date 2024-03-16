@@ -1,17 +1,20 @@
-using UnityEngine;
-using TMPro;
 using Lean.Localization;
+using TMPro;
+using UnityEngine;
 
-[RequireComponent(typeof(TMP_Text))]
-public class TutorialText : UIElement
+namespace Sourse.Tutorial
 {
-    private const string Tap = "TAP";
-
-    private TMP_Text _text;
-
-    public void Initialize()
+    [RequireComponent(typeof(TMP_Text))]
+    public class TutorialText : UIElement
     {
-        _text = GetComponent<TMP_Text>();
-        _text.text = $"{LeanLocalization.GetTranslationText(Tap)}";
+        private const string Tap = "TAP";
+
+        private TMP_Text _text;
+
+        public void Initialize()
+        {
+            _text = GetComponent<TMP_Text>();
+            _text.text = $"{LeanLocalization.GetTranslationText(Tap)}";
+        }
     }
 }

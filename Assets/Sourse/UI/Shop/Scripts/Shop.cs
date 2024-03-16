@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Sourse.UI.Shop.Scripts;
 using UnityEngine;
 
 [RequireComponent(typeof(SkinViewSpawner))]
