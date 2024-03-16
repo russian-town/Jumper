@@ -1,20 +1,23 @@
 using UnityEngine;
 
-[RequireComponent(typeof(AudioSource))]
-public class Ground : MonoBehaviour
+namespace Sourse.Ground
 {
-    [SerializeField] private AudioClip _playerFallSound;
-
-    private AudioSource _audioSource;
-
-    private void Awake()
+    [RequireComponent(typeof(AudioSource))]
+    public class Ground : MonoBehaviour
     {
-        _audioSource = GetComponent<AudioSource>();
-    }
+        [SerializeField] private AudioClip _playerFallSound;
 
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.transform.TryGetComponent(out Player player) && (collision.collider is SphereCollider) == false)
-            _audioSource.PlayOneShot(_playerFallSound);
+        private AudioSource _audioSource;
+
+        private void Awake()
+        {
+            _audioSource = GetComponent<AudioSource>();
+        }
+
+        private void OnCollisionEnter(Collision collision)
+        {
+            if (collision.transform.TryGetComponent(out Player.Common.Scripts.Player player) && (collision.collider is SphereCollider) == false)
+                _audioSource.PlayOneShot(_playerFallSound);
+        }
     }
 }

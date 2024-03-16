@@ -1,3 +1,8 @@
-public class RewardedPanel : UIElement
+using Sourse.UI;
+
+namespace Sourse.Game
 {
+    public class RewardedPanel : UIElement
+    {
+    }
 }

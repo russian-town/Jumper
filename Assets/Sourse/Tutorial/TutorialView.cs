@@ -1,26 +1,28 @@
-using Sourse.Tutorial;
 using UnityEngine;
 
-public class TutorialView : MonoBehaviour
+namespace Sourse.Tutorial
 {
-    [SerializeField] private TutorialText _tutorialText;
-    [SerializeField] private TutorialImage _tutorialImage;
-
-    public void Initialize()
+    public class TutorialView : MonoBehaviour
     {
-        _tutorialText.Initialize();
-    }
+        [SerializeField] private TutorialText _tutorialText;
+        [SerializeField] private TutorialImage _tutorialImage;
 
-    public void Show()
-    {
-        _tutorialText.Initialize();
-        _tutorialText.Show();
-        _tutorialImage.Show();
-    }
+        public void Initialize()
+        {
+            _tutorialText.Initialize();
+        }
 
-    public void Hide()
-    {
-        _tutorialText.Hide();
-        _tutorialImage.Hide();
+        public void Show()
+        {
+            _tutorialText.Initialize();
+            _tutorialText.Show();
+            _tutorialImage.Show();
+        }
+
+        public void Hide()
+        {
+            _tutorialText.Hide();
+            _tutorialImage.Hide();
+        }
     }
 }

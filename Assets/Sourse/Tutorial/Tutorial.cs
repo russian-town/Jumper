@@ -1,56 +1,59 @@
 using System.Collections;
 using UnityEngine;
 
-[RequireComponent(typeof(TutorialAnimaton), typeof(TutorialView))]
-public class Tutorial : MonoBehaviour
+namespace Sourse.Tutorial
 {
-    private const string DoubleClickKey = "DoubleClick";
-    private const string ClickKey = "Click";
-
-    [SerializeField] private float _delay;
-
-    private TutorialAnimaton _tutorialAnimaton;
-    private TutorialView _tutorialView;
-    private bool _isWork = true;
-
-    private void Awake()
+    [RequireComponent(typeof(TutorialAnimaton), typeof(TutorialView))]
+    public class Tutorial : MonoBehaviour
     {
-        _tutorialAnimaton = GetComponent<TutorialAnimaton>();
-        _tutorialView = GetComponent<TutorialView>();
-        _tutorialAnimaton.Initialize();
-        _tutorialView.Initialize();
-        _tutorialView.Hide();
-    }
+        private const string DoubleClickKey = "DoubleClick";
+        private const string ClickKey = "Click";
 
-    public void Show(TutorialType tutorialType)
-    {
-        _tutorialView.Show();
-        StartCoroutine(StartTutorial(tutorialType));
-    }
+        [SerializeField] private float _delay;
 
-    public void Hide(TutorialType tutorialType)
-    {
-        StopCoroutine(StartTutorial(tutorialType));
-        _tutorialView.Hide();
-    }
+        private TutorialAnimaton _tutorialAnimaton;
+        private TutorialView _tutorialView;
+        private bool _isWork = true;
 
-    private IEnumerator StartTutorial(TutorialType tutorialType)
-    {
-        WaitForSeconds delay = new WaitForSeconds(_delay);
-
-        while (_isWork)
+        private void Awake()
         {
-            switch (tutorialType)
-            {
-                case TutorialType.Clik:
-                    _tutorialAnimaton.Clik(ClickKey);
-                    break;
-                case TutorialType.DoubleClick:
-                    _tutorialAnimaton.Clik(DoubleClickKey);
-                    break;
-            }  
+            _tutorialAnimaton = GetComponent<TutorialAnimaton>();
+            _tutorialView = GetComponent<TutorialView>();
+            _tutorialAnimaton.Initialize();
+            _tutorialView.Initialize();
+            _tutorialView.Hide();
+        }
 
-            yield return delay;
+        public void Show(TutorialType tutorialType)
+        {
+            _tutorialView.Show();
+            StartCoroutine(StartTutorial(tutorialType));
+        }
+
+        public void Hide(TutorialType tutorialType)
+        {
+            StopCoroutine(StartTutorial(tutorialType));
+            _tutorialView.Hide();
+        }
+
+        private IEnumerator StartTutorial(TutorialType tutorialType)
+        {
+            WaitForSeconds delay = new WaitForSeconds(_delay);
+
+            while (_isWork)
+            {
+                switch (tutorialType)
+                {
+                    case TutorialType.Clik:
+                        _tutorialAnimaton.Clik(ClickKey);
+                        break;
+                    case TutorialType.DoubleClick:
+                        _tutorialAnimaton.Clik(DoubleClickKey);
+                        break;
+                }  
+
+                yield return delay;
+            }
         }
     }
 }

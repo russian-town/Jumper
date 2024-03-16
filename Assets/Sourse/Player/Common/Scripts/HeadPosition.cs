@@ -1,6 +1,9 @@
 using UnityEngine;
 
-public class HeadPosition : MonoBehaviour
+namespace Sourse.Player.Common.Scripts
 {
-    public Vector3 Current => transform.position;
+    public class HeadPosition : MonoBehaviour
+    {
+        public Vector3 Current => transform.position;
+    }
 }

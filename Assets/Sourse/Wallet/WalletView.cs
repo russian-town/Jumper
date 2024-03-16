@@ -1,12 +1,15 @@
 using TMPro;
 using UnityEngine;
 
-public class WalletView : MonoBehaviour
+namespace Sourse.Wallet
 {
-    [SerializeField] private TMP_Text _moneyText;
-
-    public void UpdateMoneyText(int money)
+    public class WalletView : MonoBehaviour
     {
-        _moneyText.text = money.ToString();
+        [SerializeField] private TMP_Text _moneyText;
+
+        public void UpdateMoneyText(int money)
+        {
+            _moneyText.text = money.ToString();
+        }
     }
 }

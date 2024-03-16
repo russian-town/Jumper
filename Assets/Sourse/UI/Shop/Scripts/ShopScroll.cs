@@ -63,7 +63,7 @@ namespace Sourse.UI.Shop.Scripts
                     ScrollTo(nearestIndex);
         }
 
-        public void Initialize(List<SkinView> skins)
+        public void Initialize(List<SkinView.Common.SkinView> skins)
         {
             if (_isInitialized)
                 throw new InvalidOperationException("Already initialized");

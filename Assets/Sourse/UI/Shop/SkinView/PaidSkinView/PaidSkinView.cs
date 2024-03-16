@@ -1,38 +1,42 @@
 using Sourse.UI.Shop.Scripts;
+using Sourse.UI.Shop.Scripts.Buttons;
 using UnityEngine;
 
-public class PaidSkinView : SkinView
+namespace Sourse.UI.Shop.SkinView.PaidSkinView
 {
-    [SerializeField] private BuyButton _byButton;
-    [SerializeField] private PriceText _priceText;
-
-    protected override void UpdateChildView()
+    public class PaidSkinView : Common.SkinView
     {
-        if (Skin.IsBought == true)
+        [SerializeField] private BuyButton _byButton;
+        [SerializeField] private PriceText _priceText;
+
+        protected override void UpdateChildView()
         {
-            _byButton.Hide();
-            SelectButton.Show();
+            if (Skin.IsBought == true)
+            {
+                _byButton.Hide();
+                SelectButton.Show();
+            }
+            else if (Skin.IsBought == false)
+            {
+                _priceText.SetText(Skin.Price);
+                _byButton.Show();
+            }
         }
-        else if (Skin.IsBought == false)
+
+        protected override void Initialize()
         {
-            _priceText.SetText(Skin.Price);
-            _byButton.Show();
+            _byButton.Initialize();
+            _byButton.ButtonClicked += OnButtonClicked;
         }
-    }
 
-    protected override void Initialize()
-    {
-        _byButton.Initialize();
-        _byButton.ButtonClicked += OnButtonClicked;
-    }
+        protected override void Deinitialize()
+        {
+            _byButton.ButtonClicked -= OnButtonClicked;
+        }
 
-    protected override void Deinitialize()
-    {
-        _byButton.ButtonClicked -= OnButtonClicked;
-    }
-
-    private void OnButtonClicked()
-    {
-        By();
+        private void OnButtonClicked()
+        {
+            By();
+        }
     }
 }

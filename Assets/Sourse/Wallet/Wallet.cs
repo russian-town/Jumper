@@ -1,44 +1,47 @@
 using UnityEngine;
 
-[RequireComponent(typeof(WalletView), typeof(Saver))]
-public class Wallet : MonoBehaviour
+namespace Sourse.Wallet
 {
-    private const string MoneyKey = "Money";
-
-    private int _money;
-    private WalletView _walletView;
-    private Saver _saver;
-
-    public int Money => _money;
-
-    private void Awake()
+    [RequireComponent(typeof(WalletView), typeof(Saver.Saver))]
+    public class Wallet : MonoBehaviour
     {
-        _walletView = GetComponent<WalletView>();
-        _saver = GetComponent<Saver>();
+        private const string MoneyKey = "Money";
 
-        if (_saver.TryGetValue(MoneyKey, out int money))
-            _money = money;
+        private int _money;
+        private WalletView _walletView;
+        private Saver.Saver _saver;
 
-        _walletView.UpdateMoneyText(_money);
-    }
+        public int Money => _money;
 
-    public void DicreaseMoney(int money)
-    {
-        if (money <= 0)
-            return;
+        private void Awake()
+        {
+            _walletView = GetComponent<WalletView>();
+            _saver = GetComponent<Saver.Saver>();
 
-        _money -= money;
-        _saver.Save(MoneyKey, _money);
-        _walletView.UpdateMoneyText(_money);
-    }
+            if (_saver.TryGetValue(MoneyKey, out int money))
+                _money = money;
 
-    public void AddMoney(int money)
-    {
-        if (money <= 0)
-            return;
+            _walletView.UpdateMoneyText(_money);
+        }
 
-        _money += money;
-        _saver.Save(MoneyKey, _money);
-        _walletView.UpdateMoneyText(_money);
+        public void DicreaseMoney(int money)
+        {
+            if (money <= 0)
+                return;
+
+            _money -= money;
+            _saver.Save(MoneyKey, _money);
+            _walletView.UpdateMoneyText(_money);
+        }
+
+        public void AddMoney(int money)
+        {
+            if (money <= 0)
+                return;
+
+            _money += money;
+            _saver.Save(MoneyKey, _money);
+            _walletView.UpdateMoneyText(_money);
+        }
     }
 }

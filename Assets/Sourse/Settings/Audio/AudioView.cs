@@ -1,37 +1,40 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class AudioView : MonoBehaviour
+namespace Sourse.Settings.Audio
 {
-    [SerializeField] private Image _soundImage;
-    [SerializeField] private Image _musicImage;
-    [SerializeField] private Sprite _unmuteSound;
-    [SerializeField] private Sprite _muteSound;
-    [SerializeField] private Sprite _unmuteMusic;
-    [SerializeField] private Sprite _muteMusic;
-
-    public void MuteSound()
+    public class AudioView : MonoBehaviour
     {
-        ChangeIcon(_soundImage, _muteSound);
-    }
+        [SerializeField] private Image _soundImage;
+        [SerializeField] private Image _musicImage;
+        [SerializeField] private Sprite _unmuteSound;
+        [SerializeField] private Sprite _muteSound;
+        [SerializeField] private Sprite _unmuteMusic;
+        [SerializeField] private Sprite _muteMusic;
 
-    public void UnmuteSound()
-    {
-        ChangeIcon(_soundImage, _unmuteSound);
-    }
+        public void MuteSound()
+        {
+            ChangeIcon(_soundImage, _muteSound);
+        }
 
-    public void MuteMusic()
-    {
-        ChangeIcon(_musicImage, _muteMusic);
-    }
+        public void UnmuteSound()
+        {
+            ChangeIcon(_soundImage, _unmuteSound);
+        }
 
-    public void UnmuteMusic()
-    {
-        ChangeIcon(_musicImage, _unmuteMusic);
-    }
+        public void MuteMusic()
+        {
+            ChangeIcon(_musicImage, _muteMusic);
+        }
 
-    private void ChangeIcon(Image icon, Sprite iconState)
-    {
-        icon.sprite = iconState;
+        public void UnmuteMusic()
+        {
+            ChangeIcon(_musicImage, _unmuteMusic);
+        }
+
+        private void ChangeIcon(Image icon, Sprite iconState)
+        {
+            icon.sprite = iconState;
+        }
     }
 }

@@ -1,4 +1,5 @@
 using Agava.WebUtility;
+using Sourse.Pause;
 using UnityEngine;
 using UnityEngine.Audio;
 
@@ -11,12 +12,12 @@ namespace Sourse.ApplicationStatusChecker
         private const float MuteVolume = -80f;
 
         [SerializeField] private AudioMixerGroup _masterGroup;
-        [SerializeField] private Pause _pause;
+        [SerializeField] private Pause.Pause _pause;
         [SerializeField] private PausePanel _pausePanel;
 
         private bool _isPlayInterstitial = false;
         private bool _isPlayRewarded = false;
-        private YandexAds _yandexAds;
+        private YandexAds.YandexAds _yandexAds;
 
         private void OnEnable()
         {
@@ -48,7 +49,7 @@ namespace Sourse.ApplicationStatusChecker
             }
         }
 
-        public void Initialize(YandexAds yandexAds)
+        public void Initialize(YandexAds.YandexAds yandexAds)
         {
             _yandexAds = yandexAds;
             _yandexAds.OpenInterstitialCallback += OnOpenInterstitial;

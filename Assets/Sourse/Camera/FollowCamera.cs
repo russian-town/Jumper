@@ -1,25 +1,28 @@
 using UnityEngine;
 
-public class FollowCamera : MonoBehaviour
+namespace Sourse.Camera
 {
-    [SerializeField] private float _speed;
-    [SerializeField] private Vector3 _offSet;
-
-    private Transform _target;
-
-    private void Update()
+    public class FollowCamera : MonoBehaviour
     {
-        if (_target == null)
-            return;
+        [SerializeField] private float _speed;
+        [SerializeField] private Vector3 _offSet;
 
-        Vector3 targetPosition = new Vector3(_target.position.x, _target.position.y, transform.position.z);
-        Vector3 offSet = new Vector3(_offSet.x, _offSet.y, 0f);
-        Vector3 followPosition = targetPosition + offSet; 
-        transform.position = Vector3.Lerp(transform.position, followPosition, _speed * Time.deltaTime);
-    }
+        private Transform _target;
 
-    public void SetTarget(Player player)
-    {
-        _target = player.transform;
+        private void Update()
+        {
+            if (_target == null)
+                return;
+
+            Vector3 targetPosition = new Vector3(_target.position.x, _target.position.y, transform.position.z);
+            Vector3 offSet = new Vector3(_offSet.x, _offSet.y, 0f);
+            Vector3 followPosition = targetPosition + offSet; 
+            transform.position = Vector3.Lerp(transform.position, followPosition, _speed * Time.deltaTime);
+        }
+
+        public void SetTarget(Player.Common.Scripts.Player player)
+        {
+            _target = player.transform;
+        }
     }
 }

@@ -1,7 +1,10 @@
-public enum SkinType
+namespace Sourse.UI.Shop.Skin
 {
-    Default,
-    Paid,
-    Rewarded,
-    Openable
+    public enum SkinType
+    {
+        Default,
+        Paid,
+        Rewarded,
+        Openable
+    }
 }

@@ -1,5 +1,8 @@
-public enum TutorialType
+namespace Sourse.Tutorial
 {
-    Clik,
-    DoubleClick
+    public enum TutorialType
+    {
+        Clik,
+        DoubleClick
+    }
 }

@@ -1,6 +1,9 @@
-public enum Language
+namespace Sourse.Settings.Language
 {
-    Rus,
-    Eng,
-    Tur
+    public enum Language
+    {
+        Rus,
+        Eng,
+        Tur
+    }
 }

@@ -1,7 +1,12 @@
-public class RetryButton : UIButton, IPauseHandler
+using Sourse.UI.Shop.Scripts.Buttons;
+
+namespace Sourse.Game
 {
-    public void SetPause(bool isPause)
+    public class RetryButton : UIButton, IPauseHandler
     {
-        SwitchEnableState(!isPause);
+        public void SetPause(bool isPause)
+        {
+            SwitchEnableState(!isPause);
+        }
     }
 }

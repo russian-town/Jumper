@@ -1,4 +1,7 @@
-public interface IPauseHandler
+namespace Sourse.Game
 {
-    void SetPause(bool isPause);
+    public interface IPauseHandler
+    {
+        void SetPause(bool isPause);
+    }
 }

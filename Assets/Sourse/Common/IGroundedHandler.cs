@@ -1,4 +1,7 @@
-public interface IGroundedHandler
+namespace Sourse.Common
 {
-    void SetGrounded(bool isGrounded);
+    public interface IGroundedHandler
+    {
+        void SetGrounded(bool isGrounded);
+    }
 }

@@ -1,31 +1,35 @@
+using Sourse.Player.Common.Scripts;
 using UnityEngine;
 
-public class Props : MonoBehaviour
+namespace Sourse.Props.Common
 {
-    [SerializeField] private CollisionEvent CollisionEnter;
-    [SerializeField] private CollisionEvent CollisionExit;
-    [SerializeField] private PlayerPosition _playerPosition;
-
-    public PlayerPosition PlayerPosition => _playerPosition;
-
-    private void OnCollisionEnter(Collision collision)
+    public class Props : MonoBehaviour
     {
-        if (collision.transform.TryGetComponent(out Player player))
+        [SerializeField] private CollisionEvent CollisionEnter;
+        [SerializeField] private CollisionEvent CollisionExit;
+        [SerializeField] private PlayerPosition _playerPosition;
+
+        public PlayerPosition PlayerPosition => _playerPosition;
+
+        private void OnCollisionEnter(Collision collision)
         {
-            if (player.IsStart)
+            if (collision.transform.TryGetComponent(out Player.Common.Scripts.Player player))
             {
-                CollisionEnter.Invoke();
+                if (player.IsStart)
+                {
+                    CollisionEnter.Invoke();
+                }
             }
         }
-    }
 
-    private void OnCollisionExit(Collision collision)
-    {
-        if (collision.transform.TryGetComponent(out Player player))
+        private void OnCollisionExit(Collision collision)
         {
-            if (player.IsStart)
+            if (collision.transform.TryGetComponent(out Player.Common.Scripts.Player player))
             {
-                CollisionExit.Invoke();
+                if (player.IsStart)
+                {
+                    CollisionExit.Invoke();
+                }
             }
         }
     }

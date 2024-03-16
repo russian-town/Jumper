@@ -1,3 +1,8 @@
-public class CloseButton : UIButton
+using Sourse.UI.Shop.Scripts.Buttons;
+
+namespace Sourse.UI
 {
+    public class CloseButton : UIButton
+    {
+    }
 }

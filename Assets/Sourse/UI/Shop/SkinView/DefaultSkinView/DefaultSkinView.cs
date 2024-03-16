@@ -1,8 +1,11 @@
-public class DefaultSkinView : SkinView
+namespace Sourse.UI.Shop.SkinView.DefaultSkinView
 {
-    protected override void Initialize() { }
+    public class DefaultSkinView : Common.SkinView
+    {
+        protected override void Initialize() { }
 
-    protected override void UpdateChildView() { }
+        protected override void UpdateChildView() { }
 
-    protected override void Deinitialize() { }
+        protected override void Deinitialize() { }
+    }
 }

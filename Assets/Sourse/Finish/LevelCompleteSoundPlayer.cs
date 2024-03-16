@@ -1,20 +1,23 @@
 using UnityEngine;
 
-[RequireComponent(typeof(AudioSource))]
-public class LevelCompleteSoundPlayer : MonoBehaviour
+namespace Sourse.Finish
 {
-    [SerializeField] private AudioClip _fallSound;
-
-    private AudioSource _audioSource;
-
-    private void Awake() => _audioSource = GetComponent<AudioSource>();
-
-    private void OnCollisionEnter(Collision collision)
+    [RequireComponent(typeof(AudioSource))]
+    public class LevelCompleteSoundPlayer : MonoBehaviour
     {
-        if (collision.transform.TryGetComponent(out Player player))
+        [SerializeField] private AudioClip _fallSound;
+
+        private AudioSource _audioSource;
+
+        private void Awake() => _audioSource = GetComponent<AudioSource>();
+
+        private void OnCollisionEnter(Collision collision)
         {
-            player.SetPause(true);
-            _audioSource.PlayOneShot(_fallSound);
+            if (collision.transform.TryGetComponent(out Player.Common.Scripts.Player player))
+            {
+                player.SetPause(true);
+                _audioSource.PlayOneShot(_fallSound);
+            }
         }
     }
 }

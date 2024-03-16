@@ -1,5 +1,8 @@
 using UnityEngine;
 
-public class FinishPosition : MonoBehaviour
+namespace Sourse.Finish
 {
+    public class FinishPosition : MonoBehaviour
+    {
+    }
 }
