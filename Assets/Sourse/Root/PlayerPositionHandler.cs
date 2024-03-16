@@ -4,12 +4,12 @@ using UnityEngine;
 [RequireComponent(typeof(Saver))]
 public class PlayerPositionHandler : MonoBehaviour
 {
-    private const string LastPropsIDKey = "CurrentPropsID";
+    private const string LastPropsIdKey = "CurrentPropsID";
 
     [SerializeField] private List<Props> _props = new List<Props>();
     [SerializeField] private Game _game;
 
-    private int _currentPropsID;
+    private int _currentPropsId;
     private Saver _saver;
 
     public PlayerPosition LastPlayerPosition { get; private set; }
@@ -21,11 +21,11 @@ public class PlayerPositionHandler : MonoBehaviour
 
     public PlayerPosition GetLastPosition()
     {
-        if (_saver.TryGetValue(LastPropsIDKey, out int ID) == true)
+        if (_saver.TryGetValue(LastPropsIdKey, out int Id) == true)
         {
             foreach (var props in _props)
             {
-                if (_props.IndexOf(props) == ID)
+                if (_props.IndexOf(props) == Id)
                 {
                     return props.PlayerPosition;
                 }
@@ -37,12 +37,12 @@ public class PlayerPositionHandler : MonoBehaviour
 
     public void RemoveCurrentPropsID()
     {
-        _saver.TryDeleteSaveData(LastPropsIDKey);
+        _saver.TryDeleteSaveData(LastPropsIdKey);
     }
 
     public void SaveCurrentPropsID()
     {
-        _saver.Save(LastPropsIDKey, _currentPropsID);
+        _saver.Save(LastPropsIdKey, _currentPropsId);
     }
 
     public void OnPlayerFell(PlayerPosition playerPosition, Props props)
@@ -54,7 +54,7 @@ public class PlayerPositionHandler : MonoBehaviour
         {
             if(_props[i] == props)
             {
-                _currentPropsID = _props.IndexOf(props);
+                _currentPropsId = _props.IndexOf(props);
             }
         }
 
