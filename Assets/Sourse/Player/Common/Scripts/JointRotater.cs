@@ -14,5 +14,10 @@ public class JointRotater : MonoBehaviour
         => _startRotation = transform.localRotation;
 
     private void Update()
-       => _joint.targetRotation = Quaternion.Inverse(_target.localRotation) * _startRotation;
+    {
+        if (_target == null || _joint == null)
+            return;
+
+        _joint.targetRotation = Quaternion.Inverse(_target.localRotation) * _startRotation;
+    }
 }

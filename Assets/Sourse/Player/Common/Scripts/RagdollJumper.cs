@@ -5,6 +5,10 @@ public class RagdollJumper : MonoBehaviour
     [SerializeField] private Animator _animationCharacter;
     [SerializeField] private Rigidbody _pelvis;
     [SerializeField] private float _force;
+    [SerializeField] private Transform _centerOfMass;
+
+    private void Start()
+        => _pelvis.centerOfMass = _centerOfMass.position;
 
     private void Update()
     {
