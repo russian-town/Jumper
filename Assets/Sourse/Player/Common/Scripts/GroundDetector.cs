@@ -1,5 +1,4 @@
 using System;
-using Sourse.Common;
 using Sourse.Props.Barrel;
 using UnityEngine;
 
@@ -8,23 +7,17 @@ namespace Sourse.Player.Common.Scripts
     [RequireComponent(typeof(BoxCollider))]
     public class GroundDetector : MonoBehaviour
     {
+        private const float Denominator = 2f;
+        private const float Threshold = .5f;
+
         [SerializeField] private float _distance;
         [SerializeField] private LayerMask _groundLayerMask;
         [SerializeField] private SphereCollider _head;
 
-        private readonly float _threshold = .5f;
-
         private BoxCollider _boxCollider;
-        private IGroundedHandler[] _groundedHandlers;
         private bool _canDetect = true;
 
         public event Action<Collision> Fell;
-
-        private void FixedUpdate()
-        {
-            foreach (var groundedHandler in _groundedHandlers)
-                groundedHandler.SetGrounded(IsGrounded());
-        }
 
         private void OnCollisionEnter(Collision collision)
         {
@@ -43,26 +36,29 @@ namespace Sourse.Player.Common.Scripts
                 out float distance
             );
 
-            if (Vector3.Dot(collision.GetContact(0).normal, Vector3.up) > _threshold && _canDetect)
+            if (Vector3.Dot(collision.GetContact(0).normal, Vector3.up) > Threshold && _canDetect)
                 Fell?.Invoke(collision);
         }
 
-        public void Initialize(IGroundedHandler[] groundedHandlers)
-        {
-            _boxCollider = GetComponent<BoxCollider>();
-            _groundedHandlers = groundedHandlers;
-        }
+        public void Initialize()
+           => _boxCollider = GetComponent<BoxCollider>();
 
-        private bool IsGrounded()
+        public bool IsGrounded()
         {
-            Vector3 halfScale = transform.localScale / 2f;
+            Vector3 halfScale = transform.localScale / Denominator;
 
-            if (Physics.BoxCast(_boxCollider.bounds.center, halfScale, -transform.up, out RaycastHit hit, transform.rotation, _distance, _groundLayerMask, QueryTriggerInteraction.Ignore))
+            if (Physics.BoxCast(
+                _boxCollider.bounds.center,
+                halfScale,
+                -transform.up,
+                out RaycastHit hit,
+                transform.rotation,
+                _distance,
+                _groundLayerMask,
+                QueryTriggerInteraction.Ignore))
             {
-                if (Vector3.Dot(hit.normal, transform.up) > _threshold)
-                {
+                if (Vector3.Dot(hit.normal, transform.up) > Threshold)
                     return true;
-                }
             }
 
             return false;

@@ -1169,6 +1169,7 @@ MonoBehaviour:
   _rewardedButton: {fileID: 3545420808043878673}
   _nextLevelButton: {fileID: 1149804489407474526}
   _wallet: {fileID: 157831624858757419}
+  _hideHUD: 0
 --- !u!114 &5307958142101819413
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1753,7 +1754,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _followCamera: {fileID: 4674197536032411678}
   _game: {fileID: 8341674719788255806}
-  _openableSkinHandler: {fileID: 5281097067266589892}
   _levelProgress: {fileID: 4674197534672537432}
   _playerInput: {fileID: 4674197536186430168}
   _level: {fileID: 4674197535118504056}
@@ -2475,7 +2475,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 74.55
+  m_fontSize: 99.15
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -3531,7 +3531,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4674197535987492643}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9085b87c5453a3c49b5aa46f7419a130, type: 3}
+  m_Script: {fileID: 11500000, guid: b265154101a6729469ecafdd2018ac21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &4674197536027497861

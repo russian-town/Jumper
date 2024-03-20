@@ -14,8 +14,21 @@ namespace Sourse.Root
 
         private int _currentPropsId;
         private Saver.Saver _saver;
+        private GroundDetector _groundDetector;
 
+        public PlayerPosition StartPlayerPosition { get; private set; }
         public PlayerPosition LastPlayerPosition { get; private set; }
+
+        public void Unsubscribe()
+        {
+            _groundDetector.Fell -= OnFell;
+        }
+
+        public void Subscribe(GroundDetector groundDetector)
+        {
+            _groundDetector = groundDetector;
+            _groundDetector.Fell += OnFell;
+        }
 
         public void Initialize()
         {
@@ -42,7 +55,16 @@ namespace Sourse.Root
             _saver.Save(LastPropsIdKey, _currentPropsId);
         }
 
-        public void OnPlayerFell(PlayerPosition playerPosition, Props.Common.Props props)
+        private void OnFell(Collision collision)
+        {
+            if (collision.transform.TryGetComponent(out Props.Common.Props props))
+            {
+                SetCurrentPropsId(props);
+                LastPlayerPosition = GetLastPosition();
+            }
+        }
+
+        private void SetCurrentPropsId(Props.Common.Props props)
         {
             if (_props.Count == 0)
                 return;
@@ -51,7 +73,7 @@ namespace Sourse.Root
                 if (_props[i] == props)
                     _currentPropsId = _props.IndexOf(props);
 
-            _game.SetLastPosition(playerPosition);
+            _game.SetLastPosition(props.PlayerPosition);
         }
     }
 }

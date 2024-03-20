@@ -52,7 +52,7 @@ namespace Sourse.Game
             _playerInput.Pressed += StartGame;
         }
 
-        public void Disable()
+        public void Unsubscribe()
         {
             if (_player == null)
                 return;
@@ -83,7 +83,12 @@ namespace Sourse.Game
             _retryButton.Initialize();
             IPauseHandler[] pauseHandlers = new IPauseHandler[]
             {
-                player, this, _nextLevelButton, _retryButton, _noThanksButton, _rewardedButton 
+                this,
+                _nextLevelButton,
+                _retryButton,
+                _noThanksButton,
+                _rewardedButton,
+                _playerInput
             };
             _pause.Initialize(pauseHandlers, this);
         }

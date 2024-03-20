@@ -29,9 +29,10 @@ namespace Sourse.Root
             _saver = GetComponent<Saver.Saver>();
         }
 
-        private void OnDisable()
+        private void OnDestroy()
         {
-            _game.Disable();
+            _game.Unsubscribe();
+            _startPlayer.Unsubscribe();
         }
 
         private void Start()
@@ -51,8 +52,7 @@ namespace Sourse.Root
         {
             _startPlayer = _playerSpawner.GetPlayer(id, playerPosition);
             _startPlayer.transform.localRotation = Quaternion.Euler(_targetRotation);
-            _startPlayer.Initialize(_playerPositionHandler);
-            _playerInput.Initialize(_startPlayer);
+            _startPlayer.Initialize(_playerPositionHandler, _playerInput);
             _game.Initialaize(_startPlayer, _levelProgress, _playerInput, _startPlayerPosition, _applicationStatusChecker);
             _game.Enable();
             _levelProgress.Initialize(_startPlayer);

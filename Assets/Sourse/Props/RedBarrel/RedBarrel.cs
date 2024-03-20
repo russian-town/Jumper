@@ -1,4 +1,5 @@
 using Sourse.Props.Common;
+using Sourse.Player.Common.Scripts;
 using UnityEngine;
 
 namespace Sourse.Props.RedBarrel
@@ -13,10 +14,10 @@ namespace Sourse.Props.RedBarrel
             gameObject.SetActive(false);
         }
 
-        protected override void Action(Collision collision, Player.Common.Scripts.Player player)
+        protected override void Action(Collision collision, PlayerAnimator playerAnimator)
         {
-            player.Bounce();
             MakeExplosion();
+            playerAnimator.Jump();
 
             Collider[] hitCollides = Physics.OverlapBox(transform.position, transform.localScale);
 

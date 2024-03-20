@@ -61,7 +61,7 @@ ModelImporter:
       curves: []
       events:
       - time: 0.4296029
-        functionName: DoubleJumpUp
+        functionName: CallDoubleJumpEvent
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0

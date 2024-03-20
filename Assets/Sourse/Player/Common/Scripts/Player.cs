@@ -1,14 +1,13 @@
 using System;
-using Sourse.Common;
 using Sourse.Finish;
-using Sourse.Game;
 using Sourse.Root;
+using Sourse.UI;
 using UnityEngine;
 
 namespace Sourse.Player.Common.Scripts
 {
     [RequireComponent(typeof(PlayerAnimator), typeof(PlayerJumper), typeof(GroundDetector))]
-    public class Player : MonoBehaviour, IPauseHandler, IGroundedHandler
+    public class Player : MonoBehaviour
     {
         private const float MaxRelativeVelocityY = 5f;
 
@@ -18,15 +17,12 @@ namespace Sourse.Player.Common.Scripts
 
         private PlayerAnimator _animator;
         private PlayerJumper _jumper;
+        private PlayerInput _input;
         private GroundDetector _groundDetector;
         private PlayerPositionHandler _positionHandler;
-        private bool _doubleJump;
-        private bool _jump;
-        private bool _isPause;
         private bool _isStart = false;
         private bool _isGameOver = false;
         private bool _isLevelComleted = false;
-        private bool _isGrounded;
 
         public int ID => _id;
         public bool IsStart => _isStart;
@@ -34,44 +30,28 @@ namespace Sourse.Player.Common.Scripts
         public event Action Died;
         public event Action LevelCompleted;
 
-        private void OnDisable() => _groundDetector.Fell -= OnFell;
+        public void Unsubscribe()
+        {
+            _groundDetector.Fell -= OnFell;
+            _positionHandler.Unsubscribe();
+        }
 
-        public void Initialize(PlayerPositionHandler positionHandler)
+        public void Initialize(PlayerPositionHandler positionHandler, PlayerInput input)
         {
             _animator = GetComponent<PlayerAnimator>();
             _groundDetector = GetComponent<GroundDetector>();
             _groundDetector.Fell += OnFell;
             _jumper = GetComponent<PlayerJumper>();
-            _animator.Initialize();
-            _jumper.Initialize();
-            _groundDetector.Initialize(new IGroundedHandler[] { _animator, this });
+            _input = input;
+            _input.Initialize(_animator);
+            _jumper.Initialize(_animator);
+            _groundDetector.Initialize();
+            _animator.Initialize(_groundDetector);
             _positionHandler = positionHandler;
+            _positionHandler.Subscribe(_groundDetector);
         }
-
-        public void SetPause(bool isPause) => _isPause = isPause;
 
         public void SetStart(bool isStart) => _isStart = isStart;
-
-        public void Jump()
-        {
-            if (_isPause == true || _isGameOver == true || _isLevelComleted == true)
-                return;
-
-            if (_jump == false && _isGrounded)
-            {
-                _animator.Jump();
-                _jump = true;
-            }
-            else if (_doubleJump == false && _jump == true || _doubleJump == false && _isGrounded == false)
-            {
-                _animator.DoubleJump();
-                _doubleJump = true;
-            }
-        }
-
-        public void Bounce() => _jumper.JumpUp();
-
-        public void SetGrounded(bool isGrounded) => _isGrounded = isGrounded;
 
         private void OnFell(Collision collision)
         {
@@ -79,39 +59,42 @@ namespace Sourse.Player.Common.Scripts
                 return;
 
             if (collision.transform.TryGetComponent(out Props.Common.Props props))
-            {
-                _positionHandler.OnPlayerFell(props.PlayerPosition, props);
-                _jumper.ResetVelocity();
-                _fallParticle.Play();
-                _jump = false;
-                _doubleJump = false;
-            }
+                LandOnProps();
             else if (collision.transform.TryGetComponent(out Ground.Ground ground))
-            {
-                _animator.DisableIK();
-
-                if (_isLevelComleted == true || _isGameOver == true)
-                    return;
-
-                _fallOnGroundParticle.Play();
-
-                if (collision.relativeVelocity.y >= MaxRelativeVelocityY)
-                    _animator.HardFall();
-                else
-                    _animator.Defeat();
-
-                Died?.Invoke();
-                _isGameOver = true;
-            }
+                Die(collision);
             else if (collision.transform.TryGetComponent(out LevelCompleteSoundPlayer finish))
-            {
-                if (_isLevelComleted == true || _isGameOver == true)
-                    return;
+                FinishLevel();
+        }
 
-                _fallParticle.Play();
-                LevelCompleted?.Invoke();
-                _isLevelComleted = true;
-            }
+        private void LandOnProps()
+           => _fallParticle.Play();
+
+        private void FinishLevel()
+        {
+            if (_isLevelComleted == true || _isGameOver == true)
+                return;
+
+            _fallParticle.Play();
+            LevelCompleted?.Invoke();
+            _isLevelComleted = true;
+        }
+
+        private void Die(Collision collision)
+        {
+            _animator.DisableIK();
+
+            if (_isLevelComleted == true || _isGameOver == true)
+                return;
+
+            _fallOnGroundParticle.Play();
+
+            if (collision.relativeVelocity.y >= MaxRelativeVelocityY)
+                _animator.HardFall();
+            else
+                _animator.Defeat();
+
+            Died?.Invoke();
+            _isGameOver = true;
         }
     }
 }
