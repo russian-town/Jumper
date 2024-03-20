@@ -3,9 +3,7 @@ using Sourse.UI.Shop.Scripts.Buttons;
 
 namespace Sourse.UI
 {
-    public class CloseAdOfferScreenButton : UIButton, IPauseHandler
+    public class CloseAdOfferScreenButton : UIButton
     {
-        public void SetPause(bool isPause)
-            => SwitchEnableState(!isPause);
     }
 }

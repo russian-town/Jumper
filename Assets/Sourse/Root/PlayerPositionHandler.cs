@@ -10,7 +10,6 @@ namespace Sourse.Root
         private const string LastPropsIdKey = "CurrentPropsID";
 
         [SerializeField] private List<Props.Common.Props> _props = new List<Props.Common.Props>();
-        [SerializeField] private Game.Game _game;
 
         private int _currentPropsId;
         private Saver.Saver _saver;
@@ -72,8 +71,6 @@ namespace Sourse.Root
             for (int i = 0; i < _props.Count; i++)
                 if (_props[i] == props)
                     _currentPropsId = _props.IndexOf(props);
-
-            _game.SetLastPosition(props.PlayerPosition);
         }
     }
 }

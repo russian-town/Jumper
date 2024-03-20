@@ -40,9 +40,7 @@ namespace Sourse.Player.Common.Scripts
             => _groundDetector.Fell -= OnFell;
 
         private void Update()
-        {
-            _animator.SetBool(IsGroundedParametr, IsGrounded);
-        }
+           => _animator.SetBool(IsGroundedParametr, IsGrounded);
 
         public void Initialize(GroundDetector groundDetector)
         {
@@ -59,9 +57,7 @@ namespace Sourse.Player.Common.Scripts
             => DoubleJumped?.Invoke();
 
         public void DisableIK()
-        {
-            _weight = MinWeight;
-        }
+            => _weight = MinWeight;
 
         public void Jump()
         {
@@ -71,9 +67,7 @@ namespace Sourse.Player.Common.Scripts
         }
 
         public void Defeat()
-        {
-            _animator.SetBool(DefeatParametr, true);
-        }
+           => _animator.SetBool(DefeatParametr, true);
 
         public void DoubleJump()
         {
@@ -83,9 +77,7 @@ namespace Sourse.Player.Common.Scripts
         }
 
         public void HardFall()
-        {
-            _animator.SetTrigger(HardFallParametr);
-        }
+           => _animator.SetTrigger(HardFallParametr);
 
         private void OnFell(Collision collision)
         {

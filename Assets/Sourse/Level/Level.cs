@@ -21,7 +21,7 @@ namespace Sourse.Level
 
         public int CurrentLevelNumber => _currentLevelNumber;
 
-        private void OnDisable()
+        public void Unsubscribe()
         {
             _rewardedVideo.RewardedVideoEnded -= RestartLevelOnLastPosition;
             _rewardedVideo.RewardedVideoOpened -= _playerPositionHandler.SaveCurrentPropsID;

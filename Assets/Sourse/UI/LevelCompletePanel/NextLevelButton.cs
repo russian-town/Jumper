@@ -7,7 +7,10 @@ namespace Sourse.UI.LevelCompletePanel
     {
         public void SetPause(bool isPause)
         {
-            SwitchEnableState(!isPause);
+            if (isPause)
+                Disable();
+            else
+                Enable();
         }
     }
 }

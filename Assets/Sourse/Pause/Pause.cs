@@ -10,19 +10,12 @@ namespace Sourse.Pause
         [SerializeField] private PausePanel _pausePanel;
 
         private List<IPauseHandler> _pauseHandlers = new List<IPauseHandler>();
-        private Game.Game _game;
 
-        public void Initialize(IPauseHandler[] pauseHandlers, Game.Game game)
-        {
-            _pauseHandlers.AddRange(pauseHandlers);
-            _game = game;
-        }
+        public void Initialize(IPauseHandler[] pauseHandlers)
+          =>  _pauseHandlers.AddRange(pauseHandlers);
 
         public void Enable()
         {
-            if (_game.IsLevelComplete == true)
-                _pausePanel.DisableButtons();
-
             _pauseButton.Hide();
             _pausePanel.Show();
 

@@ -500,7 +500,6 @@ MonoBehaviour:
   _props:
   - {fileID: 0}
   - {fileID: 0}
-  _game: {fileID: 8341674719788255806}
 --- !u!1 &2049184610
 GameObject:
   m_ObjectHideFlags: 0
@@ -1117,7 +1116,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3892914268926911776}
-  - component: {fileID: 8341674719788255806}
   - component: {fileID: 5307958142101819413}
   - component: {fileID: 5281097067266589892}
   - component: {fileID: 4665288833514106105}
@@ -1143,33 +1141,6 @@ Transform:
   m_Father: {fileID: 4674197535848503238}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8341674719788255806
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3984699639373608436}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e0904b9d4325bef4f8d645616ab1c4ac, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _gameOverView: {fileID: 4674197534422095664}
-  _levelProgressView: {fileID: 4674197534672537433}
-  _level: {fileID: 4674197535118504056}
-  _levelCompletePanel: {fileID: 4674197534540420739}
-  _percentOpeningSkin: 0.1
-  _moneyOfLevel: 100
-  _pause: {fileID: 4674197535662549678}
-  _retryButton: {fileID: 4674197534731186803}
-  _rewardedPanel: {fileID: 4674197535250671688}
-  _pauseButton: {fileID: 8267919103148882659}
-  _noThanksButton: {fileID: 7523796881791975207}
-  _rewardedButton: {fileID: 3545420808043878673}
-  _nextLevelButton: {fileID: 1149804489407474526}
-  _wallet: {fileID: 157831624858757419}
-  _hideHUD: 0
 --- !u!114 &5307958142101819413
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1753,13 +1724,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _followCamera: {fileID: 4674197536032411678}
-  _game: {fileID: 8341674719788255806}
   _levelProgress: {fileID: 4674197534672537432}
   _playerInput: {fileID: 4674197536186430168}
   _level: {fileID: 4674197535118504056}
   _applicationStatusChecker: {fileID: 4924027635071552965}
   _playerPositionHandler: {fileID: 1934897855}
   _startPlayerPosition: {fileID: 0}
+  _gameOverView: {fileID: 0}
+  _levelProgressView: {fileID: 0}
+  _levelCompletePanel: {fileID: 0}
+  _percentOpeningSkin: 0
+  _moneyOfLevel: 0
+  _pause: {fileID: 0}
+  _retryButton: {fileID: 0}
+  _rewardedPanel: {fileID: 0}
+  _pauseButton: {fileID: 0}
+  _noThanksButton: {fileID: 0}
+  _rewardedButton: {fileID: 0}
+  _nextLevelButton: {fileID: 0}
+  _wallet: {fileID: 0}
 --- !u!114 &2953531168426537016
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2475,7 +2458,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 99.15
+  m_fontSize: 123.3
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -5493,17 +5476,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 584cc9424c1547043affdde16bad5477, type: 3}
---- !u!114 &157831624858757419 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7220117396243551971, guid: 584cc9424c1547043affdde16bad5477, type: 3}
-  m_PrefabInstance: {fileID: 7350922986166190024}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 21b3ad67d65e581458e6eb7f4693d4c2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!224 &2484900273043155734 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 4935833194633254110, guid: 584cc9424c1547043affdde16bad5477, type: 3}

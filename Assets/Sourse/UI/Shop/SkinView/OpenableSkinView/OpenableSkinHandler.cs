@@ -12,7 +12,8 @@ namespace Sourse.UI.Shop.SkinView.OpenableSkinView
         private LevelCompletePanel.LevelCompletePanel _levelCompletePanel;
         private int _currentIndex;
 
-        private void OnDisable() => _levelCompletePanel.SkinOpened -= OnSkinOpened;
+        public void Unsubscribe()
+            => _levelCompletePanel.SkinOpened -= OnSkinOpened;
 
         public void Initialize(LevelCompletePanel.LevelCompletePanel levelCompletePanel)
         {

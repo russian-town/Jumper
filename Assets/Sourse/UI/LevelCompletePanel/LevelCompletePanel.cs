@@ -22,6 +22,8 @@ namespace Sourse.UI.LevelCompletePanel
 
         private int _id;
 
+        public float CurrentFillAmount => _openingSkinBar.fillAmount;
+
         public event Action<int> SkinOpened;
 
         public void Initialize(Skin skin)
@@ -46,18 +48,11 @@ namespace Sourse.UI.LevelCompletePanel
             _openingSkinBarBackground.enabled = false;
         }
 
-        public void StartFillSkinBarCoroutine(float percent)
-            => StartCoroutine(FillSkinBarOverTime(percent));
+        public void StartFillSkinBarCoroutine(float targetFillAmount)
+            => StartCoroutine(FillSkinBarOverTime(targetFillAmount));
 
-        private IEnumerator FillSkinBarOverTime(float percent)
+        private IEnumerator FillSkinBarOverTime(float targetFillAmount)
         {
-            float targetFillAmount;
-
-            if (PlayerPrefs.HasKey(FillAmountKey) == true)
-                targetFillAmount = PlayerPrefs.GetFloat(FillAmountKey) + percent;
-            else
-                targetFillAmount = _openingSkinBar.fillAmount + percent;
-
             while (_openingSkinBar.fillAmount != targetFillAmount)
             {
                 _openingSkinBar.fillAmount = Mathf.MoveTowards(

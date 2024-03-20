@@ -55,9 +55,6 @@ namespace Sourse.Player.Common.Scripts
 
         private void OnFell(Collision collision)
         {
-            if (_isStart == false || _isGameOver == true)
-                return;
-
             if (collision.transform.TryGetComponent(out Props.Common.Props props))
                 LandOnProps();
             else if (collision.transform.TryGetComponent(out Ground.Ground ground))
@@ -82,10 +79,7 @@ namespace Sourse.Player.Common.Scripts
         private void Die(Collision collision)
         {
             _animator.DisableIK();
-
-            if (_isLevelComleted == true || _isGameOver == true)
-                return;
-
+            _isGameOver = true;
             _fallOnGroundParticle.Play();
 
             if (collision.relativeVelocity.y >= MaxRelativeVelocityY)
@@ -94,7 +88,6 @@ namespace Sourse.Player.Common.Scripts
                 _animator.Defeat();
 
             Died?.Invoke();
-            _isGameOver = true;
         }
     }
 }
