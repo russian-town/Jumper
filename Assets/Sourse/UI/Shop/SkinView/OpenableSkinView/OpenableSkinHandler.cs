@@ -8,9 +8,10 @@ namespace Sourse.UI.Shop.SkinView.OpenableSkinView
     {
         private const string OpeningSkinIndexKey = "OpeningSkinIndex";
 
-        private List<Skin.Skin> _openableSkins = new List<Skin.Skin>();
         private LevelCompletePanel.LevelCompletePanel _levelCompletePanel;
         private int _currentIndex;
+
+        private readonly List<Skin.Skin> _openableSkins = new List<Skin.Skin>();
 
         public void Unsubscribe()
             => _levelCompletePanel.SkinOpened -= OnSkinOpened;

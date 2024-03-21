@@ -372,6 +372,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d08b6294a747f1346827ca6e23df4f2c, type: 3}
+--- !u!114 &270026306 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4674197536470653818, guid: cf2d3bcaf424b9049a030aa385ad8d59, type: 3}
+  m_PrefabInstance: {fileID: 4674197535883984235}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f292ce7666e4e444a8e7641eb70f685d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &349640817
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2553,6 +2564,10 @@ PrefabInstance:
       propertyPath: _rewardedPanel
       value: 
       objectReference: {fileID: 4674197535883984242}
+    - target: {fileID: 4674197534554460007, guid: cf2d3bcaf424b9049a030aa385ad8d59, type: 3}
+      propertyPath: _rewardedVideo
+      value: 
+      objectReference: {fileID: 270026306}
     - target: {fileID: 4674197534554460007, guid: cf2d3bcaf424b9049a030aa385ad8d59, type: 3}
       propertyPath: _noThanksButton
       value: 

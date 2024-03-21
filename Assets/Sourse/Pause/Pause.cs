@@ -9,7 +9,7 @@ namespace Sourse.Pause
         [SerializeField] private PauseButton _pauseButton;
         [SerializeField] private PausePanel _pausePanel;
 
-        private List<IPauseHandler> _pauseHandlers = new List<IPauseHandler>();
+        private readonly List<IPauseHandler> _pauseHandlers = new List<IPauseHandler>();
 
         public void Initialize(IPauseHandler[] pauseHandlers)
           =>  _pauseHandlers.AddRange(pauseHandlers);

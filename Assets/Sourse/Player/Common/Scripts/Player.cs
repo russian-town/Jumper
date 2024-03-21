@@ -33,6 +33,7 @@ namespace Sourse.Player.Common.Scripts
         public void Unsubscribe()
         {
             _groundDetector.Fell -= OnFell;
+            _animator.Unsubscribe();
             _positionHandler.Unsubscribe();
         }
 

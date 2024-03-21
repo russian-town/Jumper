@@ -7,15 +7,14 @@ using Sourse.UI;
 using Sourse.UI.LevelCompletePanel;
 using Sourse.UI.Shop.Scripts.Buttons;
 using Sourse.UI.Shop.SkinView.OpenableSkinView;
+using Sourse.YandexAds;
 using UnityEngine;
 
 namespace Sourse.Root
 {
     [RequireComponent(typeof(PlayerSpawner), typeof(Saver.Saver), typeof(OpenableSkinHandler))]
-    public class Root : MonoBehaviour, IPauseHandler
+    public class Root : MonoBehaviour
     {
-        private const string FillAmountKey = "FillAmount";
-
         [SerializeField] private FollowCamera _followCamera;
         [SerializeField] private LevelProgress _levelProgress;
         [SerializeField] private PlayerInput _playerInput;
@@ -36,19 +35,17 @@ namespace Sourse.Root
         [SerializeField] private RewardedButton _rewardedButton;
         [SerializeField] private NextLevelButton _nextLevelButton;
         [SerializeField] private Wallet.Wallet _wallet;
+        [SerializeField] private RewardedVideo _rewardedVideo;
 
         private Vector3 _targetRotation = new Vector3(0f, 90f, 0f);
         private PlayerSpawner _playerSpawner;
         private Saver.Saver _saver;
         private Player.Common.Scripts.Player _startPlayer;
         private OpenableSkinHandler _openableSkinHandler;
-        private bool _isPause;
-        private PlayerPosition _playerLastPosition;
-        private PlayerPosition _playerStartPosition;
         private YandexAds.YandexAds _yandexAds;
-        private bool _isStart;
-        private bool _isRewarded = false;
-        private float _percentRatio = 100f;
+        private FinishLevelHandler _finishLevelHandler;
+        private LoseLevelHandler _loseLevelHandler;
+        private PlayerUI _playerUI;
 
         private void Awake()
         {
@@ -58,8 +55,6 @@ namespace Sourse.Root
 
         private void OnDestroy()
         {
-            _startPlayer.Died -= OnPlayerDied;
-            _startPlayer.LevelCompleted -= OnLevelCompleted;
             _startPlayer.Unsubscribe();
             _nextLevelButton.Unsubscribe();
             _rewardedButton.Unsubscribe();
@@ -67,6 +62,9 @@ namespace Sourse.Root
             _retryButton.Unsubscribe();
             _level.Unsubscribe();
             _openableSkinHandler.Unsubscribe();
+            _finishLevelHandler.Unsubscribe();
+            _loseLevelHandler.Unsubscribe();
+            _playerUI.Unsibscribe();
         }
 
         private void Start()
@@ -87,8 +85,6 @@ namespace Sourse.Root
             _startPlayer = _playerSpawner.GetPlayer(id, playerPosition);
             _startPlayer.transform.localRotation = Quaternion.Euler(_targetRotation);
             _startPlayer.Initialize(_playerPositionHandler, _playerInput);
-            _startPlayer.Died += OnPlayerDied;
-            _startPlayer.LevelCompleted += OnLevelCompleted;
             _levelProgress.Initialize(_startPlayer);
             _followCamera.SetTarget(_startPlayer);
             _openableSkinHandler = GetComponent<OpenableSkinHandler>();
@@ -99,92 +95,39 @@ namespace Sourse.Root
             _rewardedButton.Initialize();
             _noThanksButton.Initialize();
             _retryButton.Initialize();
+            _finishLevelHandler = new FinishLevelHandler(_levelCompletePanel,
+                _wallet,
+                _openableSkinHandler,
+                _percentOpeningSkin,
+                _moneyOfLevel,
+                _level,
+                _levelProgress,
+                _levelProgressView,
+                _startPlayer);
+            _finishLevelHandler.Subscribe();
+            _loseLevelHandler = new LoseLevelHandler(_levelProgress,
+                _startPlayerPosition,
+                _gameOverView,
+                _rewardedPanel,
+                _retryButton,
+                _levelProgressView,
+                _startPlayer);
+            _loseLevelHandler.Subscribe();
+            _playerUI = new PlayerUI(_nextLevelButton, _retryButton, _rewardedVideo);
+            _playerUI.Subscribe();
             IPauseHandler[] pauseHandlers = new IPauseHandler[]
             {
-                this,
                 _nextLevelButton,
                 _retryButton,
                 _noThanksButton,
                 _rewardedButton,
-                _playerInput
+                _playerInput,
+                _loseLevelHandler,
+                _playerUI
             };
             _pause.Initialize(pauseHandlers);
             _levelProgressView.Show();
             _gameOverView.Hide();
-        }
-
-        public void SetPause(bool isPause)
-        {
-            _isPause = isPause;
-
-            if (_isPause == true)
-                _nextLevelButton.Hide();
-            else
-                _nextLevelButton.Show();
-
-            if (_isStart == false && _isPause == true)
-                _retryButton.Hide();
-            else if (_isStart == false && _isPause == true && _isRewarded == true)
-                _retryButton.Hide();
-            else if (_isPause == false && _isRewarded == false)
-                _retryButton.Show();
-        }
-
-        private void OnPlayerDied()
-        {
-            _isStart = false;
-            _levelProgress.DeleteSavedDistance();
-            float percent = Mathf.Ceil(_levelProgress.CurrentDistance * _percentRatio);
-            _gameOverView.Show();
-
-            if (_playerLastPosition == null || _playerLastPosition == _playerStartPosition)
-            {
-                _rewardedPanel.Hide();
-
-                if (!_isPause)
-                    _retryButton.Show();
-            }
-            else
-            {
-                _isRewarded = true;
-                _rewardedPanel.Show();
-                _retryButton.Hide();
-            }
-
-            _gameOverView.ShowProgress(percent);
-            _levelProgressView.Hide();
-        }
-
-        private void OnLevelCompleted()
-        {
-#if !UNITY_EDITOR && UNITY_WEBGL
-        _yandexAds.ShowInterstitial();
-#endif
-
-            _levelProgress.DeleteSavedDistance();
-            _levelProgressView.Hide();
-            _levelCompletePanel.Show();
-
-            _wallet.AddMoney(_moneyOfLevel);
-
-            if (_openableSkinHandler.GetOpenableSkin() != null)
-            {
-                float targetFillAmount;
-
-                if (PlayerPrefs.HasKey(FillAmountKey) == true)
-                    targetFillAmount = PlayerPrefs.GetFloat(FillAmountKey) + _percentOpeningSkin;
-                else
-                    targetFillAmount = _levelCompletePanel.CurrentFillAmount + _percentOpeningSkin;
-
-                _levelCompletePanel.Initialize(_openableSkinHandler.GetOpenableSkin());
-                _levelCompletePanel.StartFillSkinBarCoroutine(targetFillAmount);
-            }
-            else
-            {
-                _levelCompletePanel.HideOpeningSkinBar();
-            }
-
-            _levelCompletePanel.SetText(_level.CurrentLevelNumber);
         }
     }
 }

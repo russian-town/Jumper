@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using Sourse.Constants;
 using UnityEngine;
 
 namespace Sourse.Player.Common.Scripts
@@ -7,14 +8,6 @@ namespace Sourse.Player.Common.Scripts
     [RequireComponent(typeof(Animator))]
     public class PlayerAnimator : MonoBehaviour
     {
-        private const float MaxWeight = 1f;
-        private const float MinWeight = 0f;
-        private const string JumpParametr = "Jump";
-        private const string DoubleJumpParametr = "DoubleJump";
-        private const string IsGroundedParametr = "IsGrounded";
-        private const string HardFallParametr = "HardFall";
-        private const string DefeatParametr = "Defeat";
-
         [SerializeField] private float _animationDelay;
         [SerializeField] private HeadPosition _headPosition;
 
@@ -36,19 +29,19 @@ namespace Sourse.Player.Common.Scripts
             _animator.SetLookAtPosition(_headPosition.Current);
         }
 
-        private void OnDisable()
-            => _groundDetector.Fell -= OnFell;
-
         private void Update()
-           => _animator.SetBool(IsGroundedParametr, IsGrounded);
+           => _animator.SetBool(AnimationName.IsGrounded, IsGrounded);
 
         public void Initialize(GroundDetector groundDetector)
         {
             _animator = GetComponent<Animator>();
             _groundDetector = groundDetector;
             _groundDetector.Fell += OnFell;
-            _weight = MaxWeight;
+            _weight = AnimationParameter.MaxWeight;
         }
+
+        public void Unsubscribe()
+            => _groundDetector.Fell -= OnFell;
 
         public void CallJumpEvent()
             => Jumped?.Invoke();
@@ -57,27 +50,27 @@ namespace Sourse.Player.Common.Scripts
             => DoubleJumped?.Invoke();
 
         public void DisableIK()
-            => _weight = MinWeight;
+            => _weight = AnimationParameter.MinWeight;
 
         public void Jump()
         {
             IsJumped = true;
-            _animator.SetTrigger(JumpParametr);
+            _animator.SetTrigger(AnimationName.Jump);
             _startResetTriggers = StartCoroutine(ResetTriggers());
         }
 
         public void Defeat()
-           => _animator.SetBool(DefeatParametr, true);
+           => _animator.SetBool(AnimationName.Defeat, true);
 
         public void DoubleJump()
         {
             IsdDoubleJumped = true;
-            _animator.SetTrigger(DoubleJumpParametr);
+            _animator.SetTrigger(AnimationName.DoubleJump);
             _startResetTriggers = StartCoroutine(ResetTriggers());
         }
 
         public void HardFall()
-           => _animator.SetTrigger(HardFallParametr);
+           => _animator.SetTrigger(AnimationName.HardFall);
 
         private void OnFell(Collision collision)
         {
@@ -91,8 +84,8 @@ namespace Sourse.Player.Common.Scripts
                 StopCoroutine(_startResetTriggers);
 
             yield return new WaitForSeconds(_animationDelay);
-            _animator.ResetTrigger(JumpParametr);
-            _animator.ResetTrigger(DoubleJumpParametr);
+            _animator.ResetTrigger(AnimationName.Jump);
+            _animator.ResetTrigger(AnimationName.DoubleJump);
         }
     }
 }
