@@ -5,17 +5,17 @@ namespace Sourse.Player.Common.Scripts
 {
     public class PlayerSpawner : MonoBehaviour
     {
-        [SerializeField] private List<Player> _players = new List<Player>();
+        [SerializeField] private List<PlayerInitializer> _players = new List<PlayerInitializer>();
 
-        public Player GetPlayer(int id, PlayerPosition playerPosition)
+        public PlayerInitializer GetPlayer(int id, PlayerPosition playerPosition)
         {
-            if (TrySearchPlayer(id, out Player player))
+            if (TrySearchPlayer(id, out PlayerInitializer player))
                 return Instantiate(player, playerPosition.transform.position, Quaternion.identity);
 
             return null;
         }
 
-        private bool TrySearchPlayer(int id, out Player searchPlayer)
+        private bool TrySearchPlayer(int id, out PlayerInitializer searchPlayer)
         {
             foreach (var player in _players)
             {

@@ -13,7 +13,7 @@ namespace Sourse.Game
         private readonly RewardedPanel _rewardedPanel;
         private readonly RetryButton _retryButton;
         private readonly LevelProgressView _levelProgressView;
-        private readonly Player.Common.Scripts.Player _player;
+        private readonly PlayerInitializer _player;
         private readonly float _percentRatio = 100f;
 
         private bool _isPause;
@@ -24,7 +24,7 @@ namespace Sourse.Game
             RewardedPanel rewardedPanel,
             RetryButton retryButton,
             LevelProgressView levelProgressView,
-            Player.Common.Scripts.Player player)
+            PlayerInitializer player)
         {
             _levelProgress = levelProgress;
             _playerStartPosition = playerStartPosition;
@@ -37,12 +37,12 @@ namespace Sourse.Game
 
         public void Subscribe()
         {
-            _player.Died += OnPlayerDied;
+            //_player.Died += OnPlayerDied;
         }
 
         public void Unsubscribe()
         {
-            _player.Died -= OnPlayerDied;
+            //_player.Died -= OnPlayerDied;
         }
 
         public void SetPause(bool isPause)

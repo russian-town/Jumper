@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Sourse.Level
 {
-    [RequireComponent(typeof(Saver.Saver), typeof(PlayerSceneLoader.PlayerSceneLoader))]
+    [RequireComponent(typeof(PlayerSceneLoader.PlayerSceneLoader))]
     public class Level : MonoBehaviour
     {
         public const string FirstLevelNumber = "1";
@@ -14,7 +14,6 @@ namespace Sourse.Level
         [SerializeField] private RewardedVideo _rewardedVideo;
 
         private int _currentLevelNumber;
-        private Saver.Saver _saver;
         private PlayerSceneLoader.PlayerSceneLoader _sceneLoader;
         private LevelProgress _levelProgress;
         private PlayerPositionHandler _playerPositionHandler;
@@ -29,7 +28,6 @@ namespace Sourse.Level
 
         public void Initialize(LevelProgress levelProgress, PlayerPositionHandler playerPositionHandler)
         {
-            _saver = GetComponent<Saver.Saver>();
             _sceneLoader = GetComponent<PlayerSceneLoader.PlayerSceneLoader>();
             _levelProgress = levelProgress;
             _playerPositionHandler = playerPositionHandler;
@@ -39,7 +37,6 @@ namespace Sourse.Level
             if (int.TryParse(_sceneLoader.CurrentSceneName, out int level))
                 _currentLevelNumber = level;
 
-            _saver.Save(SavedIndexKey, _currentLevelNumber);
             _levelNumberText.Initialize(_currentLevelNumber);
         }
 

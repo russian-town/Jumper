@@ -1,132 +1,73 @@
 using System;
 using System.Collections.Generic;
-using Sourse.UI.Shop.SkinView.Common;
+using Sourse.Balance;
+using Sourse.UI.Shop.SkinConfiguration;
+using Sourse.UI.Shop.View.Common;
 using UnityEngine;
 
 namespace Sourse.UI.Shop.Scripts
 {
-    [RequireComponent(typeof(SkinViewSpawner))]
-    public class Shop : SkinHandler.SkinHandler
+    public class Shop : MonoBehaviour
     {
         [SerializeField] private ShopScroll _shopScroll;
-        [SerializeField] private Wallet.Wallet _wallet;
-        [SerializeField] private Skin.Skin _defaultSkin;
 
-        private SkinViewSpawner _skinViewSpawner;
-        private List<SkinView.Common.SkinView> _spawnedSkinsView = new List<SkinView.Common.SkinView>();
-        private SkinView.Common.SkinView _currentSkinView;
-        private Skin.Skin _currentSkin;
+        private Wallet _wallet;
+        private List<Skin> _skins = new List<Skin>();
+        private SkinViewSpawner _skinViewSpawner = new SkinViewSpawner();
+        private List<SkinView> _spawnedSkinsView = new List<SkinView>();
+        private SkinView _currentSkinView;
+        private SkinConfig _currentSkin;
         private int _selectedID;
 
-        public event Action<int> Selected;
-        public event Action<int> Initialized;
+        public event Action<Skin> Bought;
+        public event Action<Skin> Selected;
 
-        private void Awake()
-        {
-            _skinViewSpawner = GetComponent<SkinViewSpawner>();
-            Initialize();
-
-            for (int i = 0; i < Skins.Count; i++)
-            {
-                var spawnedSkinView = _skinViewSpawner.GetSkinView(Skins[i]);
-                spawnedSkinView.Selected += OnSkinViewSelected;
-                spawnedSkinView.ByButtonClicked += OnBuyButtonClicked;
-                spawnedSkinView.SelectButtonClicked += OnSelectButtonClicked;
-                spawnedSkinView.Initialize(Skins[i]);
-                _spawnedSkinsView.Add(spawnedSkinView);
-            }
-
-            if (_currentSkin == null)
-            {
-                _currentSkin = _defaultSkin;
-                _defaultSkin.Select();
-                _currentSkinView = _skinViewSpawner.DefaultSkin;
-                _currentSkinView.UpdateView();
-                _selectedID = _defaultSkin.ID;
-            }
-
-            _shopScroll.Initialize(_spawnedSkinsView);
-            Initialized?.Invoke(_selectedID);
+        public void Initialize(List<Skin> skins)
+        { 
+            _skins = skins;
         }
 
-        private void OnDisable()
+        public bool TryBuySkin(Skin skin)
         {
-            foreach (var skinView in _spawnedSkinsView)
+            if (skin.Price <= _wallet.Money)
             {
-                skinView.Selected -= OnSkinViewSelected;
-                skinView.ByButtonClicked -= OnBuyButtonClicked;
-                skinView.SelectButtonClicked -= OnSelectButtonClicked;
-            }
-        }
-
-        public void OpenSkin(int id) => TryBuySkin(id);
-
-        public bool TryBuySkin(int id)
-        {
-            if (TrySearchByID(id, out Skin.Skin skin) == true)
-            {
-                if (skin.Price <= _wallet.Money)
-                {
-                    _wallet.DicreaseMoney(skin.Price);
-                    skin.Buy();
-                    Saver.SaveState(IsByKey, skin.ID, skin.IsBought);
-                    return true;
-                }
+                _wallet.DicreaseMoney(skin.Price);
+                skin.Buy();
+                Bought?.Invoke(skin);
+                return true;
             }
 
             return false;
         }
 
-        public bool TrySelect(int id)
+        public bool TrySelect(Skin skin)
         {
-            if (TrySearchByID(id, out Skin.Skin skin))
+            if (skin.IsBought == true)
             {
-                if (skin.IsBought == true)
-                {
-                    DeselectSkin(_selectedID);
-                    skin.Select();
-                    Saver.SaveState(IsSelectKey, skin.ID, skin.IsSelect);
-                    _selectedID = id;
-                    Saver.SaveSelectedID(_selectedID);
-                    Selected?.Invoke(id);
-                    return true;
-                }
+                skin.Select();
+                Selected?.Invoke(skin);
+                return true;
             }
 
             return false;
         }
 
-        private bool TrySearchByID(int id, out Skin.Skin skin)
-        {
-            for (int i = 0; i < Skins.Count; i++)
-            {
-                if (Skins[i].ID == id)
-                {
-                    skin = Skins[i];
-                    return true;
-                }
-            }
-
-            skin = null;
-            return false;
-        }
-
-        private void OnSkinViewSelected(Skin.Skin skin, SkinView.Common.SkinView skinView)
+        private void OnSkinViewSelected(SkinConfig skin, SkinView skinView)
         {
             _currentSkinView = skinView;
             _currentSkin = skin;
             _selectedID = skin.ID;
         }
 
-        private void OnBuyButtonClicked(Skin.Skin skin, SkinView.Common.SkinView skinView)
+        private void OnBuyButtonClicked(Skin skin, SkinView skinView)
         {
-            if (TryBuySkin(skin.ID))
+            if (TryBuySkin(skin))
                 skinView.UpdateView();
         }
 
-        private void OnSelectButtonClicked(Skin.Skin skin, SkinView.Common.SkinView skinView)
+        private void OnSelectButtonClicked(Skin skin, SkinView skinView)
         {
-            if (TrySelect(skin.ID))
+            if (TrySelect(skin))
             {
                 if (_currentSkinView != null)
                     _currentSkinView.UpdateView();
@@ -138,11 +79,6 @@ namespace Sourse.UI.Shop.Scripts
 
         private void DeselectSkin(int id)
         {
-            if (TrySearchByID(id, out Skin.Skin skin))
-            {
-                skin.Deselect();
-                Saver.SaveState(IsSelectKey, skin.ID, skin.IsSelect);
-            }
         }
     }
 }

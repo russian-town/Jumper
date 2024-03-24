@@ -13,7 +13,7 @@ namespace Sourse.Props.Common
 
         private void OnCollisionEnter(Collision collision)
         {
-            if (collision.transform.TryGetComponent(out Player.Common.Scripts.Player player))
+            if (collision.transform.TryGetComponent(out Player.Common.Scripts.PlayerInitializer player))
             {
                 if (player.IsStart)
                 {
@@ -24,7 +24,7 @@ namespace Sourse.Props.Common
 
         private void OnCollisionExit(Collision collision)
         {
-            if (collision.transform.TryGetComponent(out Player.Common.Scripts.Player player))
+            if (collision.transform.TryGetComponent(out Player.Common.Scripts.PlayerInitializer player))
             {
                 if (player.IsStart)
                 {

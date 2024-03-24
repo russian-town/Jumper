@@ -1,5 +1,6 @@
 using System.Collections;
 using Agava.YandexGames;
+using Sourse.Constants;
 using Sourse.Settings.Language;
 using UnityEngine;
 
@@ -7,13 +8,6 @@ namespace Sourse.YandexAds
 {
     public class YandexInit : MonoBehaviour
     {
-        private const string English = "English";
-        private const string Russian = "Russian";
-        private const string Turkish = "Turkish";
-        private const string Tr = "tr";
-        private const string En = "en";
-        private const string Ru = "ru";
-
         [SerializeField] private LanguageSettings _languageSettings;
 
         private IEnumerator Start()
@@ -28,17 +22,17 @@ namespace Sourse.YandexAds
 
             switch (YandexGamesSdk.Environment.i18n.lang)
             {
-                case Tr:
-                    _languageSettings.SetLanguage(Turkish);
+                case LanguagueName.Tr:
+                    _languageSettings.SetLanguage(LanguagueName.Turkish);
                     break;
-                case Ru:
-                    _languageSettings.SetLanguage(Russian);
+                case LanguagueName.Ru:
+                    _languageSettings.SetLanguage(LanguagueName.Russian);
                     break;
-                case En:
-                    _languageSettings.SetLanguage(English);
+                case LanguagueName.En:
+                    _languageSettings.SetLanguage(LanguagueName.English);
                     break;
                 default:
-                    _languageSettings.SetLanguage(Russian);
+                    _languageSettings.SetLanguage(LanguagueName.Russian);
                     break;
             }
         }

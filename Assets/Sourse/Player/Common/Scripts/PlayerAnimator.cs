@@ -5,8 +5,7 @@ using UnityEngine;
 
 namespace Sourse.Player.Common.Scripts
 {
-    [RequireComponent(typeof(Animator))]
-    public class PlayerAnimator : MonoBehaviour
+    public class PlayerAnimator: MonoBehaviour
     {
         [SerializeField] private float _animationDelay;
         [SerializeField] private HeadPosition _headPosition;
@@ -49,18 +48,12 @@ namespace Sourse.Player.Common.Scripts
         public void CallDoubleJumpEvent()
             => DoubleJumped?.Invoke();
 
-        public void DisableIK()
-            => _weight = AnimationParameter.MinWeight;
-
         public void Jump()
         {
             IsJumped = true;
             _animator.SetTrigger(AnimationName.Jump);
             _startResetTriggers = StartCoroutine(ResetTriggers());
         }
-
-        public void Defeat()
-           => _animator.SetBool(AnimationName.Defeat, true);
 
         public void DoubleJump()
         {
@@ -69,13 +62,31 @@ namespace Sourse.Player.Common.Scripts
             _startResetTriggers = StartCoroutine(ResetTriggers());
         }
 
-        public void HardFall()
+        private void OnFell(Collision collision)
+        {
+            if (collision.transform.TryGetComponent(out Ground.Ground ground))
+                Die(collision.relativeVelocity.y);
+        }
+
+        private void DisableIK()
+            => _weight = AnimationParameter.MinWeight;
+
+        private void HardFall()
            => _animator.SetTrigger(AnimationName.HardFall);
 
-        private void OnFell(Collision collision)
+        private void Defeat()
+           => _animator.SetBool(AnimationName.Defeat, true);
+
+        private void Die(float relativeVelocity)
         {
             IsJumped = false;
             IsdDoubleJumped = false;
+            DisableIK();
+
+            if (relativeVelocity >= AnimationParameter.MaxRelativeVelocityY)
+                HardFall();
+            else
+                Defeat();
         }
 
         private IEnumerator ResetTriggers()

@@ -1,7 +1,7 @@
 using System;
 using System.Collections;
 using Lean.Localization;
-using Sourse.UI.Shop.Skin;
+using Sourse.UI.Shop.SkinConfiguration;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -26,7 +26,7 @@ namespace Sourse.UI.LevelCompletePanel
 
         public event Action<int> SkinOpened;
 
-        public void Initialize(Skin skin)
+        public void Initialize(SkinConfig skin)
         {
             _openingSkinBar.sprite = skin.Icon;
             _openingSkinBarBackground.color = Color.black;

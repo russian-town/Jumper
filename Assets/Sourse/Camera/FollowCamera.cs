@@ -20,7 +20,7 @@ namespace Sourse.Camera
             transform.position = Vector3.Lerp(transform.position, followPosition, _speed * Time.deltaTime);
         }
 
-        public void SetTarget(Player.Common.Scripts.Player player)
+        public void SetTarget(Player.Common.Scripts.PlayerInitializer player)
         {
             _target = player.transform;
         }

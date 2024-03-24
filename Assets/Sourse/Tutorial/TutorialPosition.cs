@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Sourse.Tutorial
 {
-    [RequireComponent(typeof(BoxCollider), typeof(Saver.Saver))]
+    [RequireComponent(typeof(BoxCollider))]
     public class TutorialPosition : MonoBehaviour
     {
         [SerializeField] private Tutorial _tutorial;
@@ -11,14 +11,12 @@ namespace Sourse.Tutorial
 
         private bool _isComplete = false;
         private BoxCollider _boxCollider;
-        private Saver.Saver _saver;
 
         private void Awake()
         {
             _boxCollider = GetComponent<BoxCollider>();
             _boxCollider.isTrigger = true;
-            _saver = GetComponent<Saver.Saver>();
-            _isComplete = _saver.GetTutorialState();
+            //_isComplete = _saver.GetTutorialState();
         }
 
         private void OnTriggerEnter(Collider other)
@@ -26,7 +24,7 @@ namespace Sourse.Tutorial
             if (_isComplete == true)
                 return;
 
-            if (other.TryGetComponent(out Player.Common.Scripts.Player player))
+            if (other.TryGetComponent(out Player.Common.Scripts.PlayerInitializer player))
             {
                 _tutorial.Show(_tutorialType);
             }
@@ -37,14 +35,13 @@ namespace Sourse.Tutorial
             if (_isComplete == true)
                 return;
 
-            if (other.TryGetComponent(out Player.Common.Scripts.Player player))
+            if (other.TryGetComponent(out Player.Common.Scripts.PlayerInitializer player))
             {
                 _tutorial.Hide(_tutorialType);
 
                 if (_isLastPostion == true)
                 {
                     _isComplete = true;
-                    _saver.SaveTutorialState(_isComplete);
                 }
             }
         }

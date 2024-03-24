@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 namespace Sourse.Settings.Audio
 {
-    [RequireComponent(typeof(AudioView), typeof(Saver.Saver))]
+    [RequireComponent(typeof(AudioView))]
     public class Audio : MonoBehaviour
     {
         private const string SoundVolume = "SoundVolume";
@@ -20,12 +20,10 @@ namespace Sourse.Settings.Audio
         [SerializeField] private AudioMixerGroup _musicGroup;
 
         private AudioView _audioView;
-        private Saver.Saver _saver;
 
         private void Awake()
         {
             _audioView = GetComponent<AudioView>();
-            _saver = GetComponent<Saver.Saver>();
         }
 
         private void OnEnable()
@@ -51,7 +49,7 @@ namespace Sourse.Settings.Audio
 
         private void Initialize()
         {
-            if (_saver.TryGetValue(MusicVolumeKey, out float musicVolume))
+           /* if (_saver.TryGetValue(MusicVolumeKey, out float musicVolume))
             {
                 ChangeMusicVolume(musicVolume);
                 _musicSlider.value = musicVolume;
@@ -61,13 +59,12 @@ namespace Sourse.Settings.Audio
             {
                 ChangeSoundVolume(soundVolume);
                 _soundSlider.value = soundVolume;
-            }
+            }*/
         }
 
         private void ChangeVolume(float value, AudioMixerGroup audioMixerGroup, string groupName, string key)
         {
             audioMixerGroup.audioMixer.SetFloat(groupName, Mathf.Log10(value) * AudioMixerValueRatio);
-            _saver.Save(key, value);
 
             if (value == MuteVolume)
             {

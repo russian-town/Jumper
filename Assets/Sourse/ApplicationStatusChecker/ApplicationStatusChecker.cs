@@ -1,4 +1,5 @@
 using Agava.WebUtility;
+using Sourse.Constants;
 using Sourse.Pause;
 using UnityEngine;
 using UnityEngine.Audio;
@@ -7,10 +8,6 @@ namespace Sourse.ApplicationStatusChecker
 {
     public class ApplicationStatusChecker : MonoBehaviour
     {
-        private const string MasterVolume = "MasterVolume";
-        private const float FullVolume = 0f;
-        private const float MuteVolume = -80f;
-
         [SerializeField] private AudioMixerGroup _masterGroup;
         [SerializeField] private Pause.Pause _pause;
         [SerializeField] private PausePanel _pausePanel;
@@ -67,9 +64,9 @@ namespace Sourse.ApplicationStatusChecker
         public void ChangeSoundStatus(bool isMute)
         {
             if (isMute == true)
-                _masterGroup.audioMixer.SetFloat(MasterVolume, MuteVolume);
+                _masterGroup.audioMixer.SetFloat(Volume.MasterGroup, Volume.Mute);
             else
-                _masterGroup.audioMixer.SetFloat(MasterVolume, FullVolume);
+                _masterGroup.audioMixer.SetFloat(Volume.MasterGroup, Volume.Full);
         }
 
         public void SetIsPlayRewarded(bool isPlayRewaeded)

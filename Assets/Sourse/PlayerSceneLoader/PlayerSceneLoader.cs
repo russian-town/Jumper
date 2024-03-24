@@ -3,7 +3,6 @@ using UnityEngine.SceneManagement;
 
 namespace Sourse.PlayerSceneLoader
 {
-    [RequireComponent(typeof(Saver.Saver))]
     public class PlayerSceneLoader : MonoBehaviour
     {
         private const string StartSceneName = "StartScene";
@@ -11,13 +10,11 @@ namespace Sourse.PlayerSceneLoader
         private const string ShopSceneName = "Shop";
         private const int FirstLevel = 1;
 
-        private Saver.Saver _saver;
-
         public string CurrentSceneName => SceneManager.GetActiveScene().name;
 
         private void Awake()
         {
-            _saver = GetComponent<Saver.Saver>();
+            /*_saver = GetComponent<Saver.Saver>();*/
         }
 
         public void ReloadCurrentScene()
@@ -35,9 +32,9 @@ namespace Sourse.PlayerSceneLoader
 
         public void LoadLastScene()
         {
-            if (_saver.TryGetValue(Level.Level.SavedIndexKey, out int value))
+            /*if (_saver.TryGetValue(Level.Level.SavedIndexKey, out int value))
                 LoadSceneByName(value);
-            else
+            else*/
                 LoadSceneByName(FirstLevel);
         }
 

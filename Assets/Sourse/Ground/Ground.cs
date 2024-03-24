@@ -16,7 +16,7 @@ namespace Sourse.Ground
 
         private void OnCollisionEnter(Collision collision)
         {
-            if (collision.transform.TryGetComponent(out Player.Common.Scripts.Player player) && (collision.collider is SphereCollider) == false)
+            if (collision.transform.TryGetComponent(out Player.Common.Scripts.PlayerInitializer player) && (collision.collider is SphereCollider) == false)
                 _audioSource.PlayOneShot(_playerFallSound);
         }
     }

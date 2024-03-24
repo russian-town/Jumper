@@ -1,7 +1,7 @@
+using Sourse.Balance;
 using Sourse.Level;
+using Sourse.Player.Common.Scripts;
 using Sourse.UI.LevelCompletePanel;
-using Sourse.UI.Shop.SkinView.OpenableSkinView;
-using UnityEngine;
 
 namespace Sourse.Game
 {
@@ -12,28 +12,25 @@ namespace Sourse.Game
         private bool _isLevelCompleted = false;
 
         private readonly LevelCompletePanel _levelCompletePanel;
-        private readonly Wallet.Wallet _wallet;
-        private readonly OpenableSkinHandler _openableSkinHandler;
+        private readonly Wallet _wallet;
         private readonly float _percentOpeningSkin;
         private readonly int _moneyOfLevel;
         private readonly Level.Level _level;
         private readonly LevelProgress _levelProgress;
         private readonly LevelProgressView _levelProgressView;
-        private readonly Player.Common.Scripts.Player _player;
+        private readonly PlayerInitializer _player;
 
         public FinishLevelHandler(LevelCompletePanel levelCompletePanel, 
-            Wallet.Wallet wallet,
-            OpenableSkinHandler openableSkinHandler,
+            Wallet wallet,
             float percentOpeningSkin,
             int moneyOfLevel,
             Level.Level level,
             LevelProgress levelProgress,
             LevelProgressView levelProgressView,
-            Player.Common.Scripts.Player player)
+            PlayerInitializer player)
         {
             _levelCompletePanel = levelCompletePanel;
             _wallet = wallet;
-            _openableSkinHandler = openableSkinHandler;
             _percentOpeningSkin = percentOpeningSkin;
             _moneyOfLevel = moneyOfLevel;
             _level = level;
@@ -43,10 +40,12 @@ namespace Sourse.Game
         }
 
         public void Subscribe()
-            => _player.LevelCompleted += OnLevelCompleted;
+        { }
+            /*=> _player.LevelCompleted += OnLevelCompleted;*/
 
         public void Unsubscribe()
-            => _player.LevelCompleted -= OnLevelCompleted;
+        { }
+           /* => _player.LevelCompleted -= OnLevelCompleted;*/
 
         private void OnLevelCompleted()
         {
@@ -62,7 +61,7 @@ namespace Sourse.Game
             _levelProgressView.Hide();
             _levelCompletePanel.Show();
             _wallet.AddMoney(_moneyOfLevel);
-
+/*
             if (_openableSkinHandler.GetOpenableSkin() != null)
             {
                 float targetFillAmount;
@@ -78,8 +77,9 @@ namespace Sourse.Game
             else
             {
                 _levelCompletePanel.HideOpeningSkinBar();
-            }
+            }*/
 
+            _levelCompletePanel.HideOpeningSkinBar();
             _levelCompletePanel.SetText(_level.CurrentLevelNumber);
         }
     }

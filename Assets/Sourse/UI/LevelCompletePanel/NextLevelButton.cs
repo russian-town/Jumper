@@ -5,12 +5,5 @@ namespace Sourse.UI.LevelCompletePanel
 {
     public class NextLevelButton : UIButton, IPauseHandler
     {
-        public void SetPause(bool isPause)
-        {
-            if (isPause)
-                Disable();
-            else
-                Enable();
-        }
     }
 }

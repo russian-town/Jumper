@@ -1,3 +1,4 @@
+using Sourse.Balance;
 using Sourse.Camera;
 using Sourse.Game;
 using Sourse.Level;
@@ -6,13 +7,11 @@ using Sourse.Player.Common.Scripts;
 using Sourse.UI;
 using Sourse.UI.LevelCompletePanel;
 using Sourse.UI.Shop.Scripts.Buttons;
-using Sourse.UI.Shop.SkinView.OpenableSkinView;
 using Sourse.YandexAds;
 using UnityEngine;
 
 namespace Sourse.Root
 {
-    [RequireComponent(typeof(PlayerSpawner), typeof(Saver.Saver), typeof(OpenableSkinHandler))]
     public class Root : MonoBehaviour
     {
         [SerializeField] private FollowCamera _followCamera;
@@ -34,24 +33,15 @@ namespace Sourse.Root
         [SerializeField] private CloseAdOfferScreenButton _noThanksButton;
         [SerializeField] private RewardedButton _rewardedButton;
         [SerializeField] private NextLevelButton _nextLevelButton;
-        [SerializeField] private Wallet.Wallet _wallet;
         [SerializeField] private RewardedVideo _rewardedVideo;
+        [SerializeField] private PlayerInitializer _startPlayer;
 
+        private Wallet _wallet = new Wallet();
         private Vector3 _targetRotation = new Vector3(0f, 90f, 0f);
-        private PlayerSpawner _playerSpawner;
-        private Saver.Saver _saver;
-        private Player.Common.Scripts.Player _startPlayer;
-        private OpenableSkinHandler _openableSkinHandler;
         private YandexAds.YandexAds _yandexAds;
         private FinishLevelHandler _finishLevelHandler;
         private LoseLevelHandler _loseLevelHandler;
         private PlayerUI _playerUI;
-
-        private void Awake()
-        {
-            _playerSpawner = GetComponent<PlayerSpawner>();
-            _saver = GetComponent<Saver.Saver>();
-        }
 
         private void OnDestroy()
         {
@@ -61,7 +51,6 @@ namespace Sourse.Root
             _noThanksButton.Unsubscribe();
             _retryButton.Unsubscribe();
             _level.Unsubscribe();
-            _openableSkinHandler.Unsubscribe();
             _finishLevelHandler.Unsubscribe();
             _loseLevelHandler.Unsubscribe();
             _playerUI.Unsibscribe();
@@ -77,27 +66,22 @@ namespace Sourse.Root
                 startPositon = _startPlayerPosition;
 
             _playerPositionHandler.RemoveCurrentPropsID();
-            Initialize(_saver.GetSelectedID(), startPositon);
         }
 
         private void Initialize(int id, PlayerPosition playerPosition)
         {
-            _startPlayer = _playerSpawner.GetPlayer(id, playerPosition);
             _startPlayer.transform.localRotation = Quaternion.Euler(_targetRotation);
             _startPlayer.Initialize(_playerPositionHandler, _playerInput);
             _levelProgress.Initialize(_startPlayer);
             _followCamera.SetTarget(_startPlayer);
-            _openableSkinHandler = GetComponent<OpenableSkinHandler>();
             _yandexAds = new YandexAds.YandexAds();
             _applicationStatusChecker.Initialize(_yandexAds);
-            _openableSkinHandler.Initialize(_levelCompletePanel);
             _nextLevelButton.Initialize();
             _rewardedButton.Initialize();
             _noThanksButton.Initialize();
             _retryButton.Initialize();
             _finishLevelHandler = new FinishLevelHandler(_levelCompletePanel,
                 _wallet,
-                _openableSkinHandler,
                 _percentOpeningSkin,
                 _moneyOfLevel,
                 _level,

@@ -4,7 +4,6 @@ using UnityEngine;
 
 namespace Sourse.Root
 {
-    [RequireComponent(typeof(Saver.Saver))]
     public class PlayerPositionHandler : MonoBehaviour
     {
         private const string LastPropsIdKey = "CurrentPropsID";
@@ -12,7 +11,6 @@ namespace Sourse.Root
         [SerializeField] private List<Props.Common.Props> _props = new List<Props.Common.Props>();
 
         private int _currentPropsId;
-        private Saver.Saver _saver;
         private GroundDetector _groundDetector;
 
         public PlayerPosition StartPlayerPosition { get; private set; }
@@ -31,27 +29,26 @@ namespace Sourse.Root
 
         public void Initialize()
         {
-            _saver = GetComponent<Saver.Saver>();
         }
 
         public PlayerPosition GetLastPosition()
         {
-            if (_saver.TryGetValue(LastPropsIdKey, out int Id) == true)
+           /* if (_saver.TryGetValue(LastPropsIdKey, out int Id) == true)
                 foreach (var props in _props)
                     if (_props.IndexOf(props) == Id)
-                        return props.PlayerPosition;
+                        return props.PlayerPosition;*/
 
             return null;
         }
 
         public void RemoveCurrentPropsID()
         {
-            _saver.TryDeleteSaveData(LastPropsIdKey);
+            /*_saver.TryDeleteSaveData(LastPropsIdKey);*/
         }
 
         public void SaveCurrentPropsID()
         {
-            _saver.Save(LastPropsIdKey, _currentPropsId);
+            /*_saver.Save(LastPropsIdKey, _currentPropsId);*/
         }
 
         private void OnFell(Collision collision)

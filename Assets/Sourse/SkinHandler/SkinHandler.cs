@@ -1,35 +1,35 @@
 using System.Collections.Generic;
 using Sourse.UI.Shop.Scripts;
-using Sourse.UI.Shop.Skin;
+using Sourse.UI.Shop.SkinConfiguration;
 using UnityEngine;
 
 namespace Sourse.SkinHandler
 {
-    [RequireComponent(typeof(Saver.Saver), typeof(Sorter))]
+    [RequireComponent(typeof(BubbleSort))]
     public abstract class SkinHandler : MonoBehaviour
     {
         protected const string IsByKey = "IsBy";
         protected const string IsSelectKey = "IsSelect";
 
-        [SerializeField] private List<Skin> _skins = new List<Skin>();
+        [SerializeField] private List<SkinConfig> _skins = new List<SkinConfig>();
 
-        private Saver.Saver _saver;
-        private Sorter _sorter;
+       // private Saver.Saver _saver;
+        private BubbleSort _sorter;
 
-        protected Saver.Saver Saver => _saver;
+        //protected Saver.Saver Saver => _saver;
 
-        protected IReadOnlyList<Skin> Skins => _skins;
+        protected IReadOnlyList<SkinConfig> Skins => _skins;
 
         protected virtual void Initialize()
         {
-            _saver = GetComponent<Saver.Saver>();
-            _sorter = GetComponent<Sorter>();
+            //_saver = GetComponent<Saver.Saver>();
+            _sorter = GetComponent<BubbleSort>();
             _sorter.SortingSkins(ref _skins);
 
-            foreach (var skin in _skins)
-            {
-                skin.SetSaveData(_saver.GetState(IsByKey, skin.ID), _saver.GetState(IsSelectKey, skin.ID));
-            }
+            //foreach (var skin in _skins)
+            //{
+            //    skin.SetSaveData(_saver.GetState(IsByKey, skin.ID), _saver.GetState(IsSelectKey, skin.ID));
+            //}
         }
     }
 }
