@@ -1,8 +1,9 @@
 using System;
+using Sourse.Save;
 
 namespace Sourse.Balance
 {
-    public class Wallet
+    public class Wallet : IDataReader, IDataWriter
     {
         private int _money;
 
@@ -27,5 +28,11 @@ namespace Sourse.Balance
             _money += money;
             MoneyChanged?.Invoke(_money);
         }
+
+        public void Read(PlayerData playerData)
+            => _money = playerData.Money;
+
+        public void Write(PlayerData playerData)
+            => playerData.Money = _money;
     }
 }

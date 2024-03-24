@@ -2,83 +2,58 @@ using System;
 using System.Collections.Generic;
 using Sourse.Balance;
 using Sourse.UI.Shop.SkinConfiguration;
-using Sourse.UI.Shop.View.Common;
-using UnityEngine;
 
 namespace Sourse.UI.Shop.Scripts
 {
-    public class Shop : MonoBehaviour
+    public class Shop
     {
-        [SerializeField] private ShopScroll _shopScroll;
-
         private Wallet _wallet;
         private List<Skin> _skins = new List<Skin>();
-        private SkinViewSpawner _skinViewSpawner = new SkinViewSpawner();
-        private List<SkinView> _spawnedSkinsView = new List<SkinView>();
-        private SkinView _currentSkinView;
-        private SkinConfig _currentSkin;
-        private int _selectedID;
 
         public event Action<Skin> Bought;
         public event Action<Skin> Selected;
 
-        public void Initialize(List<Skin> skins)
-        { 
+        public void Initialize(List<Skin> skins, Wallet wallet)
+        {
             _skins = skins;
+            _wallet = wallet;
         }
 
-        public bool TryBuySkin(Skin skin)
+        public void Subscribe()
         {
-            if (skin.Price <= _wallet.Money)
+            foreach (var skin in _skins)
             {
-                _wallet.DicreaseMoney(skin.Price);
-                skin.Buy();
-                Bought?.Invoke(skin);
-                return true;
-            }
-
-            return false;
-        }
-
-        public bool TrySelect(Skin skin)
-        {
-            if (skin.IsBought == true)
-            {
-                skin.Select();
-                Selected?.Invoke(skin);
-                return true;
-            }
-
-            return false;
-        }
-
-        private void OnSkinViewSelected(SkinConfig skin, SkinView skinView)
-        {
-            _currentSkinView = skinView;
-            _currentSkin = skin;
-            _selectedID = skin.ID;
-        }
-
-        private void OnBuyButtonClicked(Skin skin, SkinView skinView)
-        {
-            if (TryBuySkin(skin))
-                skinView.UpdateView();
-        }
-
-        private void OnSelectButtonClicked(Skin skin, SkinView skinView)
-        {
-            if (TrySelect(skin))
-            {
-                if (_currentSkinView != null)
-                    _currentSkinView.UpdateView();
-
-                skinView.UpdateView();
-                _currentSkinView = skinView;
+                skin.BuyTried += OnBuyTried;
+                skin.SelectTried += OnSelectTride;
             }
         }
 
-        private void DeselectSkin(int id)
+        public void Unsubscribe()
         {
+            foreach (var skin in _skins)
+            {
+                skin.BuyTried -= OnBuyTried;
+                skin.SelectTried -= OnSelectTride;
+            }
+        }
+
+        private void OnBuyTried(Skin skin)
+        {
+            if (skin.Price > _wallet.Money)
+                return;
+
+            _wallet.DicreaseMoney(skin.Price);
+            skin.Buy();
+            Bought?.Invoke(skin);
+        }
+
+        private void OnSelectTride(Skin skin)
+        {
+            if (skin.IsBought == false)
+                return;
+
+            skin.Select();
+            Selected?.Invoke(skin);
         }
     }
 }

@@ -12,6 +12,9 @@ namespace Sourse.Save
 
         public void Update(Skin skin)
         {
+            if (_skinSaveDatas == null)
+                return;
+
             foreach (var skinSaveData in _skinSaveDatas)
             {
                 if(skinSaveData.Id == skin.ID)

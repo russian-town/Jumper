@@ -824,7 +824,7 @@ GameObject:
   - component: {fileID: 1410132333066041488}
   - component: {fileID: 742175254427601380}
   m_Layer: 8
-  m_Name: Prisoner
+  m_Name: Player_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

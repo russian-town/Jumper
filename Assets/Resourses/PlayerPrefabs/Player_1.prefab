@@ -1246,7 +1246,7 @@ GameObject:
   - component: {fileID: 6428178809684774205}
   - component: {fileID: 8209370874924828413}
   m_Layer: 8
-  m_Name: Police
+  m_Name: Player_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -24,15 +24,15 @@ namespace Sourse.UI.Shop.View.Common
 
         public int ID;
 
-        public event Action<SkinConfig, SkinView> ByButtonClicked;
-        public event Action<SkinConfig, SkinView> SelectButtonClicked;
-        public event Action<SkinConfig, SkinView> Selected;
+        public event Action BuyButtonClicked;
+        public event Action SelectButtonClicked;
+        public event Action Selected;
 
-        private void OnDisable()
+       /* private void OnDisable()
         {
             _selectButton.ButtonClicked -= OnButtonClicked;
             Deinitialize();
-        }
+        }*/
 
         public void Initialize(SkinConfig skin)
         {
@@ -58,7 +58,7 @@ namespace Sourse.UI.Shop.View.Common
             //    SwitchViewState(true, false, _defaultColor);
         }
 
-        protected void By() => ByButtonClicked?.Invoke(_skin, this);
+        protected void By() => BuyButtonClicked?.Invoke();
 
         protected abstract void Initialize();
 
@@ -68,7 +68,7 @@ namespace Sourse.UI.Shop.View.Common
 
         protected void SetIconColor(Color color) => _icon.color = color;
 
-        private void OnButtonClicked() => SelectButtonClicked?.Invoke(_skin, this);
+        private void OnButtonClicked() { /*SelectButtonClicked?.Invoke(_skin, this);*/ }
 
         private void SwitchViewState(bool enableText, bool enableIcon, Color buttonColor)
         {

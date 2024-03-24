@@ -9,7 +9,6 @@ namespace Sourse.Player.Common.Scripts
     {
         [SerializeField] private ParticleSystem _fallParticle;
         [SerializeField] private ParticleSystem _fallOnGroundParticle;
-        [SerializeField] private int _id;
 
         private PlayerAnimator _animator;
         private PlayerJumper _jumper;
@@ -21,7 +20,6 @@ namespace Sourse.Player.Common.Scripts
         private PlayerPositionHandler _positionHandler;
         private bool _isStart = false;
 
-        public int ID => _id;
         public bool IsStart => _isStart;
 
         public void Unsubscribe()

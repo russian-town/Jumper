@@ -87,6 +87,7 @@ GameObject:
   - component: {fileID: 2148855595195773149}
   - component: {fileID: 2148855595195773151}
   - component: {fileID: 2148855595195773148}
+  - component: {fileID: 6037275378775921656}
   m_Layer: 5
   m_Name: DefaultSkinView
   m_TagString: Untagged
@@ -154,6 +155,26 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &6037275378775921656
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2148855595195773146}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f22c072cc8691d478bb2dd996d083a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _selectButton: {fileID: 0}
+  _selectText: {fileID: 0}
+  _icon: {fileID: 0}
+  _selectIcon: {fileID: 0}
+  _selectButtonImage: {fileID: 0}
+  _selectColor: {r: 0, g: 0, b: 0, a: 0}
+  _defaultColor: {r: 0, g: 0, b: 0, a: 0}
+  ID: 0
 --- !u!1 &2148855595479688930
 GameObject:
   m_ObjectHideFlags: 0
