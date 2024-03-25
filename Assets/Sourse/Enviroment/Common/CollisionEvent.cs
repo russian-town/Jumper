@@ -1,6 +1,6 @@
 using UnityEngine.Events;
 
-namespace Sourse.Props.Common
+namespace Sourse.Enviroment.Common
 {
     [System.Serializable]
     public class CollisionEvent : UnityEvent

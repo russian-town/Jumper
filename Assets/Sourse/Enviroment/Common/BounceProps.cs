@@ -1,7 +1,7 @@
 using Sourse.Player.Common.Scripts;
 using UnityEngine;
 
-namespace Sourse.Props.Common
+namespace Sourse.Enviroment.Common
 {
     public abstract class BounceProps : MonoBehaviour
     {

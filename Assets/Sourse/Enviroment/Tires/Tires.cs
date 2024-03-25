@@ -1,8 +1,8 @@
-using Sourse.Props.Common;
+using Sourse.Enviroment.Common;
 using Sourse.Player.Common.Scripts;
 using UnityEngine;
 
-namespace Sourse.Props.Tires
+namespace Sourse.Enviroment.Tires
 {
     public class Tires : BounceProps
     {

@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Sourse.Props.Barrel
+namespace Sourse.Enviroment.Barrel
 {
     public class BarrelsStock : MonoBehaviour
     {

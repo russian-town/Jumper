@@ -1,44 +1,39 @@
 using Sourse.Finish;
+using Sourse.Player.Common.Scripts;
+using Sourse.Save;
 using UnityEngine;
 
 namespace Sourse.Level
 {
-    [RequireComponent(typeof(LevelProgressView))]
-    public class LevelProgress : MonoBehaviour
+    public class LevelProgress : IDataReader, IDataWriter
     {
-        private const string LevelProgressKey = "LevelProgress";
-
-        [SerializeField] private FinishPosition _finishPosition;
-
-        private LevelProgressView _levelProgressView;
+        private readonly FinishPosition _finishPosition;
+        private readonly float _maxDistance = 1f;
+        private readonly PlayerInitializer _playerInitializer;
+        
         private float _distance;
-        private float _maxDistance = 1f;
-        private Player.Common.Scripts.PlayerInitializer _player;
 
-        public float CurrentDistance { get; private set; }
-
-        private void Update()
+        public LevelProgress(PlayerInitializer playerInitializer,
+            FinishPosition finishPosition)
         {
-            if (_player == null)
-                return;
-
-            CurrentDistance = _maxDistance - Vector3.Distance(_player.transform.position, _finishPosition.transform.position) / _distance;
-            _levelProgressView.UpdateProgressBar(CurrentDistance);
+            _playerInitializer = playerInitializer;
+            _finishPosition = finishPosition;
         }
 
-        public void Initialize(Player.Common.Scripts.PlayerInitializer player)
+        public float GetDistance()
         {
-            _levelProgressView = GetComponent<LevelProgressView>();
-            _player = player;
+            if (_playerInitializer == null)
+                return _maxDistance;
 
-           /* if (_saver.TryGetValue(LevelProgressKey, out float value))
-                _distance = value;
-            else
-                _distance = Vector3.Distance(player.transform.position, _finishPosition.transform.position);*/
+            float distanceToFinish = Vector3.Distance(_playerInitializer.transform.position,
+                _finishPosition.transform.position);
+            return _maxDistance - distanceToFinish / _distance;
         }
 
-        public void SaveDistance() { /*_saver.Save(LevelProgressKey, _distance);*/ }
+        public void Read(PlayerData playerData)
+            => _distance = playerData.Distance;
 
-        public void DeleteSavedDistance() { /*_saver.TryDeleteSaveData(LevelProgressKey);*/ }
+        public void Write(PlayerData playerData)
+            => playerData.Distance = _distance;
     }
 }

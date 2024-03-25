@@ -16,7 +16,6 @@ namespace Sourse.Game
         private readonly float _percentOpeningSkin;
         private readonly int _moneyOfLevel;
         private readonly Level.Level _level;
-        private readonly LevelProgress _levelProgress;
         private readonly LevelProgressView _levelProgressView;
         private readonly PlayerInitializer _player;
 
@@ -25,7 +24,6 @@ namespace Sourse.Game
             float percentOpeningSkin,
             int moneyOfLevel,
             Level.Level level,
-            LevelProgress levelProgress,
             LevelProgressView levelProgressView,
             PlayerInitializer player)
         {
@@ -34,7 +32,6 @@ namespace Sourse.Game
             _percentOpeningSkin = percentOpeningSkin;
             _moneyOfLevel = moneyOfLevel;
             _level = level;
-            _levelProgress = levelProgress;
             _levelProgressView = levelProgressView;
             _player = player;
         }
@@ -57,7 +54,6 @@ namespace Sourse.Game
                 return;
 
             _isLevelCompleted = true;
-            _levelProgress.DeleteSavedDistance();
             _levelProgressView.Hide();
             _levelCompletePanel.Show();
             _wallet.AddMoney(_moneyOfLevel);

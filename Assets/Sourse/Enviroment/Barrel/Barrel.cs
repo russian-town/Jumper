@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Sourse.Props.Barrel
+namespace Sourse.Enviroment.Barrel
 {
     [RequireComponent(typeof(Rigidbody), typeof(CapsuleCollider), typeof(AudioSource))]
     public class Barrel : MonoBehaviour

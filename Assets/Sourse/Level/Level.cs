@@ -1,4 +1,3 @@
-using Sourse.Root;
 using Sourse.YandexAds;
 using UnityEngine;
 
@@ -15,24 +14,17 @@ namespace Sourse.Level
 
         private int _currentLevelNumber;
         private PlayerSceneLoader.PlayerSceneLoader _sceneLoader;
-        private LevelProgress _levelProgress;
-        private PlayerPositionHandler _playerPositionHandler;
-
         public int CurrentLevelNumber => _currentLevelNumber;
 
         public void Unsubscribe()
         {
             _rewardedVideo.RewardedVideoEnded -= RestartLevelOnLastPosition;
-            _rewardedVideo.RewardedVideoOpened -= _playerPositionHandler.SaveCurrentPropsID;
         }
 
-        public void Initialize(LevelProgress levelProgress, PlayerPositionHandler playerPositionHandler)
+        public void Initialize(LevelProgress levelProgress)
         {
             _sceneLoader = GetComponent<PlayerSceneLoader.PlayerSceneLoader>();
-            _levelProgress = levelProgress;
-            _playerPositionHandler = playerPositionHandler;
             _rewardedVideo.RewardedVideoEnded += RestartLevelOnLastPosition;
-            _rewardedVideo.RewardedVideoOpened += _playerPositionHandler.SaveCurrentPropsID;
 
             if (int.TryParse(_sceneLoader.CurrentSceneName, out int level))
                 _currentLevelNumber = level;
@@ -53,7 +45,6 @@ namespace Sourse.Level
 
         private void RestartLevelOnLastPosition()
         {
-            _levelProgress.SaveDistance();
             RestartLevel();
         }
     }

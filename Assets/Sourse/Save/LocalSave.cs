@@ -17,7 +17,7 @@ namespace Sourse.Save
             _dataWriters = dataWriters;
         }
 
-        public void Save(PlayerData playerData)
+        public void Save()
         {
             foreach (var dataWriter in _dataWriters)
                 dataWriter.Write(_playerData);

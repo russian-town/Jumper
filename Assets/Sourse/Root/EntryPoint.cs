@@ -23,7 +23,6 @@ namespace Sourse.Root
         private List<SkinSaveData> _skinSaveDatas = new List<SkinSaveData>();
         private SaveDataInjector _saveDataInjector;
         private ISaveLoadService _saveLoadService;
-        private PlayerData _playerData = new PlayerData();
         private LocalSave _localSave;
         private Wallet _wallet = new Wallet();
         private BubbleSort _bubbleSort = new BubbleSort();
@@ -136,9 +135,9 @@ namespace Sourse.Root
         }
 
         private void OnSelected(Skin skin)
-           => _saveLoadService.Save(_playerData);
+           => _saveLoadService.Save();
 
         private void OnBought(Skin skin)
-            => _saveLoadService.Save(_playerData);
+            => _saveLoadService.Save();
     }
 }

@@ -1,5 +1,5 @@
 using System;
-using Sourse.Props.Barrel;
+using Sourse.Enviroment.Barrel;
 using UnityEngine;
 
 namespace Sourse.Player.Common.Scripts

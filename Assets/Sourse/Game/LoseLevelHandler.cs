@@ -18,15 +18,13 @@ namespace Sourse.Game
 
         private bool _isPause;
 
-        public LoseLevelHandler(LevelProgress levelProgress,
-            PlayerPosition playerStartPosition,
+        public LoseLevelHandler(PlayerPosition playerStartPosition,
             GameOverView gameOverView,
             RewardedPanel rewardedPanel,
             RetryButton retryButton,
             LevelProgressView levelProgressView,
             PlayerInitializer player)
         {
-            _levelProgress = levelProgress;
             _playerStartPosition = playerStartPosition;
             _gameOverView = gameOverView;
             _rewardedPanel = rewardedPanel;
@@ -50,8 +48,7 @@ namespace Sourse.Game
 
         private void OnPlayerDied()
         {
-            _levelProgress.DeleteSavedDistance();
-            float percent = Mathf.Ceil(_levelProgress.CurrentDistance * _percentRatio);
+            float percent = Mathf.Ceil(_levelProgress.GetDistance() * _percentRatio);
             _gameOverView.Show();
 
             if (_playerLastPosition == null || _playerLastPosition == _playerStartPosition)

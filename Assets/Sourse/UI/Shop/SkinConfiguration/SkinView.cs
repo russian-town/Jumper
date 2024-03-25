@@ -1,4 +1,5 @@
 using System;
+using Sourse.Constants;
 using Sourse.UI.Shop.Scripts;
 using TMPro;
 using UnityEngine;
@@ -43,7 +44,7 @@ namespace Sourse.UI.Shop.SkinConfiguration
                 _priceText.Hide();
                 _selectButton.gameObject.SetActive(true);
                 _selectButton.enabled = false;
-                _selectText.text = "Selected";
+                _selectText.text = ShopParameter.SelectedText;
             }
             else if (!skin.IsBought && !skin.IsSelect)
             {
@@ -55,7 +56,7 @@ namespace Sourse.UI.Shop.SkinConfiguration
                 _priceText.Hide();
                 _buyButton.gameObject.SetActive(false);
                 _selectButton.gameObject.SetActive(true);
-                _selectText.text = "Select";
+                _selectText.text = ShopParameter.SelectText;
                 _selectButton.enabled = true;
             }
         }

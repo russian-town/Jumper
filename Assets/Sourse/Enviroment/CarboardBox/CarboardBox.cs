@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Sourse.Props.CarboardBox
+namespace Sourse.Enviroment.CarboardBox
 {
     [RequireComponent(typeof(BoxCollider))]
     public class CarboardBox : MonoBehaviour
