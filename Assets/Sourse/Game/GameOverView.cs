@@ -7,7 +7,7 @@ namespace Sourse.Game
 {
     public class GameOverView : UIElement
     {
-        private string Completed = "COMPLETED";
+        private const string Completed = "COMPLETED";
 
         [SerializeField] private TMP_Text _progressText;
 

@@ -1,6 +1,6 @@
-using Sourse.UI.Shop.View.Common;
 using System;
 using System.Collections.Generic;
+using Sourse.UI.Shop.SkinConfiguration;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;

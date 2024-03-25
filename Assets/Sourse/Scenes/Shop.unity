@@ -848,7 +848,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 600}
+  m_SizeDelta: {x: 0, y: 800}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1351587774
 MonoBehaviour:
@@ -967,14 +967,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _shopScroll: {fileID: 1351587774}
   _skinConfigs:
+  - {fileID: 11400000, guid: b228c802c047227479c91f54c029e377, type: 2}
   - {fileID: 11400000, guid: b4c19ea346687d040bc9130c368ab2f5, type: 2}
   - {fileID: 11400000, guid: e2bd94703d1880f468390843e228cffe, type: 2}
+  - {fileID: 11400000, guid: 1b99fb8c7796b3c44b8ab8ec5a70c3bf, type: 2}
+  - {fileID: 11400000, guid: d6ed2b81bdc86264bb963aaa61e034fa, type: 2}
   - {fileID: 11400000, guid: c07af095df035414898963503c2a3705, type: 2}
   - {fileID: 11400000, guid: 2a6032c13b756b94ea3d1ff9004cd808, type: 2}
-  - {fileID: 11400000, guid: 1b99fb8c7796b3c44b8ab8ec5a70c3bf, type: 2}
-  - {fileID: 11400000, guid: b228c802c047227479c91f54c029e377, type: 2}
-  - {fileID: 11400000, guid: d6ed2b81bdc86264bb963aaa61e034fa, type: 2}
-  _temeplate: {fileID: 6037275378775921656, guid: 0f438fa285ade4848a4fe9cbdfb1e6d0, type: 3}
+  _temeplate: {fileID: 8431075474733755795, guid: 21ed021170d9a0c40b596155c19325be, type: 3}
   _parent: {fileID: 140261059}
   _walletView: {fileID: 37953892}
 --- !u!4 &1436396059

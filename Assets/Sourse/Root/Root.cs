@@ -1,18 +1,21 @@
 using Sourse.Balance;
 using Sourse.Camera;
+using Sourse.Constants;
 using Sourse.Game;
 using Sourse.Level;
 using Sourse.Pause;
 using Sourse.Player.Common.Scripts;
+using Sourse.Save;
 using Sourse.UI;
 using Sourse.UI.LevelCompletePanel;
 using Sourse.UI.Shop.Scripts.Buttons;
 using Sourse.YandexAds;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Sourse.Root
 {
-    public class Root : MonoBehaviour
+    public class Root : MonoBehaviour, IDataReader
     {
         [SerializeField] private FollowCamera _followCamera;
         [SerializeField] private LevelProgress _levelProgress;
@@ -20,7 +23,7 @@ namespace Sourse.Root
         [SerializeField] private Level.Level _level;
         [SerializeField] private ApplicationStatusChecker.ApplicationStatusChecker _applicationStatusChecker;
         [SerializeField] private PlayerPositionHandler _playerPositionHandler;
-        [SerializeField] private PlayerPosition _startPlayerPosition;
+        [SerializeField] private PlayerPosition _start;
         [SerializeField] private GameOverView _gameOverView;
         [SerializeField] private LevelProgressView _levelProgressView;
         [SerializeField] private LevelCompletePanel _levelCompletePanel;
@@ -34,14 +37,17 @@ namespace Sourse.Root
         [SerializeField] private RewardedButton _rewardedButton;
         [SerializeField] private NextLevelButton _nextLevelButton;
         [SerializeField] private RewardedVideo _rewardedVideo;
-        [SerializeField] private PlayerInitializer _startPlayer;
 
+        private PlayerInitializer _startPlayer;
         private Wallet _wallet = new Wallet();
+        private PlayerSpawner _playerSpawner = new PlayerSpawner();
+        private LocalSave _localSave;
         private Vector3 _targetRotation = new Vector3(0f, 90f, 0f);
         private YandexAds.YandexAds _yandexAds;
         private FinishLevelHandler _finishLevelHandler;
         private LoseLevelHandler _loseLevelHandler;
         private PlayerUI _playerUI;
+        private int _id;
 
         private void OnDestroy()
         {
@@ -63,14 +69,28 @@ namespace Sourse.Root
             PlayerPosition startPositon = _playerPositionHandler.GetLastPosition();
 
             if (startPositon == null)
-                startPositon = _startPlayerPosition;
+                startPositon = _start;
 
             _playerPositionHandler.RemoveCurrentPropsID();
+            Initialize(_start);
         }
 
-        private void Initialize(int id, PlayerPosition playerPosition)
+        private void Initialize(PlayerPosition playerPosition)
         {
-            _startPlayer.transform.localRotation = Quaternion.Euler(_targetRotation);
+            List<IDataReader> dataReaders = new List<IDataReader>()
+            {
+                this,
+                _wallet
+            };
+            List<IDataWriter> dataWriters = new List<IDataWriter>()
+            {
+                _wallet
+            };
+            _localSave = new LocalSave(dataReaders, dataWriters);
+            _localSave.Load();
+            string path = $"{PlayerParameter.PlayerPrefabsPath}{_id}";
+            var playerTemplate = Resources.Load<PlayerInitializer>(path);
+            _startPlayer = _playerSpawner.GetPlayer(playerTemplate, _start, _targetRotation);
             _startPlayer.Initialize(_playerPositionHandler, _playerInput);
             _levelProgress.Initialize(_startPlayer);
             _followCamera.SetTarget(_startPlayer);
@@ -90,7 +110,7 @@ namespace Sourse.Root
                 _startPlayer);
             _finishLevelHandler.Subscribe();
             _loseLevelHandler = new LoseLevelHandler(_levelProgress,
-                _startPlayerPosition,
+                _start,
                 _gameOverView,
                 _rewardedPanel,
                 _retryButton,
@@ -112,6 +132,20 @@ namespace Sourse.Root
             _pause.Initialize(pauseHandlers);
             _levelProgressView.Show();
             _gameOverView.Hide();
+        }
+
+        public void Read(PlayerData playerData)
+        {
+            foreach (var skinSaveData in playerData.SkinSaveDatas)
+            {
+                if (skinSaveData.IsSelect == true)
+                {
+                    _id = skinSaveData.ID;
+                    return;
+                }
+            }
+
+            _id = PlayerParameter.DefaultPlayerID;
         }
     }
 }

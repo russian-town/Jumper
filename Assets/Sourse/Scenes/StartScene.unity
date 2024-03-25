@@ -1412,7 +1412,6 @@ GameObject:
   - component: {fileID: 1212297615}
   - component: {fileID: 1212297614}
   - component: {fileID: 1212297617}
-  - component: {fileID: 1212297619}
   m_Layer: 5
   m_Name: PlayButton
   m_TagString: Untagged
@@ -1560,18 +1559,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_AspectMode: 2
   m_AspectRatio: 1.0592937
---- !u!114 &1212297619
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1212297612}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f46fb18344fd18640bef72bc3b53b7d2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1222925753
 GameObject:
   m_ObjectHideFlags: 0
@@ -1581,7 +1568,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1222925757}
-  - component: {fileID: 1222925755}
   - component: {fileID: 1222925756}
   - component: {fileID: 1222925754}
   m_Layer: 0
@@ -1607,18 +1593,6 @@ MonoBehaviour:
   _musicSlider: {fileID: 1728758599}
   _soundGroup: {fileID: 8179410371896700620, guid: d8a608f9b1abbde4283823ca4d03a067, type: 2}
   _musicGroup: {fileID: 3300593692110393751, guid: d8a608f9b1abbde4283823ca4d03a067, type: 2}
---- !u!114 &1222925755
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1222925753}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f46fb18344fd18640bef72bc3b53b7d2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1222925756
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2831,7 +2805,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 7530916775826831050, guid: 0e695841909b15b42869a82cbcedd114, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 0e695841909b15b42869a82cbcedd114, type: 3}
 --- !u!114 &1917400288 stripped
 MonoBehaviour:

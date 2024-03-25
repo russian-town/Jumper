@@ -5,18 +5,18 @@ namespace Sourse.UI.Shop.Scripts
 {
     public class BubbleSort
     {
-        public void SortingSkins(ref List<SkinConfig> skinConfigs)
+        public void SortingSkins(ref List<SkinConfig> configs)
         {
-            for (int i = 0; i < skinConfigs.Count; i++)
+            for (int i = 0; i < configs.Count; i++)
             {
-                for (int j = i + 1; j < skinConfigs.Count; j++)
+                for (int j = i + 1; j < configs.Count; j++)
                 {
-                    /*if (skins[i].SortOrder > skins[j].SortOrder)
+                    if (configs[i].ID > configs[j].ID)
                     {
-                        var skin = skins[i];
-                        skins[i] = skins[j];
-                        skins[j] = skin;
-                    }*/
+                        SkinConfig skin = configs[i];
+                        configs[i] = configs[j];
+                        configs[j] = skin;
+                    }
                 }
             }
         }

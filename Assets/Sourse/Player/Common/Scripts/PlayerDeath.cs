@@ -6,8 +6,7 @@ namespace Sourse.Player.Common
 {
     public class PlayerDeath
     {
-        private GroundDetector _groundDetector;
-        private bool _isGameOver;
+        private readonly GroundDetector _groundDetector;
 
         public PlayerDeath(GroundDetector groundDetector)
             => _groundDetector = groundDetector;
@@ -27,9 +26,6 @@ namespace Sourse.Player.Common
         }
 
         private void Die()
-        {
-            _isGameOver = true;
-            Died?.Invoke();
-        }
+            => Died?.Invoke();
     }
 }

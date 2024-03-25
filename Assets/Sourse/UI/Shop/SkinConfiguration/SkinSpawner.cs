@@ -1,5 +1,3 @@
-using Sourse.UI.Shop.View.Common;
-
 namespace Sourse.UI.Shop.SkinConfiguration
 {
     public class SkinSpawner

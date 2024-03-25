@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Skin_5
   m_EditorClassIdentifier: 
   <Type>k__BackingField: 0
-  <Icon>k__BackingField: {fileID: 21300000, guid: 413710b631bd5493ebbf1a29b2d82eb3, type: 3}
-  <Price>k__BackingField: 0
+  <Icon>k__BackingField: {fileID: 21300000, guid: 4a762e4dd2f7c644d8d647a4ec74757b, type: 3}
+  <Price>k__BackingField: 5
   <ID>k__BackingField: 5

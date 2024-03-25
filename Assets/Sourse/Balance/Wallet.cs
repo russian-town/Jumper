@@ -16,6 +16,9 @@ namespace Sourse.Balance
             if (money <= 0)
                 return;
 
+            if (_money - money < 0)
+                return;
+
             _money -= money;
             MoneyChanged?.Invoke(_money);
         }

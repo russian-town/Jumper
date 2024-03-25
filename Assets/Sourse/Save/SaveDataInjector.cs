@@ -17,7 +17,7 @@ namespace Sourse.Save
 
             foreach (var skinSaveData in _skinSaveDatas)
             {
-                if(skinSaveData.Id == skin.ID)
+                if(skinSaveData.ID == skin.ID)
                 {
                     skin.ApplySaveData(skinSaveData);
                     break;
