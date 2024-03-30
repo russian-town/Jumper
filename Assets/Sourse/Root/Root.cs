@@ -60,9 +60,7 @@ namespace Sourse.Root
             => Initialize();
 
         private void Update()
-        {
-            _levelProgressView.UpdateProgressBar();
-        }
+            => _levelProgressView.UpdateProgressBar();
 
         private void Initialize()
         {
@@ -87,12 +85,10 @@ namespace Sourse.Root
             {
                 this,
                 _wallet,
-                _levelProgress
             };
             List<IDataWriter> dataWriters = new List<IDataWriter>()
             {
                 _wallet,
-                _levelProgress
             };
             _localSave = new LocalSave(dataReaders, dataWriters);
             _localSave.Load();
@@ -101,8 +97,9 @@ namespace Sourse.Root
             _startPlayer = _playerSpawner.GetPlayer(playerTemplate, _startPoint, _targetRotation);
             _startPlayer.Initialize(_playerInput);
             _followCamera.SetTarget(_startPlayer);
-            _levelProgress = new LevelProgress(_startPlayer, _finishPosition);
+            _levelProgress = new LevelProgress(_startPlayer, _finishPosition, _startPoint);
             _levelProgressView.Initialize(_levelProgress);
+            _levelProgressView.UpdateProgressBar();
             IPauseHandler[] pauseHandlers = new IPauseHandler[]
             {
                 _nextLevelButton,

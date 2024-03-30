@@ -11,9 +11,17 @@ namespace Sourse.Level
         private LevelProgress _levelProgress;
 
         public void Initialize(LevelProgress levelProgress)
-            => _levelProgress = levelProgress;
+        {
+            _levelProgress = levelProgress;
+            _levelProgressBar.fillAmount = _levelProgress.GetCurrentDistance();
+        }
 
         public void UpdateProgressBar()
-            => _levelProgressBar.fillAmount = _levelProgress.GetDistance();
+        {
+            if (_levelProgress.GetCurrentDistance() < _levelProgressBar.fillAmount)
+                return;
+
+            _levelProgressBar.fillAmount = _levelProgress.GetCurrentDistance();
+        }
     }
 }

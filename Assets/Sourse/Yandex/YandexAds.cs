@@ -17,13 +17,19 @@ namespace Sourse.Yandex
         public void ShowRewardedVideo()
         {
             if (YandexGamesSdk.IsInitialized == true)
-                VideoAd.Show(OpenCallback, RewardedCallback, CloseCallback, ErrorCallback);
+                VideoAd.Show(OpenCallback,
+                    RewardedCallback,
+                    CloseCallback,
+                    ErrorCallback);
         }
 
         public void ShowInterstitial()
         {
             if (YandexGamesSdk.IsInitialized == true)
-                InterstitialAd.Show(OpenInterstitialCallback, CloseInterstitialCallback, ErrorInterstitialCallback, OfflineCallback);
+                InterstitialAd.Show(OpenInterstitialCallback,
+                    CloseInterstitialCallback,
+                    ErrorInterstitialCallback,
+                    OfflineCallback);
         }
     }
 }

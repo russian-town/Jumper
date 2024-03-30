@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using Lean.Localization;
+using Sourse.Constants;
 using Sourse.UI.Shop.SkinConfiguration;
 using TMPro;
 using UnityEngine;
@@ -11,8 +12,6 @@ namespace Sourse.UI.LevelCompletePanel
     public class LevelCompletePanel : UIElement
     {
         private const string FillAmountKey = "FillAmount";
-        private const string Level = "LEVEL";
-        private const string Complete = "COMPLETE";
         private const float MaxPercent = 1f;
 
         [SerializeField] private float _speed;
@@ -36,8 +35,8 @@ namespace Sourse.UI.LevelCompletePanel
 
         public void SetText(int levelNumber)
         {
-            string translatedLevel = LeanLocalization.GetTranslationText(Level);
-            string translatedComplete = LeanLocalization.GetTranslationText(Complete);
+            string translatedLevel = LeanLocalization.GetTranslationText(TranslationText.Level);
+            string translatedComplete = LeanLocalization.GetTranslationText(TranslationText.Completed);
             string translationText = $"{translatedLevel} {levelNumber} {translatedComplete}";
             _completeLevelText.text = translationText;
         }

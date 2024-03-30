@@ -48,7 +48,7 @@ namespace Sourse.Game
 
         private void OnPlayerDied()
         {
-            float percent = Mathf.Ceil(_levelProgress.GetDistance() * _percentRatio);
+            float percent = Mathf.Ceil(_levelProgress.GetCurrentDistance() * _percentRatio);
             _gameOverView.Show();
 
             if (_playerLastPosition == null || _playerLastPosition == _playerStartPosition)
