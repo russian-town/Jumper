@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace Sourse.YandexAds
+namespace Sourse.Yandex
 {
     public class RewardedVideo : MonoBehaviour
     {

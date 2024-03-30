@@ -1,14 +1,14 @@
 using Sourse.Balance;
+using Sourse.Finish;
 using Sourse.Level;
 using Sourse.Player.Common.Scripts;
 using Sourse.UI.LevelCompletePanel;
+using UnityEngine;
 
 namespace Sourse.Game
 {
-    public class FinishLevelHandler
+    public class LevelFinisher
     {
-        private const string FillAmountKey = "FillAmount";
-
         private bool _isLevelCompleted = false;
 
         private readonly LevelCompletePanel _levelCompletePanel;
@@ -17,15 +17,15 @@ namespace Sourse.Game
         private readonly int _moneyOfLevel;
         private readonly Level.Level _level;
         private readonly LevelProgressView _levelProgressView;
-        private readonly PlayerInitializer _player;
+        private readonly GroundDetector _groundDetector;
 
-        public FinishLevelHandler(LevelCompletePanel levelCompletePanel, 
+        public LevelFinisher(LevelCompletePanel levelCompletePanel, 
             Wallet wallet,
             float percentOpeningSkin,
             int moneyOfLevel,
             Level.Level level,
             LevelProgressView levelProgressView,
-            PlayerInitializer player)
+            GroundDetector groundDetector)
         {
             _levelCompletePanel = levelCompletePanel;
             _wallet = wallet;
@@ -33,18 +33,16 @@ namespace Sourse.Game
             _moneyOfLevel = moneyOfLevel;
             _level = level;
             _levelProgressView = levelProgressView;
-            _player = player;
+            _groundDetector = groundDetector;
         }
 
         public void Subscribe()
-        { }
-            /*=> _player.LevelCompleted += OnLevelCompleted;*/
+            => _groundDetector.Fell += OnFell;
 
         public void Unsubscribe()
-        { }
-           /* => _player.LevelCompleted -= OnLevelCompleted;*/
+            => _groundDetector.Fell -= OnFell;
 
-        private void OnLevelCompleted()
+        private void CompleteLevel()
         {
 #if !UNITY_EDITOR && UNITY_WEBGL
         _yandexAds.ShowInterstitial();
@@ -57,26 +55,15 @@ namespace Sourse.Game
             _levelProgressView.Hide();
             _levelCompletePanel.Show();
             _wallet.AddMoney(_moneyOfLevel);
-/*
-            if (_openableSkinHandler.GetOpenableSkin() != null)
-            {
-                float targetFillAmount;
-
-                if (PlayerPrefs.HasKey(FillAmountKey) == true)
-                    targetFillAmount = PlayerPrefs.GetFloat(FillAmountKey) + _percentOpeningSkin;
-                else
-                    targetFillAmount = _levelCompletePanel.CurrentFillAmount + _percentOpeningSkin;
-
-                _levelCompletePanel.Initialize(_openableSkinHandler.GetOpenableSkin());
-                _levelCompletePanel.StartFillSkinBarCoroutine(targetFillAmount);
-            }
-            else
-            {
-                _levelCompletePanel.HideOpeningSkinBar();
-            }*/
-
             _levelCompletePanel.HideOpeningSkinBar();
             _levelCompletePanel.SetText(_level.CurrentLevelNumber);
         }
+
+        private void OnFell(Collision collision)
+        {
+            if (collision.transform.TryGetComponent(out LevelCompleteSoundPlayer _))
+                CompleteLevel();
+        }
+
     }
 }

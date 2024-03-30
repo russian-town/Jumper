@@ -2,6 +2,7 @@ using Sourse.Balance;
 using Sourse.Camera;
 using Sourse.Constants;
 using Sourse.Enviroment.Common;
+using Sourse.Finish;
 using Sourse.Game;
 using Sourse.Level;
 using Sourse.Pause;
@@ -10,7 +11,7 @@ using Sourse.Save;
 using Sourse.UI;
 using Sourse.UI.LevelCompletePanel;
 using Sourse.UI.Shop.Scripts.Buttons;
-using Sourse.YandexAds;
+using Sourse.Yandex;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -37,18 +38,20 @@ namespace Sourse.Root
         [SerializeField] private NextLevelButton _nextLevelButton;
         [SerializeField] private RewardedVideo _rewardedVideo;
         [SerializeField] private List<Props> _props = new List<Props>();
+        [SerializeField] private FinishPosition _finishPosition;
 
         private PlayerInitializer _startPlayer;
         private Wallet _wallet = new Wallet();
         private PlayerSpawner _playerSpawner = new PlayerSpawner();
         private LocalSave _localSave;
         private Vector3 _targetRotation = new Vector3(0f, 90f, 0f);
-        private YandexAds.YandexAds _yandexAds;
-        private FinishLevelHandler _finishLevelHandler;
+        private YandexAds _yandexAds;
+        private LevelFinisher _levelFinisher;
         private LoseLevelHandler _loseLevelHandler;
         private PlayerUI _playerUI;
         private int _id;
         private LastPropsSaver _lastPropsSaver;
+        private LevelProgress _levelProgress;
 
         private void OnDestroy()
             => Unsubscribe();
@@ -64,36 +67,12 @@ namespace Sourse.Root
         private void Initialize()
         {
             //_level.Initialize(_levelProgress);
-            List<IDataReader> dataReaders = new List<IDataReader>()
-            {
-                this,
-                _wallet
-            };
-            List<IDataWriter> dataWriters = new List<IDataWriter>()
-            {
-                _wallet
-            };
-            _localSave = new LocalSave(dataReaders, dataWriters);
-            _localSave.Load();
-            string path = $"{PlayerParameter.PlayerPrefabsPath}{_id}";
-            var playerTemplate = Resources.Load<PlayerInitializer>(path);
-            _startPlayer = _playerSpawner.GetPlayer(playerTemplate, _startPoint, _targetRotation);
-            _startPlayer.Initialize(_playerInput);
-            _followCamera.SetTarget(_startPlayer);
-            _yandexAds = new YandexAds.YandexAds();
+            _yandexAds = new YandexAds();
             _applicationStatusChecker.Initialize(_yandexAds);
             _nextLevelButton.Initialize();
             _rewardedButton.Initialize();
             _noThanksButton.Initialize();
             _retryButton.Initialize();
-            _finishLevelHandler = new FinishLevelHandler(_levelCompletePanel,
-                _wallet,
-                _percentOpeningSkin,
-                _moneyOfLevel,
-                _level,
-                _levelProgressView,
-                _startPlayer);
-            _finishLevelHandler.Subscribe();
             _loseLevelHandler = new LoseLevelHandler(
                 _startPoint,
                 _gameOverView,
@@ -104,6 +83,26 @@ namespace Sourse.Root
             _loseLevelHandler.Subscribe();
             _playerUI = new PlayerUI(_nextLevelButton, _retryButton, _rewardedVideo);
             _playerUI.Subscribe();
+            List<IDataReader> dataReaders = new List<IDataReader>()
+            {
+                this,
+                _wallet,
+                _levelProgress
+            };
+            List<IDataWriter> dataWriters = new List<IDataWriter>()
+            {
+                _wallet,
+                _levelProgress
+            };
+            _localSave = new LocalSave(dataReaders, dataWriters);
+            _localSave.Load();
+            string path = $"{PlayerParameter.PlayerPrefabsPath}{_id}";
+            var playerTemplate = Resources.Load<PlayerInitializer>(path);
+            _startPlayer = _playerSpawner.GetPlayer(playerTemplate, _startPoint, _targetRotation);
+            _startPlayer.Initialize(_playerInput);
+            _followCamera.SetTarget(_startPlayer);
+            _levelProgress = new LevelProgress(_startPlayer, _finishPosition);
+            _levelProgressView.Initialize(_levelProgress);
             IPauseHandler[] pauseHandlers = new IPauseHandler[]
             {
                 _nextLevelButton,
@@ -115,9 +114,17 @@ namespace Sourse.Root
                 _playerUI
             };
             _pause.Initialize(pauseHandlers);
+            _levelFinisher = new LevelFinisher(_levelCompletePanel,
+                _wallet,
+                _percentOpeningSkin,
+                _moneyOfLevel,
+                _level,
+                _levelProgressView,
+                _startPlayer.GetComponent<GroundDetector>());
+            _levelFinisher.Subscribe();
             _levelProgressView.Show();
             _gameOverView.Hide();
-            //_lastPropsSaver = new LastPropsSaver(_props);
+            _lastPropsSaver = new LastPropsSaver(_props, _startPlayer.GetComponent<GroundDetector>());
             _lastPropsSaver.Subscribe();
         }
 
@@ -143,7 +150,7 @@ namespace Sourse.Root
             _noThanksButton.Unsubscribe();
             _retryButton.Unsubscribe();
             _level.Unsubscribe();
-            _finishLevelHandler.Unsubscribe();
+            _levelFinisher.Unsubscribe();
             _loseLevelHandler.Unsubscribe();
             _playerUI.Unsibscribe();
             _lastPropsSaver.Unsubscribe();

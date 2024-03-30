@@ -4,7 +4,7 @@ using Sourse.Constants;
 using Sourse.Settings.Language;
 using UnityEngine;
 
-namespace Sourse.YandexAds
+namespace Sourse.Yandex
 {
     public class YandexInit : MonoBehaviour
     {

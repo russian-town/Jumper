@@ -1,4 +1,4 @@
-using Sourse.YandexAds;
+using Sourse.Yandex;
 using UnityEngine;
 
 namespace Sourse.Level

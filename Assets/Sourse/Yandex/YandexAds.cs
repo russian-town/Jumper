@@ -1,7 +1,7 @@
 using System;
 using Agava.YandexGames;
 
-namespace Sourse.YandexAds
+namespace Sourse.Yandex
 {
     public class YandexAds
     {

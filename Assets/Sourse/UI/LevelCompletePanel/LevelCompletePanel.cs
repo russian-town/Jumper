@@ -26,7 +26,7 @@ namespace Sourse.UI.LevelCompletePanel
 
         public event Action<int> SkinOpened;
 
-        public void Initialize(SkinConfig skin)
+        public void Initialize(Skin skin)
         {
             _openingSkinBar.sprite = skin.Icon;
             _openingSkinBarBackground.color = Color.black;

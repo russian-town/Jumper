@@ -31,9 +31,17 @@ namespace Sourse.Level
         }
 
         public void Read(PlayerData playerData)
-            => _distance = playerData.Distance;
+           => _distance = playerData.Distance;
 
         public void Write(PlayerData playerData)
-            => playerData.Distance = _distance;
+        {
+            if(playerData.Distance != 1)
+            {
+                playerData.Distance = 1;
+                return;
+            }
+
+            playerData.Distance = _distance;
+        }
     }
 }

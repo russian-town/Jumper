@@ -1,6 +1,7 @@
 using Agava.WebUtility;
 using Sourse.Constants;
 using Sourse.Pause;
+using Sourse.Yandex;
 using UnityEngine;
 using UnityEngine.Audio;
 
@@ -14,7 +15,7 @@ namespace Sourse.ApplicationStatusChecker
 
         private bool _isPlayInterstitial = false;
         private bool _isPlayRewarded = false;
-        private YandexAds.YandexAds _yandexAds;
+        private YandexAds _yandexAds;
 
         private void OnEnable()
         {
@@ -46,7 +47,7 @@ namespace Sourse.ApplicationStatusChecker
             }
         }
 
-        public void Initialize(YandexAds.YandexAds yandexAds)
+        public void Initialize(YandexAds yandexAds)
         {
             _yandexAds = yandexAds;
             _yandexAds.OpenInterstitialCallback += OnOpenInterstitial;

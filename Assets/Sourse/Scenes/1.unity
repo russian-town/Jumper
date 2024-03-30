@@ -2543,6 +2543,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 4674197534554460007, guid: cf2d3bcaf424b9049a030aa385ad8d59, type: 3}
+      propertyPath: _startPoint
+      value: 
+      objectReference: {fileID: 4778460826051325502}
+    - target: {fileID: 4674197534554460007, guid: cf2d3bcaf424b9049a030aa385ad8d59, type: 3}
       propertyPath: _pauseButton
       value: 
       objectReference: {fileID: 4674197535883984236}
@@ -2571,6 +2575,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 270026306}
     - target: {fileID: 4674197534554460007, guid: cf2d3bcaf424b9049a030aa385ad8d59, type: 3}
+      propertyPath: _finishPosition
+      value: 
+      objectReference: {fileID: 549210787}
+    - target: {fileID: 4674197534554460007, guid: cf2d3bcaf424b9049a030aa385ad8d59, type: 3}
       propertyPath: _noThanksButton
       value: 
       objectReference: {fileID: 4674197535883984241}
@@ -2583,6 +2591,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 4674197535883984239}
     - target: {fileID: 4674197534554460007, guid: cf2d3bcaf424b9049a030aa385ad8d59, type: 3}
+      propertyPath: _props.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4674197534554460007, guid: cf2d3bcaf424b9049a030aa385ad8d59, type: 3}
       propertyPath: _levelProgressView
       value: 
       objectReference: {fileID: 4674197535883984245}
@@ -2594,6 +2606,14 @@ PrefabInstance:
       propertyPath: _percentOpeningSkin
       value: 0.1
       objectReference: {fileID: 0}
+    - target: {fileID: 4674197534554460007, guid: cf2d3bcaf424b9049a030aa385ad8d59, type: 3}
+      propertyPath: _props.Array.data[0]
+      value: 
+      objectReference: {fileID: 1115534107}
+    - target: {fileID: 4674197534554460007, guid: cf2d3bcaf424b9049a030aa385ad8d59, type: 3}
+      propertyPath: _props.Array.data[1]
+      value: 
+      objectReference: {fileID: 7859061776364593807}
     - target: {fileID: 4674197534554460007, guid: cf2d3bcaf424b9049a030aa385ad8d59, type: 3}
       propertyPath: _startPlayerPosition
       value: 

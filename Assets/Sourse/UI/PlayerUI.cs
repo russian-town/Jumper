@@ -1,6 +1,6 @@
 using Sourse.Game;
 using Sourse.UI.LevelCompletePanel;
-using Sourse.YandexAds;
+using Sourse.Yandex;
 
 namespace Sourse.UI
 {
