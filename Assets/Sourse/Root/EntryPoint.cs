@@ -15,23 +15,33 @@ namespace Sourse.Root
         [SerializeField] private Transform _parent;
         [SerializeField] private WalletView _walletView;
 
-        private Shop _shop = new Shop();
-        private SkinViewSpawner _skinViewSpawner = new SkinViewSpawner();
-        private List<SkinView> _skinViews = new List<SkinView>();
-        private List<Skin> _skins = new List<Skin>();
-        private SkinSpawner _skinSpawner = new SkinSpawner();
+        private readonly Shop _shop = new Shop();
+        private readonly SkinViewSpawner _skinViewSpawner = new SkinViewSpawner();
+        private readonly List<SkinView> _skinViews = new List<SkinView>();
+        private readonly List<Skin> _skins = new List<Skin>();
+        private readonly SkinSpawner _skinSpawner = new SkinSpawner();
+        private readonly Wallet _wallet = new Wallet();
+        private readonly BubbleSort _bubbleSort = new BubbleSort();
+
         private List<SkinSaveData> _skinSaveDatas = new List<SkinSaveData>();
         private SaveDataInjector _saveDataInjector;
         private ISaveLoadService _saveLoadService;
         private LocalSave _localSave;
-        private Wallet _wallet = new Wallet();
-        private BubbleSort _bubbleSort = new BubbleSort();
 
         private void OnDestroy()
             => Unsubscribe();
 
         private void Start()
             => Initialize();
+
+        public void Read(PlayerData playerData)
+            => _skinSaveDatas = playerData.SkinSaveDatas;
+
+        public void Write(PlayerData playerData)
+        {
+            foreach (var skin in _skins)
+                _saveDataInjector.Write(skin);
+        }
 
         private void Unsubscribe()
         {
@@ -47,6 +57,7 @@ namespace Sourse.Root
 
         private void Initialize()
         {
+            _wallet.AddMoney(1000);
             List<IDataWriter> dataWriters = new List<IDataWriter>
             {
                 _wallet,
@@ -80,58 +91,6 @@ namespace Sourse.Root
             _shop.Bought += OnBought;
             _shop.Selected += OnSelected;
             _shopScroll.Initialize(_skinViews);
-        }
-
-        public void Read(PlayerData playerData)
-            => _skinSaveDatas = playerData.SkinSaveDatas;
-
-        public void Write(PlayerData playerData)
-        {
-            if (playerData.SkinSaveDatas == null)
-                playerData.SkinSaveDatas = new List<SkinSaveData>();
-
-            if (playerData.SkinSaveDatas.Count == 0)
-            {
-                foreach (var skin in _skins)
-                {
-                    SkinSaveData skinSaveData = new SkinSaveData();
-                    FillSkinSaveData(skinSaveData, skin);
-                    playerData.SkinSaveDatas.Add(skinSaveData);
-                }
-
-                return;
-            }
-
-            foreach (var skin in _skins)
-            {
-                SkinSaveData skinSaveData = SearchSkinSaveData(playerData, skin);
-
-                if (skinSaveData != null)
-                {
-                    FillSkinSaveData(skinSaveData, skin);
-                }
-                else
-                {
-                    FillSkinSaveData(skinSaveData, skin);
-                    playerData.SkinSaveDatas.Add(skinSaveData);
-                }
-            }
-        }
-
-        private void FillSkinSaveData(SkinSaveData skinSaveData, Skin skin)
-        {
-            skinSaveData.ID = skin.ID;
-            skinSaveData.IsBought = skin.IsBought;
-            skinSaveData.IsSelect = skin.IsSelect;
-        }
-
-        private SkinSaveData SearchSkinSaveData(PlayerData playerData, Skin skin)
-        {
-            foreach (var skinSaveData in playerData.SkinSaveDatas)
-                if (skinSaveData.ID == skin.ID)
-                    return skinSaveData;
-
-            return null;
         }
 
         private void OnSelected(Skin skin)

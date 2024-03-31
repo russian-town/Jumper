@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0106eb33b218e045bd1039efd7b790e, type: 3}
   m_Name: Skin_2
   m_EditorClassIdentifier: 
-  <Type>k__BackingField: 0
+  <Type>k__BackingField: 2
   <Icon>k__BackingField: {fileID: 21300000, guid: 83f7e1664a80ddf49b34e958007d6f7a, type: 3}
   <Price>k__BackingField: 2
   <ID>k__BackingField: 2

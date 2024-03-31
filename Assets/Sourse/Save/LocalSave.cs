@@ -23,6 +23,7 @@ namespace Sourse.Save
                 dataWriter.Write(_playerData);
 
             string saveData = JsonUtility.ToJson(_playerData);
+            Debug.Log(saveData);
             PlayerPrefs.SetString(SaveKeys.PlayerProgress, saveData);
             PlayerPrefs.Save();
         }
