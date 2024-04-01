@@ -6,9 +6,14 @@ namespace Sourse.Save
     public class SaveDataInjector
     {
         private List<SkinSaveData> _skinSaveDatas;
+        private List<OpenableSkinSaveData> _openableSkinSaveDatas;
 
-        public SaveDataInjector(List<SkinSaveData> skinSaveDatas)
-            => _skinSaveDatas = skinSaveDatas;
+        public SaveDataInjector(List<SkinSaveData> skinSaveDatas,
+            List<OpenableSkinSaveData> openableSkinSaveDatas)
+        {
+            _skinSaveDatas = skinSaveDatas;
+            _openableSkinSaveDatas = openableSkinSaveDatas;
+        }
 
         public void Update(Skin skin)
         {
@@ -25,53 +30,46 @@ namespace Sourse.Save
             }
         }
 
-        public void Write(Skin skin)
+        public void Update(OpenableSkin openableSkin)
         {
-            if (_skinSaveDatas == null)
-            {
-                _skinSaveDatas = new List<SkinSaveData>();
-                AddSkinSaveData(skin);
+            if (_openableSkinSaveDatas == null)
                 return;
-            }
 
-            if(_skinSaveDatas.Count == 0)
+            foreach (var openableSkinSaveData in _openableSkinSaveDatas)
             {
-                AddSkinSaveData(skin);
-                return;
-            }
-
-            if (TrySearchSkinSaveData(out SkinSaveData searchData, skin))
-            {
-                searchData.IsBought = skin.IsBought;
-                searchData.IsSelect = skin.IsSelect;
-            }
-            else
-                AddSkinSaveData(skin);
-        }
-
-        private void AddSkinSaveData(Skin skin)
-        {
-            var newSkinSaveData = new SkinSaveData();
-            newSkinSaveData.IsBought = skin.IsBought;
-            newSkinSaveData.IsSelect = skin.IsSelect;
-            newSkinSaveData.ID = skin.ID;
-            _skinSaveDatas.Add(newSkinSaveData);
-        }
-
-        private bool TrySearchSkinSaveData(out SkinSaveData searchData, Skin skin)
-        {
-            foreach (var skinSaveData in _skinSaveDatas)
-            {
-                if (skinSaveData.ID == skin.ID)
+                if (openableSkinSaveData.ID == openableSkin.ID)
                 {
-                    searchData = skinSaveData;
-                    return true;
+                    openableSkin.ApplySaveData(openableSkinSaveData);
                     break;
                 }
             }
+        }
 
-            searchData = null;
-            return false;
+        public void Write(Skin skin)
+        {
+            foreach (var skinSaveData in _skinSaveDatas)
+            {
+                if(skinSaveData.ID == skin.ID)
+                {
+                    skinSaveData.IsBought = skin.IsBought;
+                    skinSaveData.IsSelect = skin.IsSelect;
+                    break;
+                }
+            }
+        }
+
+        public void Write(OpenableSkin openableSkin)
+        {
+            foreach (var openableSkinSaveData in _openableSkinSaveDatas)
+            {
+                if(openableSkinSaveData.ID == openableSkin.ID)
+                {
+                    openableSkinSaveData.IsBought = openableSkin.IsBought;
+                    openableSkinSaveData.IsSelect = openableSkin.IsSelect;
+                    openableSkinSaveData.Persent = openableSkin.Percent;
+                    break;
+                }
+            }
         }
     }
 }

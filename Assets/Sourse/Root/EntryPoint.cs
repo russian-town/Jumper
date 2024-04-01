@@ -10,6 +10,7 @@ namespace Sourse.Root
         [SerializeField] private List<SkinConfig> _skinConfigs = new();
 
         private readonly SkinSpawner _skinSpawner = new();
+        private readonly SkinSaveDataSpawner _skinSaveDataSpawner = new();
 
         private ISaveLoadService _saveLoadService;
         private LocalSave _localSave;
@@ -47,10 +48,10 @@ namespace Sourse.Root
                 switch (skinConfig.Type)
                 {
                     case SkinType.Paid:
-                        TakeSkinSaveData(skinConfig);
+                        AddSkinSaveData(skinConfig);
                         break;
                     case SkinType.Openable:
-                        TakeOpenableSkinSaveData(skinConfig);
+                        AddOpenableSkinSaveData(skinConfig);
                         break;
                 }
             }
@@ -58,7 +59,7 @@ namespace Sourse.Root
             _saveLoadService.Save();
         }
 
-        private void TakeSkinSaveData(SkinConfig skinConfig)
+        private void AddSkinSaveData(SkinConfig skinConfig)
         {
             foreach (var data in _skinSaveDatas)
             {
@@ -67,14 +68,11 @@ namespace Sourse.Root
             }
 
             Skin skin = _skinSpawner.CreateSkin(skinConfig);
-            SkinSaveData skinSaveData = new();
-            skinSaveData.ID = skinConfig.ID;
-            skinSaveData.IsBought = skin.IsBought;
-            skinSaveData.IsSelect = skin.IsSelect;
+            var skinSaveData = _skinSaveDataSpawner.CreateSkinSaveData(skin);
             _skinSaveDatas.Add(skinSaveData);
         }
 
-        private void TakeOpenableSkinSaveData(SkinConfig skinConfig)
+        private void AddOpenableSkinSaveData(SkinConfig skinConfig)
         {
             foreach (var data in _openableSkinSaveDatas)
             {
@@ -83,11 +81,7 @@ namespace Sourse.Root
             }
 
             OpenableSkin openableSkin = _skinSpawner.CreateOpenableSkin(skinConfig);
-            OpenableSkinSaveData openableSkinSaveData = new();
-            openableSkinSaveData.ID = openableSkin.ID;
-            openableSkinSaveData.IsBought = openableSkin.IsBought;
-            openableSkinSaveData.IsSelect = openableSkin.IsSelect;
-            openableSkinSaveData.Persent = openableSkin.Percent;
+            var openableSkinSaveData = _skinSaveDataSpawner.CreateOpenableSkinSaveData(openableSkin);
             _openableSkinSaveDatas.Add(openableSkinSaveData);
         }
     }

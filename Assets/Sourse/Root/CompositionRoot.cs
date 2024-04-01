@@ -10,20 +10,22 @@ namespace Sourse.Root
     public class CompositionRoot : MonoBehaviour, IDataReader, IDataWriter
     {
         [SerializeField] private ShopScroll _shopScroll;
-        [SerializeField] private List<SkinConfig> _skinConfigs = new List<SkinConfig>();
+        [SerializeField] private List<SkinConfig> _skinConfigs = new();
         [SerializeField] private SkinView _temeplate;
         [SerializeField] private Transform _parent;
         [SerializeField] private WalletView _walletView;
 
-        private readonly Shop _shop = new Shop();
-        private readonly SkinViewSpawner _skinViewSpawner = new SkinViewSpawner();
-        private readonly List<SkinView> _skinViews = new List<SkinView>();
-        private readonly List<Skin> _skins = new List<Skin>();
-        private readonly SkinSpawner _skinSpawner = new SkinSpawner();
-        private readonly Wallet _wallet = new Wallet();
-        private readonly BubbleSort _bubbleSort = new BubbleSort();
+        private readonly Shop _shop = new();
+        private readonly SkinViewSpawner _skinViewSpawner = new();
+        private readonly List<SkinView> _skinViews = new();
+        private readonly List<Skin> _skins = new();
+        private readonly List<OpenableSkin> _openableSkins = new();
+        private readonly SkinSpawner _skinSpawner = new();
+        private readonly Wallet _wallet = new();
+        private readonly BubbleSort _bubbleSort = new();
 
-        private List<SkinSaveData> _skinSaveDatas = new List<SkinSaveData>();
+        private List<SkinSaveData> _skinSaveDatas = new();
+        private List<OpenableSkinSaveData> _openableSkinSaveDatas = new();
         private SaveDataInjector _saveDataInjector;
         private ISaveLoadService _saveLoadService;
         private LocalSave _localSave;
@@ -35,12 +37,18 @@ namespace Sourse.Root
             => Initialize();
 
         public void Read(PlayerData playerData)
-            => _skinSaveDatas = playerData.SkinSaveDatas;
+        {
+            _skinSaveDatas = playerData.SkinSaveDatas;
+            _openableSkinSaveDatas = playerData.OpenableSkinSaveDatas;
+        }
 
         public void Write(PlayerData playerData)
         {
             foreach (var skin in _skins)
                 _saveDataInjector.Write(skin);
+
+            foreach (var openableSkin in _openableSkins)
+                _saveDataInjector.Write(openableSkin);
         }
 
         private void Unsubscribe()
@@ -54,12 +62,12 @@ namespace Sourse.Root
         private void Initialize()
         {
             _wallet.AddMoney(1000);
-            List<IDataWriter> dataWriters = new List<IDataWriter>
+            List<IDataWriter> dataWriters = new()
             {
                 _wallet,
                 this
             };
-            List<IDataReader> dataReaders = new List<IDataReader>
+            List<IDataReader> dataReaders = new()
             {
                 _wallet,
                 this
@@ -67,22 +75,38 @@ namespace Sourse.Root
             _localSave = new LocalSave(dataReaders, dataWriters);
             _saveLoadService = _localSave;
             _saveLoadService.Load();
-            _saveDataInjector = new SaveDataInjector(_skinSaveDatas);
+            _saveDataInjector = new SaveDataInjector(_skinSaveDatas, _openableSkinSaveDatas);
             _bubbleSort.SortingSkins(ref _skinConfigs);
 
             foreach (var skinConfig in _skinConfigs)
             {
                 var skinView = _skinViewSpawner.Get(_temeplate, _parent);
-                var skin = _skinSpawner.CreateSkin(skinConfig);
-                _saveDataInjector.Update(skin);
-                skinView.Initialize(skin);
+
+                switch (skinConfig.Type)
+                {
+                    case SkinType.Paid:
+                        var skin = _skinSpawner.CreateSkin(skinConfig);
+                        _saveDataInjector.Update(skin);
+                        skinView.Initialize(skin);
+                        _skins.Add(skin);
+                        break;
+                    case SkinType.Openable:
+                        var openableSkin = _skinSpawner.CreateOpenableSkin(skinConfig);
+                        _saveDataInjector.Update(openableSkin);
+                        skinView.Initialize(openableSkin);
+                        _openableSkins.Add(openableSkin);
+                        break;
+                }
+
                 _skinViews.Add(skinView);
-                _skins.Add(skin);
             }
 
             _walletView.Initialize(_wallet);
             _walletView.Subscribe();
-            _shop.Initialize(_skins, _skinViews, _wallet);
+            List<Skin> skins = new();
+            skins.AddRange(_skins);
+            skins.AddRange(_openableSkins);
+            _shop.Initialize(skins, _skinViews, _wallet);
             _shop.Subscribe();
             _shop.Bought += OnBought;
             _shop.Selected += OnSelected;
