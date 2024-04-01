@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace Sourse.Root
 {
-    public class EntryPoint : MonoBehaviour, IDataReader, IDataWriter
+    public class CompositionRoot : MonoBehaviour, IDataReader, IDataWriter
     {
         [SerializeField] private ShopScroll _shopScroll;
         [SerializeField] private List<SkinConfig> _skinConfigs = new List<SkinConfig>();
@@ -47,10 +47,6 @@ namespace Sourse.Root
         {
             _walletView.Unsubscribe();
             _shop.Unsubscribe();
-
-            foreach (var skin in _skins)
-                skin.Unsubscribe();
-
             _shop.Bought -= OnBought;
             _shop.Selected -= OnSelected;
         }
@@ -77,16 +73,16 @@ namespace Sourse.Root
             foreach (var skinConfig in _skinConfigs)
             {
                 var skinView = _skinViewSpawner.Get(_temeplate, _parent);
-                var skin = _skinSpawner.Get(skinView, skinConfig);
+                var skin = _skinSpawner.Get(skinConfig);
                 _saveDataInjector.Update(skin);
-                skin.Subscribe();
+                skinView.Initialize(skin);
                 _skinViews.Add(skinView);
                 _skins.Add(skin);
             }
 
             _walletView.Initialize(_wallet);
             _walletView.Subscribe();
-            _shop.Initialize(_skins, _wallet);
+            _shop.Initialize(_skins, _skinViews, _wallet);
             _shop.Subscribe();
             _shop.Bought += OnBought;
             _shop.Selected += OnSelected;

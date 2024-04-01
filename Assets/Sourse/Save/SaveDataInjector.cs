@@ -41,7 +41,10 @@ namespace Sourse.Save
             }
 
             if (TrySearchSkinSaveData(out SkinSaveData searchData, skin))
-                searchData.ApplyData(skin);
+            {
+                searchData.IsBought = skin.IsBought;
+                searchData.IsSelect = skin.IsSelect;
+            }
             else
                 AddSkinSaveData(skin);
         }
@@ -49,7 +52,9 @@ namespace Sourse.Save
         private void AddSkinSaveData(Skin skin)
         {
             var newSkinSaveData = new SkinSaveData();
-            newSkinSaveData.ApplyData(skin);
+            newSkinSaveData.IsBought = skin.IsBought;
+            newSkinSaveData.IsSelect = skin.IsSelect;
+            newSkinSaveData.ID = skin.ID;
             _skinSaveDatas.Add(newSkinSaveData);
         }
 

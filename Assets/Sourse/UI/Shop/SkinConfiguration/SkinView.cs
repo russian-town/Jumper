@@ -15,43 +15,46 @@ namespace Sourse.UI.Shop.SkinConfiguration
         [SerializeField] private PriceText _priceText;
         [SerializeField] private Image _icon;
 
-        public event Action BuyButtonClicked;
-        public event Action SelectButtonClicked;
+        private Skin _skin;
+
+        public event Action<Skin, SkinView> BuyButtonClicked;
+        public event Action<Skin, SkinView> SelectButtonClicked;
 
         public void Subscribe()
         {
-            _buyButton.onClick.AddListener(() => BuyButtonClicked?.Invoke());
-            _selectButton.onClick.AddListener(() => SelectButtonClicked?.Invoke());
+            _buyButton.onClick.AddListener(() => BuyButtonClicked?.Invoke(_skin, this));
+            _selectButton.onClick.AddListener(() => SelectButtonClicked?.Invoke(_skin, this));
         }
 
         public void Unsubscribe()
         {
-            _buyButton.onClick.RemoveListener(() => BuyButtonClicked?.Invoke());
-            _selectButton.onClick.RemoveListener(() => SelectButtonClicked?.Invoke());
+            _buyButton.onClick.RemoveListener(() => BuyButtonClicked?.Invoke(_skin, this));
+            _selectButton.onClick.RemoveListener(() => SelectButtonClicked?.Invoke(_skin, this));
         }
 
         public void Initialize(Skin skin)
         {
+            _skin = skin;
             _icon.sprite = skin.Icon;
             _priceText.SetText(skin.Price);
-            UpdateView(skin);
+            UpdateView();
         }
 
-        public void UpdateView(Skin skin)
+        public void UpdateView()
         {
-            if (skin.IsSelect)
+            if (_skin.IsSelect)
             {
                 _priceText.Hide();
                 _selectButton.gameObject.SetActive(true);
                 _selectButton.enabled = false;
                 _selectText.text = ShopParameter.SelectedText;
             }
-            else if (!skin.IsBought && !skin.IsSelect)
+            else if (!_skin.IsBought && !_skin.IsSelect)
             {
                 _selectButton.gameObject.SetActive(false);
                 _priceText.Show();
             }
-            else if(skin.IsBought && !skin.IsSelect)
+            else if(_skin.IsBought && !_skin.IsSelect)
             {
                 _priceText.Hide();
                 _buyButton.gameObject.SetActive(false);

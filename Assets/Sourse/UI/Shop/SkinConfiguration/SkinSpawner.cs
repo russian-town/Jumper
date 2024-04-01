@@ -2,9 +2,9 @@ namespace Sourse.UI.Shop.SkinConfiguration
 {
     public class SkinSpawner
     {
-        public Skin Get(SkinView skinView, SkinConfig skinConfig)
+        public Skin Get(SkinConfig skinConfig)
         {
-            return new Skin(skinView, skinConfig);
+            return new Skin(skinConfig);
         }
     }
 }
