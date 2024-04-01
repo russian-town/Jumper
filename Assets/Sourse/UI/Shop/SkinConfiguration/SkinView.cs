@@ -17,19 +17,23 @@ namespace Sourse.UI.Shop.SkinConfiguration
 
         private Skin _skin;
 
-        public event Action<Skin, SkinView> BuyButtonClicked;
-        public event Action<Skin, SkinView> SelectButtonClicked;
+        public event Action<Skin> BuyButtonClicked;
+        public event Action<Skin> SelectButtonClicked;
 
         public void Subscribe()
         {
-            _buyButton.onClick.AddListener(() => BuyButtonClicked?.Invoke(_skin, this));
-            _selectButton.onClick.AddListener(() => SelectButtonClicked?.Invoke(_skin, this));
+            _buyButton.onClick.AddListener(() => BuyButtonClicked?.Invoke(_skin));
+            _selectButton.onClick.AddListener(() => SelectButtonClicked?.Invoke(_skin));
+            _buyButton.onClick.AddListener(UpdateView);
+            _selectButton.onClick.AddListener(UpdateView);
         }
 
         public void Unsubscribe()
         {
-            _buyButton.onClick.RemoveListener(() => BuyButtonClicked?.Invoke(_skin, this));
-            _selectButton.onClick.RemoveListener(() => SelectButtonClicked?.Invoke(_skin, this));
+            _buyButton.onClick.RemoveListener(() => BuyButtonClicked?.Invoke(_skin));
+            _selectButton.onClick.RemoveListener(() => SelectButtonClicked?.Invoke(_skin));
+            _buyButton.onClick.RemoveListener(UpdateView);
+            _selectButton.onClick.RemoveListener(UpdateView);
         }
 
         public void Initialize(Skin skin)

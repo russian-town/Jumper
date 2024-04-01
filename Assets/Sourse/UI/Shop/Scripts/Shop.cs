@@ -11,7 +11,6 @@ namespace Sourse.UI.Shop.Scripts
         private List<Skin> _skins = new List<Skin>();
         private List<SkinView> _skinViews = new List<SkinView>();
         private Skin _currentSelectedSkin;
-        private SkinView _currentSelectedSkinView;
 
         public event Action<Skin> Bought;
         public event Action<Skin> Selected;
@@ -23,9 +22,6 @@ namespace Sourse.UI.Shop.Scripts
             _wallet = wallet;
             SetDefaultSkin();
             SetSelectedSkin();
-
-            foreach (var skinView in _skinViews)
-                skinView.UpdateView();
         }
 
         public void Subscribe()
@@ -66,7 +62,7 @@ namespace Sourse.UI.Shop.Scripts
             _currentSelectedSkin = _skins[0];
         }
 
-        private void OnBuyButtonClicked(Skin skin, SkinView skinView)
+        private void OnBuyButtonClicked(Skin skin)
         {
             if (skin.IsBought == true)
                 return;
@@ -76,11 +72,10 @@ namespace Sourse.UI.Shop.Scripts
 
             _wallet.DicreaseMoney(skin.Price);
             skin.Buy();
-            skinView?.UpdateView();
             Bought?.Invoke(skin);
         }
 
-        private void OnSelectButtonClicked(Skin skin, SkinView skinView)
+        private void OnSelectButtonClicked(Skin skin)
         {
             if (skin.IsBought == false || skin.IsSelect == true)
                 return;
@@ -88,9 +83,6 @@ namespace Sourse.UI.Shop.Scripts
             _currentSelectedSkin.Deselect();
             skin.Select();
             _currentSelectedSkin = skin;
-            _currentSelectedSkinView?.UpdateView();
-            _currentSelectedSkinView = skinView;
-            skinView?.UpdateView();
             Selected?.Invoke(skin);
         }
     }

@@ -73,7 +73,7 @@ namespace Sourse.Root
             foreach (var skinConfig in _skinConfigs)
             {
                 var skinView = _skinViewSpawner.Get(_temeplate, _parent);
-                var skin = _skinSpawner.Get(skinConfig);
+                var skin = _skinSpawner.CreateSkin(skinConfig);
                 _saveDataInjector.Update(skin);
                 skinView.Initialize(skin);
                 _skinViews.Add(skinView);
