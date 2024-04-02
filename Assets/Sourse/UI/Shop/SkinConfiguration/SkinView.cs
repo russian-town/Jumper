@@ -1,71 +1,50 @@
 using System;
 using Sourse.Constants;
-using Sourse.UI.Shop.Scripts;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace Sourse.UI.Shop.SkinConfiguration
 {
-    public class SkinView : MonoBehaviour
+    public abstract class SkinView : MonoBehaviour
     {
         [SerializeField] private Button _selectButton;
-        [SerializeField] private Button _buyButton;
         [SerializeField] private TMP_Text _selectText;
-        [SerializeField] private PriceText _priceText;
-        [SerializeField] private Image _icon;
 
-        private Skin _skin;
-
-        public event Action<Skin> BuyButtonClicked;
         public event Action<Skin> SelectButtonClicked;
 
-        public void Subscribe()
+        public virtual void UpdateView()
         {
-            _buyButton.onClick.AddListener(() => BuyButtonClicked?.Invoke(_skin));
-            _selectButton.onClick.AddListener(() => SelectButtonClicked?.Invoke(_skin));
-            _buyButton.onClick.AddListener(UpdateView);
-            _selectButton.onClick.AddListener(UpdateView);
-        }
-
-        public void Unsubscribe()
-        {
-            _buyButton.onClick.RemoveListener(() => BuyButtonClicked?.Invoke(_skin));
-            _selectButton.onClick.RemoveListener(() => SelectButtonClicked?.Invoke(_skin));
-            _buyButton.onClick.RemoveListener(UpdateView);
-            _selectButton.onClick.RemoveListener(UpdateView);
-        }
-
-        public void Initialize(Skin skin)
-        {
-            _skin = skin;
-            _icon.sprite = skin.Icon;
-            _priceText.SetText(skin.Price);
-            UpdateView();
-        }
-
-        public void UpdateView()
-        {
-            if (_skin.IsSelect)
+            if (Skin().IsSelect)
             {
-                _priceText.Hide();
                 _selectButton.gameObject.SetActive(true);
                 _selectButton.enabled = false;
                 _selectText.text = ShopParameter.SelectedText;
             }
-            else if (!_skin.IsBought && !_skin.IsSelect)
+            else if (!Skin().IsBought && !Skin().IsSelect)
             {
                 _selectButton.gameObject.SetActive(false);
-                _priceText.Show();
             }
-            else if(_skin.IsBought && !_skin.IsSelect)
+            else if (Skin().IsBought && !Skin().IsSelect)
             {
-                _priceText.Hide();
-                _buyButton.gameObject.SetActive(false);
                 _selectButton.gameObject.SetActive(true);
                 _selectText.text = ShopParameter.SelectText;
                 _selectButton.enabled = true;
             }
         }
+
+        public virtual void Subscribe()
+        {
+            _selectButton.onClick.AddListener(()
+                => SelectButtonClicked?.Invoke(Skin()));
+        }
+
+        public virtual void Unsubscribe()
+        {
+            _selectButton.onClick.RemoveListener(()
+                => SelectButtonClicked?.Invoke(Skin()));
+        }
+
+        protected abstract Skin Skin();
     }
 }

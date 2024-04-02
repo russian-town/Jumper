@@ -149,7 +149,7 @@ GameObject:
   - component: {fileID: 8431075474733755795}
   - component: {fileID: 361884116129952179}
   m_Layer: 5
-  m_Name: PaidSkinViewTemplate 1
+  m_Name: OpenableSkinViewTemplate
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -225,14 +225,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 863439205245160262}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1d636b2208ffd4547b1f8bf7a12f406f, type: 3}
+  m_Script: {fileID: 11500000, guid: 120ff072d06022543abcec336d318ad3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _selectButton: {fileID: 4987886519932516474}
-  _buyButton: {fileID: 7549228119562974084}
   _selectText: {fileID: 4451554294532657809}
-  _priceText: {fileID: 3623893769717638644}
-  _icon: {fileID: 4976487692003427713}
 --- !u!114 &361884116129952179
 MonoBehaviour:
   m_ObjectHideFlags: 0

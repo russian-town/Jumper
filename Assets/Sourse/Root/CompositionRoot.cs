@@ -11,13 +11,13 @@ namespace Sourse.Root
     {
         [SerializeField] private ShopScroll _shopScroll;
         [SerializeField] private List<SkinConfig> _skinConfigs = new();
-        [SerializeField] private SkinView _temeplate;
+        [SerializeField] private PaidSkinView _temeplate;
         [SerializeField] private Transform _parent;
         [SerializeField] private WalletView _walletView;
 
         private readonly Shop _shop = new();
         private readonly SkinViewSpawner _skinViewSpawner = new();
-        private readonly List<SkinView> _skinViews = new();
+        private readonly List<PaidSkinView> _skinViews = new();
         private readonly List<Skin> _skins = new();
         private readonly List<OpenableSkin> _openableSkins = new();
         private readonly SkinSpawner _skinSpawner = new();

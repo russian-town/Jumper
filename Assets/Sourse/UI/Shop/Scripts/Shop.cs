@@ -9,13 +9,13 @@ namespace Sourse.UI.Shop.Scripts
     {
         private Wallet _wallet;
         private List<Skin> _skins = new List<Skin>();
-        private List<SkinView> _skinViews = new List<SkinView>();
+        private List<PaidSkinView> _skinViews = new List<PaidSkinView>();
         private Skin _currentSelectedSkin;
 
         public event Action<Skin> Bought;
         public event Action<Skin> Selected;
 
-        public void Initialize(List<Skin> skins, List<SkinView> skinViews, Wallet wallet)
+        public void Initialize(List<Skin> skins, List<PaidSkinView> skinViews, Wallet wallet)
         {
             _skins = skins;
             _skinViews = skinViews;
