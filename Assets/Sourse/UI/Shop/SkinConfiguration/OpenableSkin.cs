@@ -8,10 +8,10 @@ namespace Sourse.UI.Shop.SkinConfiguration
 
         public float Percent { get; private set; }
 
-        public void ApplyData(OpenableSkinSaveData saveData)
+        public void ApplySaveData(OpenableSkinSaveData openableSkinSaveData)
         {
-            ApplySaveData(saveData);
-            Percent = saveData.Persent;
+            base.ApplySaveData(openableSkinSaveData);
+            Percent = openableSkinSaveData.Persent;
         }
     }
 }

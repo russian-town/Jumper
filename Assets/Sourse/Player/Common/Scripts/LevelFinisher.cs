@@ -7,7 +7,7 @@ namespace Sourse.Player.Common
 {
     public class LevelFinisher
     {
-        private GroundDetector _groundDetector;
+        private readonly GroundDetector _groundDetector;
 
         public event Action LevelCompleted;
 

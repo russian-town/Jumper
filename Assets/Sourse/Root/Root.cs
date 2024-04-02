@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Sourse.Balance;
 using Sourse.Camera;
 using Sourse.Constants;
@@ -6,13 +7,14 @@ using Sourse.Finish;
 using Sourse.Game;
 using Sourse.Level;
 using Sourse.Pause;
+using Sourse.Player.Common;
 using Sourse.Player.Common.Scripts;
 using Sourse.Save;
 using Sourse.UI;
 using Sourse.UI.LevelCompletePanel;
 using Sourse.UI.Shop.Scripts.Buttons;
+using Sourse.UI.Shop.SkinConfiguration;
 using Sourse.Yandex;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Sourse.Root
@@ -27,7 +29,6 @@ namespace Sourse.Root
         [SerializeField] private GameOverView _gameOverView;
         [SerializeField] private LevelProgressView _levelProgressView;
         [SerializeField] private LevelCompletePanel _levelCompletePanel;
-        [SerializeField] private float _percentOpeningSkin;
         [SerializeField] private int _moneyOfLevel;
         [SerializeField] private Pause.Pause _pause;
         [SerializeField] private RetryButton _retryButton;
@@ -37,14 +38,16 @@ namespace Sourse.Root
         [SerializeField] private RewardedButton _rewardedButton;
         [SerializeField] private NextLevelButton _nextLevelButton;
         [SerializeField] private RewardedVideo _rewardedVideo;
-        [SerializeField] private List<Props> _props = new List<Props>();
+        [SerializeField] private List<Props> _props = new();
         [SerializeField] private FinishPosition _finishPosition;
+        [SerializeField] private List<SkinConfig> _skinConfigs = new();
+
+        private readonly Wallet _wallet = new();
+        private readonly PlayerSpawner _playerSpawner = new();
 
         private PlayerInitializer _startPlayer;
-        private Wallet _wallet = new Wallet();
-        private PlayerSpawner _playerSpawner = new PlayerSpawner();
         private LocalSave _localSave;
-        private Vector3 _targetRotation = new Vector3(0f, 90f, 0f);
+        private Vector3 _targetRotation = new(0f, 90f, 0f);
         private YandexAds _yandexAds;
         private LevelFinisher _levelFinisher;
         private LoseLevelHandler _loseLevelHandler;
@@ -52,6 +55,10 @@ namespace Sourse.Root
         private int _id;
         private LastPropsSaver _lastPropsSaver;
         private LevelProgress _levelProgress;
+        private OpenableSkinViewFiller _openableSkinViewFiller;
+        private List<IDataReader> _dataReaders = new();
+        private List<IDataWriter> _dataWriters = new();
+        private PlayerInitializer _playerTemplate;
 
         private void OnDestroy()
             => Unsubscribe();
@@ -64,7 +71,7 @@ namespace Sourse.Root
 
         private void Initialize()
         {
-            //_level.Initialize(_levelProgress);
+            GetPlayerTemplate();
             _yandexAds = new YandexAds();
             _applicationStatusChecker.Initialize(_yandexAds);
             _nextLevelButton.Initialize();
@@ -81,21 +88,22 @@ namespace Sourse.Root
             _loseLevelHandler.Subscribe();
             _playerUI = new PlayerUI(_nextLevelButton, _retryButton, _rewardedVideo);
             _playerUI.Subscribe();
-            List<IDataReader> dataReaders = new List<IDataReader>()
-            {
-                this,
-                _wallet,
-            };
-            List<IDataWriter> dataWriters = new List<IDataWriter>()
-            {
-                _wallet,
-            };
-            _localSave = new LocalSave(dataReaders, dataWriters);
-            _localSave.Load();
-            string path = $"{PlayerParameter.PlayerPrefabsPath}{_id}";
-            var playerTemplate = Resources.Load<PlayerInitializer>(path);
-            _startPlayer = _playerSpawner.GetPlayer(playerTemplate, _startPoint, _targetRotation);
+            _startPlayer = _playerSpawner.GetPlayer(_playerTemplate, _startPoint, _targetRotation);
             _startPlayer.Initialize(_playerInput);
+            _openableSkinViewFiller = new(_levelCompletePanel, _skinConfigs, _startPlayer.GetComponent<GroundDetector>());
+            _openableSkinViewFiller.Subscribe();
+            _dataReaders = new List<IDataReader>()
+            {
+                _wallet,
+                _openableSkinViewFiller
+            };
+            _dataWriters = new List<IDataWriter>()
+            {
+                _wallet,
+                _openableSkinViewFiller
+            };
+            _localSave = new(_dataReaders, _dataWriters);
+            _localSave.Load();
             _followCamera.SetTarget(_startPlayer);
             _levelProgress = new LevelProgress(_startPlayer, _finishPosition, _startPoint);
             _levelProgressView.Initialize(_levelProgress);
@@ -111,14 +119,9 @@ namespace Sourse.Root
                 _playerUI
             };
             _pause.Initialize(pauseHandlers);
-            _levelFinisher = new LevelFinisher(_levelCompletePanel,
-                _wallet,
-                _percentOpeningSkin,
-                _moneyOfLevel,
-                _level,
-                _levelProgressView,
-                _startPlayer.GetComponent<GroundDetector>());
+            _levelFinisher = new LevelFinisher(_startPlayer.GetComponent<GroundDetector>());
             _levelFinisher.Subscribe();
+            _levelFinisher.LevelCompleted += OnLevelCompleted;
             _levelProgressView.Show();
             _gameOverView.Hide();
             _lastPropsSaver = new LastPropsSaver(_props, _startPlayer.GetComponent<GroundDetector>());
@@ -136,7 +139,28 @@ namespace Sourse.Root
                 }
             }
 
+            foreach (var openableSkinSaveData in playerData.OpenableSkinSaveDatas)
+            {
+                if (openableSkinSaveData.IsSelect == true)
+                {
+                    _id = openableSkinSaveData.ID;
+                    return;
+                }
+            }
+
             _id = PlayerParameter.DefaultPlayerID;
+        }
+
+        private void OnLevelCompleted()
+            => _localSave.Save();
+
+        private void GetPlayerTemplate()
+        {
+            _dataReaders.Add(this);
+            _localSave = new LocalSave(_dataReaders, _dataWriters);
+            _localSave.Load();
+            string path = $"{PlayerParameter.PlayerPrefabsPath}{_id}";
+            _playerTemplate = Resources.Load<PlayerInitializer>(path);
         }
 
         private void Unsubscribe()
@@ -151,6 +175,7 @@ namespace Sourse.Root
             _loseLevelHandler.Unsubscribe();
             _playerUI.Unsibscribe();
             _lastPropsSaver.Unsubscribe();
+            _openableSkinViewFiller.Unsubscribe();
         }
     }
 }

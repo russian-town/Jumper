@@ -5,8 +5,8 @@ namespace Sourse.Save
 {
     public class SaveDataInjector
     {
-        private List<SkinSaveData> _skinSaveDatas;
-        private List<OpenableSkinSaveData> _openableSkinSaveDatas;
+        private readonly List<SkinSaveData> _skinSaveDatas;
+        private readonly List<OpenableSkinSaveData> _openableSkinSaveDatas;
 
         public SaveDataInjector(List<SkinSaveData> skinSaveDatas,
             List<OpenableSkinSaveData> openableSkinSaveDatas)

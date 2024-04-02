@@ -149,7 +149,7 @@ GameObject:
   - component: {fileID: 8431075474733755795}
   - component: {fileID: 361884116129952179}
   m_Layer: 5
-  m_Name: SkinViewTemplate
+  m_Name: PaidSkinViewTemplate 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

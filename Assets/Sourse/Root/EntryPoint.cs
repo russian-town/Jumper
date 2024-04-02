@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Sourse.Balance;
 using Sourse.Save;
 using Sourse.UI.Shop.SkinConfiguration;
 using UnityEngine;
@@ -11,6 +12,7 @@ namespace Sourse.Root
 
         private readonly SkinSpawner _skinSpawner = new();
         private readonly SkinSaveDataSpawner _skinSaveDataSpawner = new();
+        private readonly Wallet _wallet = new();
 
         private ISaveLoadService _saveLoadService;
         private LocalSave _localSave;
@@ -34,8 +36,9 @@ namespace Sourse.Root
 
         private void Initialize()
         {
+            _wallet.AddMoney(1000);
             _localSave = new LocalSave(new List<IDataReader> { this },
-                new List<IDataWriter> { this});
+                new List<IDataWriter> { this, _wallet});
             _saveLoadService = _localSave;
             _saveLoadService.Load();
             TakeSkinProgress();
