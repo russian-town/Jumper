@@ -9,16 +9,24 @@ namespace Sourse.UI.Shop.Scripts
     {
         private Wallet _wallet;
         private List<Skin> _skins = new List<Skin>();
-        private List<PaidSkinView> _skinViews = new List<PaidSkinView>();
+        private List<PaidSkinView> _paidSkinViews = new();
+        private List<OpenableSkinView> _openableSkinViews = new();
+        private List<RewardedSkinView> _rewardedSkinViews = new();
         private Skin _currentSelectedSkin;
 
         public event Action<Skin> Bought;
         public event Action<Skin> Selected;
 
-        public void Initialize(List<Skin> skins, List<PaidSkinView> skinViews, Wallet wallet)
+        public void Initialize(List<Skin> skins,
+            List<PaidSkinView> paidSkinViews,
+            List<OpenableSkinView> openableSkinViews,
+            List<RewardedSkinView> rewardedSkinViews,
+            Wallet wallet)
         {
             _skins = skins;
-            _skinViews = skinViews;
+            _paidSkinViews = paidSkinViews;
+            _openableSkinViews = openableSkinViews;
+            _rewardedSkinViews = rewardedSkinViews;
             _wallet = wallet;
             SetDefaultSkin();
             SetSelectedSkin();
@@ -26,21 +34,45 @@ namespace Sourse.UI.Shop.Scripts
 
         public void Subscribe()
         {
-            foreach (var skinView in _skinViews)
+            foreach (var skinView in _paidSkinViews)
             {
                 skinView.BuyButtonClicked += OnBuyButtonClicked;
                 skinView.SelectButtonClicked += OnSelectButtonClicked;
                 skinView.Subscribe();
             }
+
+            foreach (var openableSkinView in _openableSkinViews)
+            {
+                openableSkinView.SelectButtonClicked += OnSelectButtonClicked;
+                openableSkinView.Subscribe();
+            }
+
+            foreach (var rewardedSkinView in _rewardedSkinViews)
+            {
+                rewardedSkinView.RewardedButtonClicked += OnRewardedButtonClicked;
+                rewardedSkinView.Subscribe();
+            }
         }
 
         public void Unsubscribe()
         {
-            foreach (var skinView in _skinViews)
+            foreach (var paidSkinView in _paidSkinViews)
             {
-                skinView.BuyButtonClicked -= OnBuyButtonClicked;
-                skinView.SelectButtonClicked -= OnSelectButtonClicked;
-                skinView.Unsubscribe();
+                paidSkinView.BuyButtonClicked -= OnBuyButtonClicked;
+                paidSkinView.SelectButtonClicked -= OnSelectButtonClicked;
+                paidSkinView.Unsubscribe();
+            }
+
+            foreach (var openableSkinView in _openableSkinViews)
+            {
+                openableSkinView.SelectButtonClicked -= OnSelectButtonClicked;
+                openableSkinView.Unsubscribe();
+            }
+
+            foreach (var rewardedSkinView in _rewardedSkinViews)
+            {
+                rewardedSkinView.RewardedButtonClicked -= OnRewardedButtonClicked;
+                rewardedSkinView.Unsubscribe();
             }
         }
 
@@ -84,6 +116,10 @@ namespace Sourse.UI.Shop.Scripts
             skin.Select();
             _currentSelectedSkin = skin;
             Selected?.Invoke(skin);
+        }
+
+        private void OnRewardedButtonClicked(Skin skin)
+        {
         }
     }
 }
