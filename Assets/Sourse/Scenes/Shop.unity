@@ -643,7 +643,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 60
+  m_fontSize: 64.65
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -974,7 +974,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: d6ed2b81bdc86264bb963aaa61e034fa, type: 2}
   - {fileID: 11400000, guid: c07af095df035414898963503c2a3705, type: 2}
   - {fileID: 11400000, guid: 2a6032c13b756b94ea3d1ff9004cd808, type: 2}
-  _temeplate: {fileID: 8431075474733755795, guid: 21ed021170d9a0c40b596155c19325be, type: 3}
+  _paidSkinViewTemplate: {fileID: 8431075474733755795, guid: bd869dbd812502a499a2119dcc08e1e8, type: 3}
+  _openableSkinViewTemplate: {fileID: 8431075474733755795, guid: 6745040649506c04bbcd50debce18b13, type: 3}
+  _rewardedSkinViewTemplate: {fileID: 3593414639744076574, guid: 21ed021170d9a0c40b596155c19325be, type: 3}
   _parent: {fileID: 140261059}
   _walletView: {fileID: 37953892}
 --- !u!4 &1436396059

@@ -11,13 +11,17 @@ namespace Sourse.Root
     {
         [SerializeField] private ShopScroll _shopScroll;
         [SerializeField] private List<SkinConfig> _skinConfigs = new();
-        [SerializeField] private PaidSkinView _temeplate;
+        [SerializeField] private PaidSkinView _paidSkinViewTemplate;
+        [SerializeField] private OpenableSkinView _openableSkinViewTemplate;
+        [SerializeField] private RewardedSkinView _rewardedSkinViewTemplate;
         [SerializeField] private Transform _parent;
         [SerializeField] private WalletView _walletView;
 
         private readonly Shop _shop = new();
         private readonly SkinViewSpawner _skinViewSpawner = new();
-        private readonly List<PaidSkinView> _skinViews = new();
+        private readonly List<PaidSkinView> _paidSkinViews = new();
+        private readonly List<OpenableSkinView> _openableSkinViews = new();
+        private readonly List<RewardedSkinView> _rewardedSkinViews = new();
         private readonly List<Skin> _skins = new();
         private readonly List<OpenableSkin> _openableSkins = new();
         private readonly SkinSpawner _skinSpawner = new();
@@ -80,25 +84,37 @@ namespace Sourse.Root
 
             foreach (var skinConfig in _skinConfigs)
             {
-                var skinView = _skinViewSpawner.Get(_temeplate, _parent);
 
                 switch (skinConfig.Type)
                 {
                     case SkinType.Paid:
+                        var paidSkinView = _skinViewSpawner.Get(_paidSkinViewTemplate,
+                            _parent);
                         var skin = _skinSpawner.CreateSkin(skinConfig);
                         _saveDataInjector.Update(skin);
-                        skinView.Initialize(skin);
+                        paidSkinView.Initialize(skin);
                         _skins.Add(skin);
+                        _paidSkinViews.Add(paidSkinView);
                         break;
                     case SkinType.Openable:
+                        var openableSkinView = _skinViewSpawner.Get(_openableSkinViewTemplate,
+                            _parent);
                         var openableSkin = _skinSpawner.CreateOpenableSkin(skinConfig);
                         _saveDataInjector.Update(openableSkin);
-                        skinView.Initialize(openableSkin);
+                        openableSkinView.Initialize(openableSkin);
                         _openableSkins.Add(openableSkin);
+                        _openableSkinViews.Add(openableSkinView);
+                        break;
+                    case SkinType.Rewarded:
+                        var rewardedSkinView = _skinViewSpawner.Get(_rewardedSkinViewTemplate,
+                            _parent);
+                        var skin1 = _skinSpawner.CreateSkin(skinConfig);
+                        _saveDataInjector.Update(skin1);
+                        rewardedSkinView.Initialize(skin1);
+                        _skins.Add(skin1);
+                        _rewardedSkinViews.Add(rewardedSkinView);
                         break;
                 }
-
-                _skinViews.Add(skinView);
             }
 
             _walletView.Initialize(_wallet);
@@ -106,11 +122,15 @@ namespace Sourse.Root
             List<Skin> skins = new();
             skins.AddRange(_skins);
             skins.AddRange(_openableSkins);
-            _shop.Initialize(skins, _skinViews, _wallet);
+            _shop.Initialize(skins,
+                _paidSkinViews,
+                _openableSkinViews,
+                _rewardedSkinViews,
+                _wallet);
             _shop.Subscribe();
             _shop.Bought += OnBought;
             _shop.Selected += OnSelected;
-            _shopScroll.Initialize(_skinViews);
+            _shopScroll.Initialize(_paidSkinViews);
         }
 
         private void OnSelected(Skin skin)

@@ -6,7 +6,7 @@ namespace Sourse.UI.Shop.SkinConfiguration
         private Skin _openableSkin;
         private float _completedPercent;
 
-        public void Initiaze(OpenableSkin openableSkin)
+        public void Initialize(OpenableSkin openableSkin)
         {
             _openableSkin = openableSkin;
             _completedPercent = openableSkin.Percent;

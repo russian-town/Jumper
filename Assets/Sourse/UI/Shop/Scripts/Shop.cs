@@ -30,15 +30,24 @@ namespace Sourse.UI.Shop.Scripts
             _wallet = wallet;
             SetDefaultSkin();
             SetSelectedSkin();
+
+            foreach (var paidSkinView in _paidSkinViews)
+                paidSkinView.UpdateView();
+
+            foreach (var openableSkinView in _openableSkinViews)
+                openableSkinView.UpdateView();
+
+            foreach (var rewardedSkinView in _rewardedSkinViews)
+                rewardedSkinView.UpdateView();
         }
 
         public void Subscribe()
         {
-            foreach (var skinView in _paidSkinViews)
+            foreach (var paidSkinView in _paidSkinViews)
             {
-                skinView.BuyButtonClicked += OnBuyButtonClicked;
-                skinView.SelectButtonClicked += OnSelectButtonClicked;
-                skinView.Subscribe();
+                paidSkinView.BuyButtonClicked += OnBuyButtonClicked;
+                paidSkinView.SelectButtonClicked += OnSelectButtonClicked;
+                paidSkinView.Subscribe();
             }
 
             foreach (var openableSkinView in _openableSkinViews)
