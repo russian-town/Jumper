@@ -1,11 +1,12 @@
 using System;
 using Sourse.Constants;
 using Sourse.Level;
+using Sourse.Pause;
 using Sourse.Player.Common;
 using Sourse.Player.Common.Scripts;
 using UnityEngine;
 
-namespace Sourse.Game
+namespace Sourse.Game.Lose
 {
     public class GameLoss : IPauseHandler
     {

@@ -6,13 +6,9 @@ namespace Sourse.UI
 {
     public class OpenableSkinBar : MonoBehaviour
     {
-        [Range(0f, 1f)] [SerializeField] private float _value;
         [SerializeField] private Image _background;
         [SerializeField] private Image _fillArea;
         [SerializeField] private float _speed;
-
-/*        private void OnValidate()
-            => _fillArea.fillAmount = _value;*/
 
         public void Initialize(Sprite icon, float currentValue)
         {

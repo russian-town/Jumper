@@ -6,7 +6,7 @@ using System;
 using TMPro;
 using UnityEngine;
 
-namespace Sourse.Game
+namespace Sourse.Game.Lose
 {
     public class GameLossView : UIElement
     {

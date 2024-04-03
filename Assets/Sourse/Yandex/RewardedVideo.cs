@@ -1,20 +1,16 @@
 using System;
-using UnityEngine;
 
 namespace Sourse.Yandex
 {
-    public class RewardedVideo : MonoBehaviour
+    public class RewardedVideo
     {
-        [SerializeField] private ApplicationStatusChecker.ApplicationStatusChecker _applicationStatusChecker;
-
-        private YandexAds _yandexAds;
+        private ApplicationStatusChecker.ApplicationStatusChecker _applicationStatusChecker;
+        private YandexAds _yandexAds = new YandexAds();
 
         public event Action RewardedVideoEnded;
         public event Action RewardedVideoOpened;
 
-        private void Awake() => _yandexAds = new YandexAds();
-
-        private void OnEnable()
+        public void Subscribe()
         {
             _yandexAds.OpenCallback += OnOpenCallBack;
             _yandexAds.RewardedCallback += OnRewardedCallback;
@@ -22,7 +18,7 @@ namespace Sourse.Yandex
             _yandexAds.ErrorCallback += OnErrorCallback;
         }
 
-        private void OnDisable()
+        public void Unsubscribe()
         {
             _yandexAds.OpenCallback -= OnOpenCallBack;
             _yandexAds.RewardedCallback -= OnRewardedCallback;
@@ -30,7 +26,8 @@ namespace Sourse.Yandex
             _yandexAds.ErrorCallback -= OnErrorCallback;
         }
 
-        public void Show() => _yandexAds.ShowRewardedVideo();
+        public void Show()
+            => _yandexAds.ShowRewardedVideo();
 
         private void OnOpenCallBack()
         {
@@ -39,7 +36,8 @@ namespace Sourse.Yandex
             RewardedVideoOpened?.Invoke();
         }
 
-        private void OnRewardedCallback() => RewardedVideoEnded?.Invoke();
+        private void OnRewardedCallback()
+            => RewardedVideoEnded?.Invoke();
 
         private void OnCloseCallback()
         {
@@ -47,6 +45,7 @@ namespace Sourse.Yandex
             _applicationStatusChecker.ChangeSoundStatus(false);
         }
 
-        private void OnErrorCallback(string errorText) => _applicationStatusChecker.OnInBackgroundChangeEvent(false);
+        private void OnErrorCallback(string errorText)
+            => _applicationStatusChecker.OnInBackgroundChangeEvent(false);
     }
 }

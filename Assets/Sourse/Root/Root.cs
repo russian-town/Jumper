@@ -3,8 +3,9 @@ using Sourse.Balance;
 using Sourse.Camera;
 using Sourse.Constants;
 using Sourse.Enviroment.Common;
-using Sourse.Finish;
 using Sourse.Game;
+using Sourse.Game.Finish;
+using Sourse.Game.Lose;
 using Sourse.Level;
 using Sourse.Pause;
 using Sourse.Player.Common;
@@ -23,21 +24,17 @@ namespace Sourse.Root
     {
         [SerializeField] private FollowCamera _followCamera;
         [SerializeField] private PlayerInput _playerInput;
-        [SerializeField] private Level.Level _level;
         [SerializeField] private ApplicationStatusChecker.ApplicationStatusChecker _applicationStatusChecker;
         [SerializeField] private PlayerPosition _startPoint;
         [SerializeField] private GameLossView _gameLossView;
         [SerializeField] private LevelProgressView _levelProgressView;
         [SerializeField] private LevelFinishView _levelCompletePanel;
         [SerializeField] private int _moneyOfLevel;
-        [SerializeField] private Pause.Pause _pause;
+        [SerializeField] private PausePanel _pausePanel;
         [SerializeField] private RetryButton _retryButton;
         [SerializeField] private RewardedPanel _rewardedPanel;
         [SerializeField] private PauseButton _pauseButton;
-        [SerializeField] private CloseAdOfferScreenButton _noThanksButton;
-        [SerializeField] private RewardedButton _rewardedButton;
         [SerializeField] private NextLevelButton _nextLevelButton;
-        [SerializeField] private RewardedVideo _rewardedVideo;
         [SerializeField] private List<Props> _props = new();
         [SerializeField] private FinishPosition _finishPosition;
         [SerializeField] private List<SkinConfig> _skinConfigs = new();
@@ -59,6 +56,8 @@ namespace Sourse.Root
         private List<IDataReader> _dataReaders = new();
         private List<IDataWriter> _dataWriters = new();
         private PlayerInitializer _playerTemplate;
+        private Pause.Pause _pause;
+        private Level.Level _level = new Level.Level();
 
         private void OnDestroy()
             => Unsubscribe();
@@ -75,8 +74,6 @@ namespace Sourse.Root
             _yandexAds = new YandexAds();
             _applicationStatusChecker.Initialize(_yandexAds);
             _nextLevelButton.Initialize();
-            _rewardedButton.Initialize();
-            _noThanksButton.Initialize();
             _retryButton.Initialize();
             _startPlayer = _playerSpawner.GetPlayer(_playerTemplate, _startPoint, _targetRotation);
             _startPlayer.Initialize(_playerInput);
@@ -103,16 +100,14 @@ namespace Sourse.Root
             _followCamera.SetTarget(_startPlayer);
             _levelProgressView.Initialize(_levelProgress);
             _levelProgressView.UpdateProgressBar();
-            IPauseHandler[] pauseHandlers = new IPauseHandler[]
+            List<IPauseHandler> pauseHandlers = new()
             {
                 _nextLevelButton,
                 _retryButton,
-                _noThanksButton,
-                _rewardedButton,
                 _playerInput,
                 _gameLoss,
             };
-            _pause.Initialize(pauseHandlers);
+            _pause = new Pause.Pause(_pauseButton, _pausePanel, pauseHandlers);
             _levelFinisher = new LevelFinisher(_startPlayer.GetComponent<GroundDetector>(),
                 _level);
             _levelFinisher.Subscribe();
@@ -161,11 +156,7 @@ namespace Sourse.Root
         private void Unsubscribe()
         {
             _startPlayer.Unsubscribe();
-/*            _nextLevelButton.Unsubscribe();
-            _rewardedButton.Unsubscribe();
-            _noThanksButton.Unsubscribe();
-            _retryButton.Unsubscribe();*/
-            _level.Unsubscribe();
+            //_nextLevelButton.Unsubscribe();
             _levelFinisher.Unsubscribe();
             _gameLoss.Unsubscribe();
             _lastPropsSaver.Unsubscribe();

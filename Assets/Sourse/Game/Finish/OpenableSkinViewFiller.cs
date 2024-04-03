@@ -6,7 +6,7 @@ using Sourse.UI.LevelCompletePanel;
 using Sourse.UI.Shop.SkinConfiguration;
 using UnityEngine;
 
-namespace Sourse.Game
+namespace Sourse.Game.Finish
 {
     public class OpenableSkinViewFiller : IDataReader, IDataWriter
     {

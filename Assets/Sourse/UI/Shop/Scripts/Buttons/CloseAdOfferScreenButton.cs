@@ -1,6 +1,4 @@
-using Sourse.UI.Shop.Scripts.Buttons;
-
-namespace Sourse.UI
+namespace Sourse.UI.Shop.Scripts.Buttons
 {
     public class CloseAdOfferScreenButton : UIButton
     {

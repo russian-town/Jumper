@@ -1,5 +1,5 @@
 using System;
-using Sourse.Finish;
+using Sourse.Game.Finish;
 using Sourse.Player.Common.Scripts;
 using UnityEngine;
 

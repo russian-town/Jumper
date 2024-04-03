@@ -1958,6 +1958,17 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.8337779, y: 1.7292554, z: 1}
   m_Center: {x: -0.02336669, y: 0.36462808, z: 0}
+--- !u!114 &1939706340 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 9117000263733703016, guid: cf2d3bcaf424b9049a030aa385ad8d59, type: 3}
+  m_PrefabInstance: {fileID: 4674197535883984235}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d55cf5af5951bcf42af741f85e1c83dc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1973521023
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2528,6 +2539,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4674197534554460007, guid: cf2d3bcaf424b9049a030aa385ad8d59, type: 3}
+      propertyPath: _pausePanel
+      value: 
+      objectReference: {fileID: 1939706340}
     - target: {fileID: 4674197534554460007, guid: cf2d3bcaf424b9049a030aa385ad8d59, type: 3}
       propertyPath: _startPoint
       value: 

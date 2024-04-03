@@ -1,4 +1,4 @@
-namespace Sourse.Game
+namespace Sourse.Pause
 {
     public interface IPauseHandler
     {

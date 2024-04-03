@@ -1,6 +1,6 @@
 using Sourse.UI;
 
-namespace Sourse.Game
+namespace Sourse.Game.Lose
 {
     public class RewardedPanel : UIElement
     {

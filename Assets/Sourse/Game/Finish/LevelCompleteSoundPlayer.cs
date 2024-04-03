@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Sourse.Finish
+namespace Sourse.Game.Finish
 {
     [RequireComponent(typeof(AudioSource))]
     public class LevelCompleteSoundPlayer : MonoBehaviour

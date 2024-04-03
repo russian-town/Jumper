@@ -1,4 +1,4 @@
-using Sourse.Game;
+using Sourse.Pause;
 using Sourse.UI.Shop.Scripts.Buttons;
 
 namespace Sourse.UI.LevelCompletePanel

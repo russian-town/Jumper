@@ -1,18 +1,24 @@
 using System.Collections.Generic;
-using Sourse.Game;
+using Sourse.UI.Shop.Scripts.Buttons;
 using UnityEngine;
 
 namespace Sourse.Pause
 {
-    public class Pause : MonoBehaviour
+    public class Pause
     {
         [SerializeField] private PauseButton _pauseButton;
         [SerializeField] private PausePanel _pausePanel;
 
-        private readonly List<IPauseHandler> _pauseHandlers = new List<IPauseHandler>();
+        private readonly List<IPauseHandler> _pauseHandlers;
 
-        public void Initialize(IPauseHandler[] pauseHandlers)
-          =>  _pauseHandlers.AddRange(pauseHandlers);
+        public Pause(PauseButton pauseButton,
+            PausePanel pausePanel,
+            List<IPauseHandler> pauseHandlers)
+        {
+            _pauseButton = pauseButton;
+            _pausePanel = pausePanel;
+            _pauseHandlers = pauseHandlers;
+        }
 
         public void Enable()
         {
