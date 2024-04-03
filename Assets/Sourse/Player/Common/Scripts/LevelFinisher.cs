@@ -8,11 +8,16 @@ namespace Sourse.Player.Common
     public class LevelFinisher
     {
         private readonly GroundDetector _groundDetector;
+        private readonly Level.Level _level;
 
-        public event Action LevelCompleted;
+        public event Action<int> LevelCompleted;
 
-        public LevelFinisher(GroundDetector groundDetector)
-            => _groundDetector = groundDetector;
+        public LevelFinisher(GroundDetector groundDetector,
+            Level.Level level)
+        {
+            _groundDetector = groundDetector;
+            _level = level;
+        }
 
         public void Subscribe()
             => _groundDetector.Fell += OnFell;
@@ -27,6 +32,6 @@ namespace Sourse.Player.Common
         }
 
         private void FinishLevel()
-            => LevelCompleted?.Invoke();
+            => LevelCompleted?.Invoke(_level.CurrentLevelNumber);
     }
 }

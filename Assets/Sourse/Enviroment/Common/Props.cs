@@ -13,24 +13,14 @@ namespace Sourse.Enviroment.Common
 
         private void OnCollisionEnter(Collision collision)
         {
-            if (collision.transform.TryGetComponent(out Player.Common.Scripts.PlayerInitializer player))
-            {
-                if (player.IsStart)
-                {
+            if (collision.transform.TryGetComponent(out PlayerInitializer _))
                     CollisionEnter.Invoke();
-                }
-            }
         }
 
         private void OnCollisionExit(Collision collision)
         {
-            if (collision.transform.TryGetComponent(out Player.Common.Scripts.PlayerInitializer player))
-            {
-                if (player.IsStart)
-                {
+            if (collision.transform.TryGetComponent(out PlayerInitializer _))
                     CollisionExit.Invoke();
-                }
-            }
         }
     }
 }

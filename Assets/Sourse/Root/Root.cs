@@ -26,9 +26,9 @@ namespace Sourse.Root
         [SerializeField] private Level.Level _level;
         [SerializeField] private ApplicationStatusChecker.ApplicationStatusChecker _applicationStatusChecker;
         [SerializeField] private PlayerPosition _startPoint;
-        [SerializeField] private GameOverView _gameOverView;
+        [SerializeField] private GameLossView _gameLossView;
         [SerializeField] private LevelProgressView _levelProgressView;
-        [SerializeField] private LevelCompletePanel _levelCompletePanel;
+        [SerializeField] private LevelFinishView _levelCompletePanel;
         [SerializeField] private int _moneyOfLevel;
         [SerializeField] private Pause.Pause _pause;
         [SerializeField] private RetryButton _retryButton;
@@ -51,8 +51,7 @@ namespace Sourse.Root
         private Vector3 _targetRotation = new(0f, 90f, 0f);
         private YandexAds _yandexAds;
         private LevelFinisher _levelFinisher;
-        private LoseLevelHandler _loseLevelHandler;
-        private PlayerUI _playerUI;
+        private GameLoss _gameLoss;
         private int _id;
         private LastPropsSaver _lastPropsSaver;
         private LevelProgress _levelProgress;
@@ -79,25 +78,16 @@ namespace Sourse.Root
             _rewardedButton.Initialize();
             _noThanksButton.Initialize();
             _retryButton.Initialize();
-            _playerUI = new PlayerUI(_nextLevelButton, _retryButton, _rewardedVideo);
-            _playerUI.Subscribe();
             _startPlayer = _playerSpawner.GetPlayer(_playerTemplate, _startPoint, _targetRotation);
             _startPlayer.Initialize(_playerInput);
             _levelProgress = new LevelProgress(_startPlayer, _finishPosition, _startPoint);
-            _loseLevelHandler = new LoseLevelHandler(_startPoint,
-                _gameOverView,
-                _rewardedPanel,
-                _retryButton,
+            _gameLoss = new GameLoss(_startPoint,
                 _levelProgress,
-                _levelProgressView,
-                _startPlayer.GetComponent<GroundDetector>());
-            _loseLevelHandler.Initialize();
-            _loseLevelHandler.Subscribe();
+                _startPlayer.Death);
+            _gameLoss.Subscribe();
             _openableSkinViewFiller = new(_levelCompletePanel,
                 _skinConfigs,
-                _startPlayer.GetComponent<GroundDetector>(),
                 _openableSkinBar);
-            _openableSkinViewFiller.Subscribe();
             _dataReaders = new List<IDataReader>()
             {
                 _wallet,
@@ -120,15 +110,15 @@ namespace Sourse.Root
                 _noThanksButton,
                 _rewardedButton,
                 _playerInput,
-                _loseLevelHandler,
-                _playerUI
+                _gameLoss,
             };
             _pause.Initialize(pauseHandlers);
-            _levelFinisher = new LevelFinisher(_startPlayer.GetComponent<GroundDetector>());
+            _levelFinisher = new LevelFinisher(_startPlayer.GetComponent<GroundDetector>(),
+                _level);
             _levelFinisher.Subscribe();
             _levelFinisher.LevelCompleted += OnLevelCompleted;
             _levelProgressView.Show();
-            _gameOverView.Hide();
+            _gameLossView.Hide();
             _lastPropsSaver = new LastPropsSaver(_props, _startPlayer.GetComponent<GroundDetector>());
             _lastPropsSaver.Subscribe();
         }
@@ -156,7 +146,7 @@ namespace Sourse.Root
             _id = PlayerParameter.DefaultPlayerID;
         }
 
-        private void OnLevelCompleted()
+        private void OnLevelCompleted(int levelNumber)
             => _localSave.Save();
 
         private void GetPlayerTemplate()
@@ -177,10 +167,8 @@ namespace Sourse.Root
             _retryButton.Unsubscribe();*/
             _level.Unsubscribe();
             _levelFinisher.Unsubscribe();
-            _loseLevelHandler.Unsubscribe();
-            _playerUI.Unsibscribe();
+            _gameLoss.Unsubscribe();
             _lastPropsSaver.Unsubscribe();
-            _openableSkinViewFiller.Unsubscribe();
         }
     }
 }

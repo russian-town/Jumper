@@ -8,5 +8,6 @@ namespace Sourse.Constants
         public const float MaxPercent = 1f;
         public const int MinIndex = 0;
         public const float PercentPerLevel = .1f;
+        public const float PercentRatio = 100f;
     }
 }

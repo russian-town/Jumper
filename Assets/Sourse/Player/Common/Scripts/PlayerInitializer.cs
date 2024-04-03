@@ -1,4 +1,3 @@
-using Sourse.Root;
 using Sourse.UI;
 using UnityEngine;
 
@@ -13,19 +12,15 @@ namespace Sourse.Player.Common.Scripts
         private PlayerAnimator _animator;
         private PlayerJumper _jumper;
         private PlayerInput _input;
-        private LevelFinisher _levelFinisher;
-        private PlayerDeath _death;
         private EffectsPlayer _effectsPlayer;
         private GroundDetector _groundDetector;
-        private bool _isStart = false;
 
-        public bool IsStart => _isStart;
+        public PlayerDeath Death { get; private set; }
 
         public void Unsubscribe()
         {
             _animator.Unsubscribe();
-            _levelFinisher.Unsubscribe();
-            _death.Unsubscribe();
+            Death.Unsubscribe();
             _effectsPlayer.Unsubscribe();
         }
 
@@ -39,11 +34,11 @@ namespace Sourse.Player.Common.Scripts
             _jumper.Initialize(_animator);
             _groundDetector.Initialize();
             _animator.Initialize(_groundDetector);
-            _levelFinisher = new LevelFinisher(_groundDetector);
-            _death = new PlayerDeath(_groundDetector);
-            _effectsPlayer = new EffectsPlayer(_fallParticle, _fallOnGroundParticle, _groundDetector);
-            _levelFinisher.Subscribe();
-            _death.Subscribe();
+            Death = new PlayerDeath(_groundDetector);
+            _effectsPlayer = new EffectsPlayer(_fallParticle,
+                _fallOnGroundParticle, 
+                _groundDetector);
+            Death.Subscribe();
             _effectsPlayer.Subscribe();
         }
     }
