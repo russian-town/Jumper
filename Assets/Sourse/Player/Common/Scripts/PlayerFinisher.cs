@@ -5,19 +5,14 @@ using UnityEngine;
 
 namespace Sourse.Player.Common
 {
-    public class LevelFinisher
+    public class PlayerFinisher
     {
         private readonly GroundDetector _groundDetector;
-        private readonly Level.Level _level;
 
         public event Action<int> LevelCompleted;
 
-        public LevelFinisher(GroundDetector groundDetector,
-            Level.Level level)
-        {
-            _groundDetector = groundDetector;
-            _level = level;
-        }
+        public PlayerFinisher(GroundDetector groundDetector)
+            => _groundDetector = groundDetector;
 
         public void Subscribe()
             => _groundDetector.Fell += OnFell;
@@ -32,6 +27,6 @@ namespace Sourse.Player.Common
         }
 
         private void FinishLevel()
-            => LevelCompleted?.Invoke(_level.CurrentLevelNumber);
+            => LevelCompleted?.Invoke(1);
     }
 }

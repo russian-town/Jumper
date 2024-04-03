@@ -13,26 +13,26 @@ namespace Sourse.UI.LevelCompletePanel
         [SerializeField] private TMP_Text _completeLevelText;
         [SerializeField] private NextLevelButton _nextLevelButton;
 
-        private LevelFinisher _levelFinisher;
+        private PlayerFinisher _playerFinisher;
 
         public event Action NextLevelButtonClicked;
 
-        public void Initialize(LevelFinisher levelFinisher)
+        public void Initialize(PlayerFinisher levelFinisher)
         {
-            _levelFinisher = levelFinisher;
+            _playerFinisher = levelFinisher;
             _nextLevelButton.Initialize();
         }
 
         public void Subscribe()
         {
-            _levelFinisher.LevelCompleted += OnLevelComplete;
+            _playerFinisher.LevelCompleted += OnLevelComplete;
             _nextLevelButton.AddListener(()
                 => NextLevelButtonClicked?.Invoke());
         }
 
         public void Unsubscribe() 
         {
-            _levelFinisher.LevelCompleted -= OnLevelComplete;
+            _playerFinisher.LevelCompleted -= OnLevelComplete;
             _nextLevelButton.RemoveListener(()
                 => NextLevelButtonClicked?.Invoke());
         }
@@ -48,6 +48,7 @@ namespace Sourse.UI.LevelCompletePanel
         private void OnLevelComplete(int levelNumber)
         {
             SetText(levelNumber);
+            Show();
         }
     }
 }

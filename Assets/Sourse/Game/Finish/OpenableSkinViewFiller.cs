@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using Sourse.Constants;
 using Sourse.Save;
 using Sourse.UI;
-using Sourse.UI.LevelCompletePanel;
 using Sourse.UI.Shop.SkinConfiguration;
 using UnityEngine;
 
@@ -10,7 +9,6 @@ namespace Sourse.Game.Finish
 {
     public class OpenableSkinViewFiller : IDataReader, IDataWriter
     {
-        private readonly LevelFinishView _levelCompletePanel;
         private readonly List<SkinConfig> _skinConfigs = new();
         private readonly OpenableSkinBar _openableSkinBar;
 
@@ -18,11 +16,9 @@ namespace Sourse.Game.Finish
         private int _currentOpenableSkinID = -1;
         private List<OpenableSkinSaveData> _aviableOpenableSkinSaveData = new();
 
-        public OpenableSkinViewFiller(LevelFinishView levelCompletePanel,
-            List<SkinConfig> skinConfigs,
+        public OpenableSkinViewFiller(List<SkinConfig> skinConfigs,
             OpenableSkinBar openableSkinBar)
         {
-            _levelCompletePanel = levelCompletePanel;
             _skinConfigs = skinConfigs;
             _openableSkinBar = openableSkinBar;
         }
@@ -95,8 +91,6 @@ namespace Sourse.Game.Finish
         public void CalculatePercent()
         {
             _currentCompletePercent += PlayerParameter.MaxPercent;
-            _levelCompletePanel.Show();
-            _levelCompletePanel.SetText(1);
 
             if (_currentOpenableSkinID < 0)
             {

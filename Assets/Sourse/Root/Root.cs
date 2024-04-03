@@ -8,7 +8,6 @@ using Sourse.Game.Finish;
 using Sourse.Game.Lose;
 using Sourse.Level;
 using Sourse.Pause;
-using Sourse.Player.Common;
 using Sourse.Player.Common.Scripts;
 using Sourse.Save;
 using Sourse.UI;
@@ -28,7 +27,7 @@ namespace Sourse.Root
         [SerializeField] private PlayerPosition _startPoint;
         [SerializeField] private GameLossView _gameLossView;
         [SerializeField] private LevelProgressView _levelProgressView;
-        [SerializeField] private LevelFinishView _levelCompletePanel;
+        [SerializeField] private LevelFinishView _levelFinishView;
         [SerializeField] private int _moneyOfLevel;
         [SerializeField] private PausePanel _pausePanel;
         [SerializeField] private RetryButton _retryButton;
@@ -47,7 +46,6 @@ namespace Sourse.Root
         private LocalSave _localSave;
         private Vector3 _targetRotation = new(0f, 90f, 0f);
         private YandexAds _yandexAds;
-        private LevelFinisher _levelFinisher;
         private GameLoss _gameLoss;
         private int _id;
         private LastPropsSaver _lastPropsSaver;
@@ -57,7 +55,6 @@ namespace Sourse.Root
         private List<IDataWriter> _dataWriters = new();
         private PlayerInitializer _playerTemplate;
         private Pause.Pause _pause;
-        private Level.Level _level = new Level.Level();
 
         private void OnDestroy()
             => Unsubscribe();
@@ -82,24 +79,16 @@ namespace Sourse.Root
                 _levelProgress,
                 _startPlayer.Death);
             _gameLoss.Subscribe();
-            _openableSkinViewFiller = new(_levelCompletePanel,
-                _skinConfigs,
-                _openableSkinBar);
-            _dataReaders = new List<IDataReader>()
-            {
-                _wallet,
-                _openableSkinViewFiller
-            };
-            _dataWriters = new List<IDataWriter>()
-            {
-                _wallet,
-                _openableSkinViewFiller
-            };
+            _openableSkinViewFiller = new(_skinConfigs, _openableSkinBar);
+            _dataReaders = new() { _wallet, _openableSkinViewFiller };
+            _dataWriters = new() { _wallet, _openableSkinViewFiller };
             _localSave = new(_dataReaders, _dataWriters);
             _localSave.Load();
             _followCamera.SetTarget(_startPlayer);
             _levelProgressView.Initialize(_levelProgress);
             _levelProgressView.UpdateProgressBar();
+            _levelFinishView.Initialize(_startPlayer.Finisher);
+            _levelFinishView.Subscribe();
             List<IPauseHandler> pauseHandlers = new()
             {
                 _nextLevelButton,
@@ -108,13 +97,10 @@ namespace Sourse.Root
                 _gameLoss,
             };
             _pause = new Pause.Pause(_pauseButton, _pausePanel, pauseHandlers);
-            _levelFinisher = new LevelFinisher(_startPlayer.GetComponent<GroundDetector>(),
-                _level);
-            _levelFinisher.Subscribe();
-            _levelFinisher.LevelCompleted += OnLevelCompleted;
+            _startPlayer.Finisher.LevelCompleted += OnLevelCompleted;
             _levelProgressView.Show();
             _gameLossView.Hide();
-            _lastPropsSaver = new LastPropsSaver(_props, _startPlayer.GetComponent<GroundDetector>());
+            _lastPropsSaver = new LastPropsSaver(_props, _startPlayer.GroundDetector);
             _lastPropsSaver.Subscribe();
         }
 
@@ -155,9 +141,10 @@ namespace Sourse.Root
 
         private void Unsubscribe()
         {
+            _startPlayer.Finisher.LevelCompleted -= OnLevelCompleted;
             _startPlayer.Unsubscribe();
             //_nextLevelButton.Unsubscribe();
-            _levelFinisher.Unsubscribe();
+            _levelFinishView.Unsubscribe();
             _gameLoss.Unsubscribe();
             _lastPropsSaver.Unsubscribe();
         }

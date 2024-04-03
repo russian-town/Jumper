@@ -13,31 +13,35 @@ namespace Sourse.Player.Common.Scripts
         private PlayerJumper _jumper;
         private PlayerInput _input;
         private EffectsPlayer _effectsPlayer;
-        private GroundDetector _groundDetector;
 
+        public GroundDetector GroundDetector { get; private set; }
         public PlayerDeath Death { get; private set; }
+        public PlayerFinisher Finisher { get; private set; }
 
         public void Unsubscribe()
         {
             _animator.Unsubscribe();
             Death.Unsubscribe();
             _effectsPlayer.Unsubscribe();
+            Finisher.Unsubscribe();
         }
 
         public void Initialize(PlayerInput input)
         {
             _animator = GetComponent<PlayerAnimator>();
-            _groundDetector = GetComponent<GroundDetector>();
+            GroundDetector = GetComponent<GroundDetector>();
             _jumper = GetComponent<PlayerJumper>();
+            Finisher = new PlayerFinisher(GroundDetector);
+            Finisher.Subscribe();
             _input = input;
             _input.Initialize(_animator);
             _jumper.Initialize(_animator);
-            _groundDetector.Initialize();
-            _animator.Initialize(_groundDetector);
-            Death = new PlayerDeath(_groundDetector);
+            GroundDetector.Initialize();
+            _animator.Initialize(GroundDetector);
+            Death = new PlayerDeath(GroundDetector);
             _effectsPlayer = new EffectsPlayer(_fallParticle,
                 _fallOnGroundParticle, 
-                _groundDetector);
+                GroundDetector);
             Death.Subscribe();
             _effectsPlayer.Subscribe();
         }
