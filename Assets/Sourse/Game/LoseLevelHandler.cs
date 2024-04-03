@@ -1,3 +1,4 @@
+using System;
 using Sourse.Level;
 using Sourse.Player.Common.Scripts;
 using UnityEngine;
@@ -13,7 +14,7 @@ namespace Sourse.Game
         private readonly RewardedPanel _rewardedPanel;
         private readonly RetryButton _retryButton;
         private readonly LevelProgressView _levelProgressView;
-        private readonly PlayerInitializer _player;
+        private readonly GroundDetector _groundDetector;
         private readonly float _percentRatio = 100f;
 
         private bool _isPause;
@@ -22,31 +23,50 @@ namespace Sourse.Game
             GameOverView gameOverView,
             RewardedPanel rewardedPanel,
             RetryButton retryButton,
+            LevelProgress levelProgress,
             LevelProgressView levelProgressView,
-            PlayerInitializer player)
+            GroundDetector groundDetector)
         {
             _playerStartPosition = playerStartPosition;
             _gameOverView = gameOverView;
             _rewardedPanel = rewardedPanel;
             _retryButton = retryButton;
+            _levelProgress = levelProgress;
             _levelProgressView = levelProgressView;
-            _player = player;
+            _groundDetector = groundDetector;
         }
+
+        public event Action RetryButtonClicked;
 
         public void Subscribe()
         {
-            //_player.Died += OnPlayerDied;
+            _rewardedPanel.Subscribe();
+            _retryButton.AddListener(() => RetryButtonClicked?.Invoke());
+            _groundDetector.Fell += OnFell;
         }
 
         public void Unsubscribe()
         {
-            //_player.Died -= OnPlayerDied;
+            _rewardedPanel.Unsubscribe();
+            _retryButton.RemoveListener(() => RetryButtonClicked?.Invoke());
+        }
+
+        public void Initialize()
+        {
+            _rewardedPanel.Initialize();
+            _retryButton.Initialize();
         }
 
         public void SetPause(bool isPause)
             => _isPause = isPause;
 
-        private void OnPlayerDied()
+        private void OnFell(Collision collision)
+        {
+            if (collision.transform.TryGetComponent(out Ground.Ground _))
+                GameOver();
+        }
+
+        private void GameOver()
         {
             float percent = Mathf.Ceil(_levelProgress.GetCurrentDistance() * _percentRatio);
             _gameOverView.Show();

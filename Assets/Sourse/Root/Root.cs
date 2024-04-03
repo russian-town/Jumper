@@ -79,18 +79,20 @@ namespace Sourse.Root
             _rewardedButton.Initialize();
             _noThanksButton.Initialize();
             _retryButton.Initialize();
-            _loseLevelHandler = new LoseLevelHandler(
-                _startPoint,
-                _gameOverView,
-                _rewardedPanel,
-                _retryButton,
-                _levelProgressView,
-                _startPlayer);
-            _loseLevelHandler.Subscribe();
             _playerUI = new PlayerUI(_nextLevelButton, _retryButton, _rewardedVideo);
             _playerUI.Subscribe();
             _startPlayer = _playerSpawner.GetPlayer(_playerTemplate, _startPoint, _targetRotation);
             _startPlayer.Initialize(_playerInput);
+            _levelProgress = new LevelProgress(_startPlayer, _finishPosition, _startPoint);
+            _loseLevelHandler = new LoseLevelHandler(_startPoint,
+                _gameOverView,
+                _rewardedPanel,
+                _retryButton,
+                _levelProgress,
+                _levelProgressView,
+                _startPlayer.GetComponent<GroundDetector>());
+            _loseLevelHandler.Initialize();
+            _loseLevelHandler.Subscribe();
             _openableSkinViewFiller = new(_levelCompletePanel,
                 _skinConfigs,
                 _startPlayer.GetComponent<GroundDetector>(),
@@ -109,7 +111,6 @@ namespace Sourse.Root
             _localSave = new(_dataReaders, _dataWriters);
             _localSave.Load();
             _followCamera.SetTarget(_startPlayer);
-            _levelProgress = new LevelProgress(_startPlayer, _finishPosition, _startPoint);
             _levelProgressView.Initialize(_levelProgress);
             _levelProgressView.UpdateProgressBar();
             IPauseHandler[] pauseHandlers = new IPauseHandler[]
@@ -170,10 +171,10 @@ namespace Sourse.Root
         private void Unsubscribe()
         {
             _startPlayer.Unsubscribe();
-            _nextLevelButton.Unsubscribe();
+/*            _nextLevelButton.Unsubscribe();
             _rewardedButton.Unsubscribe();
             _noThanksButton.Unsubscribe();
-            _retryButton.Unsubscribe();
+            _retryButton.Unsubscribe();*/
             _level.Unsubscribe();
             _levelFinisher.Unsubscribe();
             _loseLevelHandler.Unsubscribe();

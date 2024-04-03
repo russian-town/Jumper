@@ -9,6 +9,22 @@ namespace Sourse.Game
     public class GameOverView : UIElement
     {
         [SerializeField] private TMP_Text _progressText;
+        [SerializeField] private RewardedPanel _rewardPanel;
+
+        public void Subscribe()
+        {
+            _rewardPanel.Subscribe();
+        }
+
+        public void Unsubscribe() 
+        {
+            _rewardPanel.Unsubscribe();
+        }
+
+        public void Initialize()
+        {
+            _rewardPanel.Initialize();
+        }
 
         public void ShowProgress(float progress)
         {

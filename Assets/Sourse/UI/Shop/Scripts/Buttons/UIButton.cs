@@ -1,6 +1,7 @@
-using Sourse.Game;
 using System;
+using Sourse.Game;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 namespace Sourse.UI.Shop.Scripts.Buttons
@@ -10,16 +11,8 @@ namespace Sourse.UI.Shop.Scripts.Buttons
     {
         private Button _button;
 
-        public event Action ButtonClicked;
-
-        public void Unsubscribe()
-            => _button.onClick.RemoveListener(OnButtonClick);
-
         public void Initialize()
-        {
-            _button = GetComponent<Button>();
-            _button.onClick.AddListener(OnButtonClick);
-        }
+            => _button = GetComponent<Button>();
 
         public void SetPause(bool isPause)
         {
@@ -29,19 +22,16 @@ namespace Sourse.UI.Shop.Scripts.Buttons
                 Enable();
         }
 
+        public void AddListener(UnityAction action)
+            => _button.onClick.AddListener(action);
+
+        public void RemoveListener(UnityAction action)
+            => _button.onClick.RemoveListener(action);
+
         protected void Enable()
-        {
-            _button.enabled = true;
-            gameObject.SetActive(true);
-        }
+            => _button.enabled = true;
 
-        protected void Disable() 
-        {
-            _button.enabled = false;
-            gameObject.SetActive(false);
-        }
-
-        private void OnButtonClick()
-            => ButtonClicked?.Invoke();
+        protected void Disable()
+            => _button.enabled = false;
     }
 }

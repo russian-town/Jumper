@@ -13,12 +13,14 @@ namespace Sourse.Level
         private readonly PlayerInitializer _playerInitializer;
         
         public LevelProgress(PlayerInitializer playerInitializer,
-            FinishPosition finishPosition, PlayerPosition startPosition)
+            FinishPosition finishPosition,
+            PlayerPosition startPosition)
         {
             _playerInitializer = playerInitializer;
             _finishPosition = finishPosition;
             _startPosition = startPosition; 
-            _startDistancePlayerToFinish = GetDistancePlayerToFinish() + GetDistanceStartToPlayer();
+            _startDistancePlayerToFinish =
+                GetDistancePlayerToFinish() + GetDistanceStartToPlayer();
         }
 
         public float GetCurrentDistance()
@@ -26,7 +28,8 @@ namespace Sourse.Level
             if (_playerInitializer == null)
                 return PlayerParameter.MaxDistance;
 
-            float normalizeDistancePlayerToFinish = GetDistancePlayerToFinish() / _startDistancePlayerToFinish;
+            float normalizeDistancePlayerToFinish =
+                GetDistancePlayerToFinish() / _startDistancePlayerToFinish;
 
             return PlayerParameter.MaxDistance - normalizeDistancePlayerToFinish;
         }
