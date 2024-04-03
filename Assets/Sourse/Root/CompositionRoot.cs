@@ -130,7 +130,11 @@ namespace Sourse.Root
             _shop.Subscribe();
             _shop.Bought += OnBought;
             _shop.Selected += OnSelected;
-            _shopScroll.Initialize(_paidSkinViews);
+            List<SkinView> skinViews = new();
+            skinViews.AddRange(_paidSkinViews);
+            skinViews.AddRange(_openableSkinViews);
+            skinViews.AddRange(_rewardedSkinViews);
+            _shopScroll.Initialize(skinViews);
         }
 
         private void OnSelected(Skin skin)

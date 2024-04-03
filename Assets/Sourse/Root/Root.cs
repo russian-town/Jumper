@@ -41,6 +41,7 @@ namespace Sourse.Root
         [SerializeField] private List<Props> _props = new();
         [SerializeField] private FinishPosition _finishPosition;
         [SerializeField] private List<SkinConfig> _skinConfigs = new();
+        [SerializeField] private OpenableSkinBar _openableSkinBar;
 
         private readonly Wallet _wallet = new();
         private readonly PlayerSpawner _playerSpawner = new();
@@ -90,7 +91,10 @@ namespace Sourse.Root
             _playerUI.Subscribe();
             _startPlayer = _playerSpawner.GetPlayer(_playerTemplate, _startPoint, _targetRotation);
             _startPlayer.Initialize(_playerInput);
-            _openableSkinViewFiller = new(_levelCompletePanel, _skinConfigs, _startPlayer.GetComponent<GroundDetector>());
+            _openableSkinViewFiller = new(_levelCompletePanel,
+                _skinConfigs,
+                _startPlayer.GetComponent<GroundDetector>(),
+                _openableSkinBar);
             _openableSkinViewFiller.Subscribe();
             _dataReaders = new List<IDataReader>()
             {

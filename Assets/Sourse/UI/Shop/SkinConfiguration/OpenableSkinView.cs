@@ -1,15 +1,18 @@
+using UnityEngine;
+
 namespace Sourse.UI.Shop.SkinConfiguration
 {
     public class OpenableSkinView : SkinView
     {
-        //openableSkinBar
+        [SerializeField] private OpenableSkinBar _bar;
+
         private Skin _openableSkin;
-        private float _completedPercent;
 
         public void Initialize(OpenableSkin openableSkin)
         {
+            Debug.Log(openableSkin.Percent);
             _openableSkin = openableSkin;
-            _completedPercent = openableSkin.Percent;
+            _bar.Initialize(_openableSkin.Icon, openableSkin.Percent);
         }
 
         protected override Skin Skin()

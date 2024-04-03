@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Sourse.Balance;
 using Sourse.UI.Shop.SkinConfiguration;
+using UnityEngine;
 
 namespace Sourse.UI.Shop.Scripts
 {
@@ -129,6 +130,7 @@ namespace Sourse.UI.Shop.Scripts
 
         private void OnRewardedButtonClicked(Skin skin)
         {
+            Debug.Log("Rewarded button clicked");
         }
     }
 }

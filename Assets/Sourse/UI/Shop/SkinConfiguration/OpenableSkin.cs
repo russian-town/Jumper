@@ -1,3 +1,5 @@
+using Sourse.Constants;
+
 namespace Sourse.UI.Shop.SkinConfiguration
 {
     public class OpenableSkin : Skin
@@ -12,6 +14,9 @@ namespace Sourse.UI.Shop.SkinConfiguration
         {
             base.ApplySaveData(openableSkinSaveData);
             Percent = openableSkinSaveData.Persent;
+
+            if (Percent >= PlayerParameter.MaxPercent)
+                Buy();
         }
     }
 }
