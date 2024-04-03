@@ -16,7 +16,10 @@ namespace Sourse.UI.Shop.SkinConfiguration
             Percent = openableSkinSaveData.Persent;
 
             if (Percent >= PlayerParameter.MaxPercent)
+            {
+                Percent = PlayerParameter.MaxPercent;
                 Buy();
+            }
         }
     }
 }

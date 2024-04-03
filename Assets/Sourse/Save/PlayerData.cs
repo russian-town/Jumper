@@ -11,5 +11,6 @@ namespace Sourse.Save
         public bool IsTutorialCompleted;
         public int Money;
         public int LastPropsIndex = -1;
+        public int CurrentOpenableSkinID = -1;
     }
 }
