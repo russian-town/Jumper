@@ -5,6 +5,14 @@ namespace Sourse.Level
 {
     public class LevelLoader
     {
+        public int GetCurrentNumber()
+        {
+            if(int.TryParse(SceneManager.GetActiveScene().name, out int number))
+                return number;
+
+            return LevelName.FirstNumber;
+        }
+
         public void Restart()
         {
             int index = SceneManager.GetActiveScene().buildIndex;

@@ -644,6 +644,17 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &500236422 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5482979043770762348, guid: cf2d3bcaf424b9049a030aa385ad8d59, type: 3}
+  m_PrefabInstance: {fileID: 4674197535883984235}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7bd23b72568063f4ea47d747b1af226c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &518756234 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3969317239977630781, guid: 7907491da5ba6b049aa06c6522251e09, type: 3}
@@ -1175,7 +1186,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &948078080
 Transform:
   m_ObjectHideFlags: 0
@@ -1298,6 +1309,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _pauseButton: {fileID: 1136246299}
+  _levelNumberText: {fileID: 500236422}
 --- !u!4 &1009301837 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6032814364973953559, guid: 097f6d528e92ec840b63e5c366b9cebf, type: 3}
@@ -1988,7 +2000,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1910144001
 Transform:
   m_ObjectHideFlags: 0
@@ -2606,13 +2618,21 @@ PrefabInstance:
       propertyPath: m_Name
       value: PauseView
       objectReference: {fileID: 0}
+    - target: {fileID: 2688217015514628614, guid: cf2d3bcaf424b9049a030aa385ad8d59, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 2688217017368894164, guid: cf2d3bcaf424b9049a030aa385ad8d59, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 4308945673827722493, guid: cf2d3bcaf424b9049a030aa385ad8d59, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: -0.000022888184
       objectReference: {fileID: 0}
     - target: {fileID: 4308945674473503791, guid: cf2d3bcaf424b9049a030aa385ad8d59, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: -3.4621625
       objectReference: {fileID: 0}
     - target: {fileID: 4674197534422095664, guid: cf2d3bcaf424b9049a030aa385ad8d59, type: 3}
       propertyPath: _retryButton
@@ -2932,19 +2952,43 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4803827073546799509, guid: cf2d3bcaf424b9049a030aa385ad8d59, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 146.46265
+      objectReference: {fileID: 0}
+    - target: {fileID: 4803827073546799510, guid: cf2d3bcaf424b9049a030aa385ad8d59, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 4803827073644756907, guid: cf2d3bcaf424b9049a030aa385ad8d59, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4803827073644756907, guid: cf2d3bcaf424b9049a030aa385ad8d59, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 4803827074229242603, guid: cf2d3bcaf424b9049a030aa385ad8d59, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 4803827074975486521, guid: cf2d3bcaf424b9049a030aa385ad8d59, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 4803827075028363129, guid: cf2d3bcaf424b9049a030aa385ad8d59, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4803827075028363129, guid: cf2d3bcaf424b9049a030aa385ad8d59, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 4803827075115815236, guid: cf2d3bcaf424b9049a030aa385ad8d59, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 4803827075115815239, guid: cf2d3bcaf424b9049a030aa385ad8d59, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 127.902756
       objectReference: {fileID: 0}
     - target: {fileID: 4878695384008471453, guid: cf2d3bcaf424b9049a030aa385ad8d59, type: 3}
       propertyPath: m_SizeDelta.x

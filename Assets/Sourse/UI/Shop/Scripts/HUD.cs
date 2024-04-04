@@ -1,4 +1,5 @@
 using System;
+using Sourse.Level;
 using Sourse.UI;
 using Sourse.UI.Shop.Scripts.Buttons;
 using UnityEngine;
@@ -6,6 +7,7 @@ using UnityEngine;
 public class HUD : UIElement
 {
     [SerializeField] private PauseButton _pauseButton;
+    [SerializeField] private LevelNumberText _levelNumberText;
 
     public event Action PauseButtonClicked;
 
@@ -17,6 +19,9 @@ public class HUD : UIElement
         => _pauseButton.RemoveListener(()
             => PauseButtonClicked?.Invoke());
 
-    public void Initialize()
-        => _pauseButton.Initialize();
+    public void Initialize(int levelNumber)
+    {
+        _pauseButton.Initialize();
+        _levelNumberText.Initialize(levelNumber);
+    }
 }

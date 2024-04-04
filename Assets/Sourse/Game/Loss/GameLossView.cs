@@ -17,36 +17,45 @@ namespace Sourse.Game.Lose
         [SerializeField] private CloseAdOfferScreenButton _closeAdOfferScreenButton;
 
         private GameLoss _gameLoss;
+        private LastPropsSaver _lastPropsSaver;
 
         public event Action RewardedButtonClicked;
         public event Action CloseAdOfferScreenButtonClicked;
         public event Action RetryButtonClicked;
 
-        public void Initialize(GameLoss gameLoss)
+        public void Initialize(GameLoss gameLoss, LastPropsSaver lastPropsSaver)
         {
             _gameLoss = gameLoss;
+            _lastPropsSaver = lastPropsSaver;
             _retryButton.Initialize();
             _rewardedButton.Initialize();
             _closeAdOfferScreenButton.Initialize();
+            _rewardedPanel.Hide();
             Hide();
         }
 
         public void Subscribe()
         {
             _gameLoss.GameOver += OnGameOver;
+            _lastPropsSaver.IndexSaved += OnIndexSaved;
             _rewardedButton.AddListener(()
                 => RewardedButtonClicked?.Invoke());
             _closeAdOfferScreenButton.AddListener(()
                 => CloseAdOfferScreenButtonClicked?.Invoke());
+            _retryButton.AddListener(()
+                => RetryButtonClicked?.Invoke());
         }
 
         public void Unsubscribe()
         {
             _gameLoss.GameOver -= OnGameOver;
+            _lastPropsSaver.IndexSaved -= OnIndexSaved;
             _rewardedButton.RemoveListener(()
                 => RewardedButtonClicked?.Invoke());
             _closeAdOfferScreenButton.RemoveListener(()
                 => CloseAdOfferScreenButtonClicked?.Invoke());
+            _retryButton.RemoveListener(()
+                => RetryButtonClicked?.Invoke());
         }
 
         public void ShowProgress(float progress)
@@ -59,5 +68,16 @@ namespace Sourse.Game.Lose
 
         private void OnGameOver(float progress)
             => ShowProgress(progress);
+
+        private void OnIndexSaved(int index)
+        {
+            Debug.Log(index);
+
+            if (index <= 0)
+                return;
+
+            _rewardedPanel.Show();
+            _retryButton.Hide();
+        }
     }
 }

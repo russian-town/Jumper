@@ -30,7 +30,10 @@ namespace Sourse.Game.Finish
                     _aviableOpenableSkinSaveData.Add(openableSkinSaveData);
 
             if (_aviableOpenableSkinSaveData.Count == 0)
+            {
+                _openableSkinBar.Hide();
                 return;
+            }
 
             if (playerData.CurrentOpenableSkinID > 0)
             {
