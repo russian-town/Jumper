@@ -45,5 +45,11 @@ namespace Sourse.Player.Common.Scripts
             Death.Subscribe();
             _effectsPlayer.Subscribe();
         }
+
+        public void SetPosition(Vector3 position, Vector3 rotation)
+        {
+            transform.position = position;
+            transform.rotation = Quaternion.Euler(rotation);
+        }    
     }
 }
