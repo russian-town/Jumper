@@ -11,7 +11,7 @@ namespace Sourse.ApplicationStatusChecker
     {
         [SerializeField] private AudioMixerGroup _masterGroup;
         [SerializeField] private Pause.Pause _pause;
-        [SerializeField] private PausePanel _pausePanel;
+        [SerializeField] private PauseView _pausePanel;
 
         private bool _isPlayInterstitial = false;
         private bool _isPlayRewarded = false;

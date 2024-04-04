@@ -28,6 +28,7 @@ namespace Sourse.Game.Lose
             _retryButton.Initialize();
             _rewardedButton.Initialize();
             _closeAdOfferScreenButton.Initialize();
+            Hide();
         }
 
         public void Subscribe()
@@ -50,6 +51,7 @@ namespace Sourse.Game.Lose
 
         public void ShowProgress(float progress)
         {
+            Show();
             string translatedCompleted =
                 LeanLocalization.GetTranslationText(TranslationText.Completed);
             _progressText.text = $"{progress} % {translatedCompleted}";

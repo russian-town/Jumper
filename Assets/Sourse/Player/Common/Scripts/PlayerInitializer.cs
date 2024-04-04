@@ -40,7 +40,7 @@ namespace Sourse.Player.Common.Scripts
             _animator.Initialize(GroundDetector);
             Death = new PlayerDeath(GroundDetector);
             _effectsPlayer = new EffectsPlayer(_fallParticle,
-                _fallOnGroundParticle, 
+                _fallOnGroundParticle,
                 GroundDetector);
             Death.Subscribe();
             _effectsPlayer.Subscribe();

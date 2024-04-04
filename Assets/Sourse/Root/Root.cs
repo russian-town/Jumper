@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Sourse.Balance;
 using Sourse.Camera;
@@ -29,15 +30,15 @@ namespace Sourse.Root
         [SerializeField] private LevelProgressView _levelProgressView;
         [SerializeField] private LevelFinishView _levelFinishView;
         [SerializeField] private int _moneyOfLevel;
-        [SerializeField] private PausePanel _pausePanel;
+        [SerializeField] private PauseView _pauseView;
         [SerializeField] private RetryButton _retryButton;
         [SerializeField] private RewardedPanel _rewardedPanel;
-        [SerializeField] private PauseButton _pauseButton;
         [SerializeField] private NextLevelButton _nextLevelButton;
         [SerializeField] private List<Props> _props = new();
         [SerializeField] private FinishPosition _finishPosition;
         [SerializeField] private List<SkinConfig> _skinConfigs = new();
         [SerializeField] private OpenableSkinBar _openableSkinBar;
+        [SerializeField] private HUD _hud;
 
         private readonly Wallet _wallet = new();
         private readonly PlayerSpawner _playerSpawner = new();
@@ -55,6 +56,7 @@ namespace Sourse.Root
         private List<IDataWriter> _dataWriters = new();
         private PlayerInitializer _playerTemplate;
         private Pause.Pause _pause;
+        private LevelLoader _levelLoader;
 
         private void OnDestroy()
             => Unsubscribe();
@@ -70,14 +72,10 @@ namespace Sourse.Root
             GetPlayerTemplate();
             _yandexAds = new YandexAds();
             _applicationStatusChecker.Initialize(_yandexAds);
-            _nextLevelButton.Initialize();
-            _retryButton.Initialize();
             _startPlayer = _playerSpawner.GetPlayer(_playerTemplate, _startPoint, _targetRotation);
             _startPlayer.Initialize(_playerInput);
             _levelProgress = new LevelProgress(_startPlayer, _finishPosition, _startPoint);
-            _gameLoss = new GameLoss(_startPoint,
-                _levelProgress,
-                _startPlayer.Death);
+            _gameLoss = new GameLoss(_levelProgress, _startPlayer.Death);
             _gameLoss.Subscribe();
             _openableSkinViewFiller = new(_skinConfigs, _openableSkinBar);
             _dataReaders = new() { _wallet, _openableSkinViewFiller };
@@ -89,6 +87,8 @@ namespace Sourse.Root
             _levelProgressView.UpdateProgressBar();
             _levelFinishView.Initialize(_startPlayer.Finisher);
             _levelFinishView.Subscribe();
+            _gameLossView.Initialize(_gameLoss);
+            _gameLossView.Subscribe();
             List<IPauseHandler> pauseHandlers = new()
             {
                 _nextLevelButton,
@@ -96,10 +96,17 @@ namespace Sourse.Root
                 _playerInput,
                 _gameLoss,
             };
-            _pause = new Pause.Pause(_pauseButton, _pausePanel, pauseHandlers);
+            _pause = new Pause.Pause(pauseHandlers);
+            _pauseView.Initialize(_pause);
+            _pauseView.Subscribe();
+            _pauseView.ContinueButtonClicked += OnContinueButtonClicked;
+            _hud.Initialize();
+            _hud.Subscribe();
+            _hud.PauseButtonClicked += OnPauseButtonClicked;
+            _levelLoader = new LevelLoader(_pauseView, _levelFinishView);
+            _levelLoader.Subscribe();
             _startPlayer.Finisher.LevelCompleted += OnLevelCompleted;
             _levelProgressView.Show();
-            _gameLossView.Hide();
             _lastPropsSaver = new LastPropsSaver(_props, _startPlayer.GroundDetector);
             _lastPropsSaver.Subscribe();
         }
@@ -127,6 +134,9 @@ namespace Sourse.Root
             _id = PlayerParameter.DefaultPlayerID;
         }
 
+        private void OnPauseButtonClicked()
+            => _pause.Enable();
+
         private void OnLevelCompleted(int levelNumber)
             => _localSave.Save();
 
@@ -143,10 +153,18 @@ namespace Sourse.Root
         {
             _startPlayer.Finisher.LevelCompleted -= OnLevelCompleted;
             _startPlayer.Unsubscribe();
-            //_nextLevelButton.Unsubscribe();
             _levelFinishView.Unsubscribe();
+            _gameLossView.Unsubscribe();
             _gameLoss.Unsubscribe();
             _lastPropsSaver.Unsubscribe();
+            _pauseView.Unsubscribe();
+            _levelLoader.Unsubscribe();
+            _hud.Unsubscribe();
+            _hud.PauseButtonClicked -= OnPauseButtonClicked;
+            _pauseView.ContinueButtonClicked -= OnContinueButtonClicked;
         }
+
+        private void OnContinueButtonClicked()
+            => _pause.Disable();
     }
 }

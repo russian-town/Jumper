@@ -21,6 +21,7 @@ namespace Sourse.UI.LevelCompletePanel
         {
             _playerFinisher = levelFinisher;
             _nextLevelButton.Initialize();
+            Hide();
         }
 
         public void Subscribe()

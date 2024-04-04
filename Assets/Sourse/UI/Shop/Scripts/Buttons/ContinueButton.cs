@@ -1,6 +1,6 @@
 namespace Sourse.UI.Shop.Scripts.Buttons
 {
-    public class PauseButton : UIButton
+    public class ContinueButton : UIButton
     {
     }
 }
