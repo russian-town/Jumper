@@ -1,5 +1,5 @@
 using System;
-using Sourse.Pause;
+using Sourse.PauseContent;
 using Sourse.Player.Common.Scripts;
 using UnityEngine;
 using UnityEngine.EventSystems;

@@ -1,7 +1,7 @@
 using System;
 using Sourse.Constants;
 using Sourse.Level;
-using Sourse.Pause;
+using Sourse.PauseContent;
 using Sourse.Player.Common;
 using UnityEngine;
 

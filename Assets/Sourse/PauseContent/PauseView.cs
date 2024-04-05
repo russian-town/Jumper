@@ -3,7 +3,7 @@ using Sourse.UI;
 using Sourse.UI.Shop.Scripts.Buttons;
 using UnityEngine;
 
-namespace Sourse.Pause
+namespace Sourse.PauseContent
 {
     public class PauseView : UIElement
     {

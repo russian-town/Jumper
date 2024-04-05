@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Sourse.Pause
+namespace Sourse.PauseContent
 {
     public class Pause
     {

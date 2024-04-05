@@ -1,4 +1,3 @@
-using Sourse.Pause;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -6,20 +5,12 @@ using UnityEngine.UI;
 namespace Sourse.UI.Shop.Scripts.Buttons
 {
     [RequireComponent(typeof(Button))]
-    public abstract class UIButton : UIElement, IPauseHandler
+    public abstract class UIButton : UIElement
     {
         private Button _button;
 
         public void Initialize()
             => _button = GetComponent<Button>();
-
-        public void SetPause(bool isPause)
-        {
-            if (isPause)
-                Disable();
-            else
-                Enable();
-        }
 
         public void AddListener(UnityAction action)
             => _button.onClick.AddListener(action);

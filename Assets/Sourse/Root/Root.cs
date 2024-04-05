@@ -7,12 +7,12 @@ using Sourse.Game;
 using Sourse.Game.Finish;
 using Sourse.Game.Lose;
 using Sourse.Level;
-using Sourse.Pause;
+using Sourse.PauseContent;
 using Sourse.Player.Common.Scripts;
 using Sourse.Save;
+using Sourse.Settings.Audio;
 using Sourse.UI;
 using Sourse.UI.LevelCompletePanel;
-using Sourse.UI.Shop.Scripts.Buttons;
 using Sourse.UI.Shop.SkinConfiguration;
 using Sourse.Yandex;
 using UnityEngine;
@@ -23,16 +23,13 @@ namespace Sourse.Root
     {
         [SerializeField] private FollowCamera _followCamera;
         [SerializeField] private PlayerInput _playerInput;
-        [SerializeField] private ApplicationStatusChecker.ApplicationStatusChecker _applicationStatusChecker;
         [SerializeField] private PlayerPosition _startPosition;
         [SerializeField] private GameLossView _gameLossView;
         [SerializeField] private LevelProgressView _levelProgressView;
         [SerializeField] private LevelFinishView _levelFinishView;
         [SerializeField] private int _moneyOfLevel;
         [SerializeField] private PauseView _pauseView;
-        [SerializeField] private RetryButton _retryButton;
         [SerializeField] private RewardedPanel _rewardedPanel;
-        [SerializeField] private NextLevelButton _nextLevelButton;
         [SerializeField] private List<Props> _props = new();
         [SerializeField] private FinishPosition _finishPosition;
         [SerializeField] private List<SkinConfig> _skinConfigs = new();
@@ -55,7 +52,8 @@ namespace Sourse.Root
         private LevelProgress _levelProgress;
         private OpenableSkinViewFiller _openableSkinViewFiller;
         private PlayerInitializer _template;
-        private Pause.Pause _pause;
+        private Pause _pause;
+        private Audio _audio;
 
         private void OnDestroy()
             => Unsubscribe();
@@ -66,11 +64,15 @@ namespace Sourse.Root
         private void Update()
             => _levelProgressView.UpdateProgressBar();
 
+        private void OnApplicationFocus(bool focus)
+        {
+          
+        }
+
         private void Initialize()
         {
             GetPlayerTemplate();
             _yandexAds = new YandexAds();
-            _applicationStatusChecker.Initialize(_yandexAds);
             _startPlayer = _playerSpawner.GetPlayer(_template);
             _startPlayer.Initialize(_playerInput);
             _lastPropsSaver = new LastPropsSaver(_props,
@@ -117,12 +119,10 @@ namespace Sourse.Root
             _gameLossView.CloseAdOfferScreenButtonClicked += OnCloseAdOfferScreenButtonClicked;
             List<IPauseHandler> pauseHandlers = new()
             {
-                _nextLevelButton,
-                _retryButton,
                 _playerInput,
                 _gameLoss,
             };
-            _pause = new Pause.Pause(pauseHandlers);
+            _pause = new Pause(pauseHandlers);
             _pauseView.Initialize(_pause);
             _pauseView.Subscribe();
             _pauseView.ContinueButtonClicked += OnContinueButtonClicked;

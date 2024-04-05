@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Lean.Localization;
 using Sourse.Balance;
+using Sourse.Menu;
 using Sourse.Save;
 using Sourse.Settings.Audio;
 using Sourse.Settings.Language;
@@ -16,6 +17,7 @@ namespace Sourse.Root
     {
         [SerializeField] private List<SkinConfig> _skinConfigs = new();
         [SerializeField] private AudioView _audioView;
+        [SerializeField] private MainMenuView _mainMenuView;
         [SerializeField] private LeanLocalization _leanLocalization;
         [SerializeField] private AudioMixerGroup _soundGroup;
         [SerializeField] private AudioMixerGroup _musicGroup;
@@ -61,6 +63,7 @@ namespace Sourse.Root
             _audioView.Initialize(_audio);
             _audioView.Subscribe();
             _audioView.Closed += OnClosed;
+            _mainMenuView.Subscribe();
             _localSave = new LocalSave(new List<IDataReader> { this, _wallet, _audio },
                 new List<IDataWriter> { this, _wallet, _audio});
             _saveLoadService = _localSave;
@@ -72,6 +75,7 @@ namespace Sourse.Root
         {
             _audioView.Unsubscribe();
             _audioView.Closed -= OnClosed;
+            _mainMenuView.Unsubscribe();
         }
 
         private void TakeSkinProgress()

@@ -1,4 +1,4 @@
-namespace Sourse.Pause
+namespace Sourse.PauseContent
 {
     public interface IPauseHandler
     {

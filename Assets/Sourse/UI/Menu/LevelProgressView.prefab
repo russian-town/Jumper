@@ -196,7 +196,7 @@ GameObject:
   - component: {fileID: 5726249492934814433}
   - component: {fileID: 5726249492934814434}
   m_Layer: 5
-  m_Name: LevelProgress
+  m_Name: LevelProgressView
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
