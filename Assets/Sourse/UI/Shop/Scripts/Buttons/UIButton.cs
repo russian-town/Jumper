@@ -17,11 +17,5 @@ namespace Sourse.UI.Shop.Scripts.Buttons
 
         public void RemoveListener(UnityAction action)
             => _button.onClick.RemoveListener(action);
-
-        protected void Enable()
-            => _button.enabled = true;
-
-        protected void Disable()
-            => _button.enabled = false;
     }
 }

@@ -1,4 +1,3 @@
-using Sourse.UI;
 using UnityEngine;
 
 namespace Sourse.Player.Common.Scripts
@@ -9,35 +8,32 @@ namespace Sourse.Player.Common.Scripts
         [SerializeField] private ParticleSystem _fallParticle;
         [SerializeField] private ParticleSystem _fallOnGroundParticle;
 
-        private PlayerAnimator _animator;
         private PlayerJumper _jumper;
-        private PlayerInput _input;
         private EffectsPlayer _effectsPlayer;
 
+        public PlayerAnimator Animator { get; private set; }
         public GroundDetector GroundDetector { get; private set; }
         public PlayerDeath Death { get; private set; }
         public PlayerFinisher Finisher { get; private set; }
 
         public void Unsubscribe()
         {
-            _animator.Unsubscribe();
+            Animator.Unsubscribe();
             Death.Unsubscribe();
             _effectsPlayer.Unsubscribe();
             Finisher.Unsubscribe();
         }
 
-        public void Initialize(PlayerInput input)
+        public void Initialize()
         {
-            _animator = GetComponent<PlayerAnimator>();
+            Animator = GetComponent<PlayerAnimator>();
             GroundDetector = GetComponent<GroundDetector>();
             _jumper = GetComponent<PlayerJumper>();
             Finisher = new PlayerFinisher(GroundDetector);
             Finisher.Subscribe();
-            _input = input;
-            _input.Initialize(_animator);
-            _jumper.Initialize(_animator);
+            _jumper.Initialize(Animator);
             GroundDetector.Initialize();
-            _animator.Initialize(GroundDetector);
+            Animator.Initialize(GroundDetector);
             Death = new PlayerDeath(GroundDetector);
             _effectsPlayer = new EffectsPlayer(_fallParticle,
                 _fallOnGroundParticle,
@@ -45,11 +41,5 @@ namespace Sourse.Player.Common.Scripts
             Death.Subscribe();
             _effectsPlayer.Subscribe();
         }
-
-        public void SetPosition(Vector3 position, Vector3 rotation)
-        {
-            transform.position = position;
-            transform.rotation = Quaternion.Euler(rotation);
-        }    
     }
 }

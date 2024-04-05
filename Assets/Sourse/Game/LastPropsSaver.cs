@@ -9,18 +9,15 @@ namespace Sourse.Game
     public class LastPropsSaver : IDataReader, IDataWriter
     {
         private readonly List<Props> _props;
-        private readonly GroundDetector _groundDetector;
         private readonly PlayerPosition _startPosition;
 
+        private GroundDetector _groundDetector;
         private PlayerPosition _savedPosition;
         private int _savedPropsIndex;
 
-        public LastPropsSaver(List<Props> props,
-            GroundDetector groundDetector,
-            PlayerPosition startPosition)
+        public LastPropsSaver(List<Props> props, PlayerPosition startPosition)
         {
             _props = props;
-            _groundDetector = groundDetector;
             _startPosition = startPosition;
         }
 
@@ -31,6 +28,9 @@ namespace Sourse.Game
 
         public void Unsubscribe()
             => _groundDetector.Fell -= OnFell;
+
+        public void Initialize(GroundDetector groundDetector)
+            => _groundDetector = groundDetector;
 
         public void Read(PlayerData playerData)
         {

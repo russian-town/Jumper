@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using Sourse.Balance;
 using Sourse.Camera;
-using Sourse.Constants;
 using Sourse.Enviroment.Common;
 using Sourse.Game;
 using Sourse.Game.Finish;
@@ -16,10 +15,11 @@ using Sourse.UI.LevelCompletePanel;
 using Sourse.UI.Shop.SkinConfiguration;
 using Sourse.Yandex;
 using UnityEngine;
+using UnityEngine.Audio;
 
 namespace Sourse.Root
 {
-    public class Root : MonoBehaviour, IDataReader
+    public class Root : MonoBehaviour
     {
         [SerializeField] private FollowCamera _followCamera;
         [SerializeField] private PlayerInput _playerInput;
@@ -35,23 +35,23 @@ namespace Sourse.Root
         [SerializeField] private List<SkinConfig> _skinConfigs = new();
         [SerializeField] private OpenableSkinBar _openableSkinBar;
         [SerializeField] private HUD _hud;
+        [SerializeField] private AudioMixerGroup _soundGroup;
+        [SerializeField] private AudioMixerGroup _musicGroup;
 
         private readonly Wallet _wallet = new();
-        private readonly PlayerSpawner _playerSpawner = new();
         private readonly LevelLoader _levelLoader = new();
-        private readonly List<IDataReader> _dataReaders = new();
-        private readonly List<IDataWriter> _dataWriters = new();
+        private readonly YandexAds _yandexAds = new();
 
+        private List<IDataReader> _dataReaders = new();
+        private List<IDataWriter> _dataWriters = new();
+        private PlayerServis _playerServis;
         private PlayerInitializer _startPlayer;
         private LocalSave _localSave;
-        private Vector3 _targetRotation = new(0f, 90f, 0f);
-        private YandexAds _yandexAds;
         private GameLoss _gameLoss;
-        private int _id;
         private LastPropsSaver _lastPropsSaver;
         private LevelProgress _levelProgress;
         private OpenableSkinViewFiller _openableSkinViewFiller;
-        private PlayerInitializer _template;
+        private ApplicationFocus _applicationFocus;
         private Pause _pause;
         private Audio _audio;
 
@@ -66,24 +66,33 @@ namespace Sourse.Root
 
         private void OnApplicationFocus(bool focus)
         {
-          
-        }
+            if (_applicationFocus == null)
+                return;
+
+            _applicationFocus.SetFocus(focus);
+        }    
 
         private void Initialize()
         {
-            GetPlayerTemplate();
-            _yandexAds = new YandexAds();
-            _startPlayer = _playerSpawner.GetPlayer(_template);
-            _startPlayer.Initialize(_playerInput);
-            _lastPropsSaver = new LastPropsSaver(_props,
-                _startPlayer.GroundDetector,
-                _startPosition);
-            _lastPropsSaver.Subscribe();
+            _lastPropsSaver = new LastPropsSaver(_props, _startPosition);
+            _playerServis = new PlayerServis(_lastPropsSaver);
+            _playerServis.PlayerSpawned += OnPlayerSpawned;       
             _dataReaders.Add(_lastPropsSaver);
+            _dataReaders.Add(_playerServis);
             _dataWriters.Add(_lastPropsSaver);
             _localSave = new(_dataReaders, _dataWriters);
             _localSave.Load();
-            PlayerPosition spawnPosition = _lastPropsSaver.GetPlayerPositon();
+        }
+
+        private void OnPlayerSpawned(PlayerInitializer startPlayer)
+        {
+            _dataReaders = new();
+            _dataWriters = new();
+            _startPlayer = startPlayer;
+            _startPlayer.Initialize();
+            _playerInput.Initialize(_startPlayer.Animator);
+            _lastPropsSaver.Initialize(_startPlayer.GroundDetector);
+            _lastPropsSaver.Subscribe();
             _openableSkinViewFiller = new(_skinConfigs, _openableSkinBar);
             _dataReaders.AddRange(new IDataReader[]
             {
@@ -97,7 +106,6 @@ namespace Sourse.Root
                 _openableSkinViewFiller,
                 _lastPropsSaver
             });
-            _startPlayer.SetPosition(spawnPosition.Position, _targetRotation);
             _levelProgress = new LevelProgress(_startPlayer, _finishPosition, _startPosition);
             _gameLoss = new GameLoss(_levelProgress, _startPlayer.Death);
             _gameLoss.Subscribe();
@@ -123,6 +131,8 @@ namespace Sourse.Root
                 _gameLoss,
             };
             _pause = new Pause(pauseHandlers);
+            _audio = new Audio(_soundGroup, _musicGroup);
+            _applicationFocus = new ApplicationFocus(_audio, _pause);
             _pauseView.Initialize(_pause);
             _pauseView.Subscribe();
             _pauseView.ContinueButtonClicked += OnContinueButtonClicked;
@@ -133,29 +143,6 @@ namespace Sourse.Root
             _hud.PauseButtonClicked += OnPauseButtonClicked;
             _startPlayer.Finisher.LevelCompleted += OnLevelCompleted;
             _levelProgressView.Show();
-        }
-
-        public void Read(PlayerData playerData)
-        {
-            foreach (var skinSaveData in playerData.SkinSaveDatas)
-            {
-                if (skinSaveData.IsSelect == true)
-                {
-                    _id = skinSaveData.ID;
-                    return;
-                }
-            }
-
-            foreach (var openableSkinSaveData in playerData.OpenableSkinSaveDatas)
-            {
-                if (openableSkinSaveData.IsSelect == true)
-                {
-                    _id = openableSkinSaveData.ID;
-                    return;
-                }
-            }
-
-            _id = PlayerParameter.DefaultPlayerID;
         }
 
         private void OnRewardedButtonClicked()
@@ -173,6 +160,9 @@ namespace Sourse.Root
 
         private void OnCloseAdOfferScreenButtonClicked()
         {
+            _yandexAds.ShowInterstitial();
+            _applicationFocus.Disable();
+            _audio.Mute();
             _lastPropsSaver.ClearIndex();
             _levelLoader.Restart();
         }
@@ -192,15 +182,6 @@ namespace Sourse.Root
             _levelLoader.Restart();
         }
 
-        private void GetPlayerTemplate()
-        {
-            _dataReaders.Add(this);
-            _localSave = new LocalSave(_dataReaders, _dataWriters);
-            _localSave.Load();
-            string path = $"{PlayerParameter.PlayerPrefabsPath}{_id}";
-            _template = Resources.Load<PlayerInitializer>(path);
-        }
-
         private void OnRetryButtonClicked()
         {
             _lastPropsSaver.ClearIndex();
@@ -209,6 +190,7 @@ namespace Sourse.Root
 
         private void Unsubscribe()
         {
+            _playerServis.PlayerSpawned -= OnPlayerSpawned;
             _startPlayer.Finisher.LevelCompleted -= OnLevelCompleted;
             _startPlayer.Unsubscribe();
             _levelFinishView.Unsubscribe();
