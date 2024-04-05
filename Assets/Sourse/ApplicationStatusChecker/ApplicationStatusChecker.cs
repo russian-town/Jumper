@@ -65,9 +65,11 @@ namespace Sourse.ApplicationStatusChecker
         public void ChangeSoundStatus(bool isMute)
         {
             if (isMute == true)
-                _masterGroup.audioMixer.SetFloat(Volume.MasterGroup, Volume.Mute);
+                _masterGroup.audioMixer.SetFloat(AudioParameters.MasterGroup,
+                    AudioParameters.MuteVolume);
             else
-                _masterGroup.audioMixer.SetFloat(Volume.MasterGroup, Volume.Full);
+                _masterGroup.audioMixer.SetFloat(AudioParameters.MasterGroup,
+                    AudioParameters.FullVolume);
         }
 
         public void SetIsPlayRewarded(bool isPlayRewaeded)

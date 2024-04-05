@@ -10,7 +10,9 @@ namespace Sourse.Save
         public List<OpenableSkinSaveData> OpenableSkinSaveDatas;
         public bool IsTutorialCompleted;
         public int Money;
-        public int LastPropsIndex = -1;
+        public int SavedPropsIndex = -1;
         public int CurrentOpenableSkinID = -1;
+        public float SoundValue = 1f;
+        public float MusicValue = 1f;
     }
 }

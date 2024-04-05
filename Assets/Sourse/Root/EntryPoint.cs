@@ -1,26 +1,47 @@
+using System.Collections;
 using System.Collections.Generic;
+using Lean.Localization;
 using Sourse.Balance;
 using Sourse.Save;
+using Sourse.Settings.Audio;
+using Sourse.Settings.Language;
 using Sourse.UI.Shop.SkinConfiguration;
+using Sourse.Yandex;
 using UnityEngine;
+using UnityEngine.Audio;
 
 namespace Sourse.Root
 {
     public class EntryPoint : MonoBehaviour, IDataReader, IDataWriter
     {
         [SerializeField] private List<SkinConfig> _skinConfigs = new();
+        [SerializeField] private AudioView _audioView;
+        [SerializeField] private LeanLocalization _leanLocalization;
+        [SerializeField] private AudioMixerGroup _soundGroup;
+        [SerializeField] private AudioMixerGroup _musicGroup;
 
         private readonly SkinSpawner _skinSpawner = new();
         private readonly SkinSaveDataSpawner _skinSaveDataSpawner = new();
         private readonly Wallet _wallet = new();
 
+        private YandexInitializer _yandexInitializer;
+        private LanguageSettings _languageSettings;
+        private Audio _audio;
         private ISaveLoadService _saveLoadService;
         private LocalSave _localSave;
         private List<SkinSaveData> _skinSaveDatas = new();
         private List<OpenableSkinSaveData> _openableSkinSaveDatas = new();
 
-        private void Start()
-            => Initialize();
+        private void OnDestroy()
+            => Unsubscribe();
+
+        private IEnumerator Start()
+        {
+            _languageSettings = new LanguageSettings(_leanLocalization);
+            _yandexInitializer = new YandexInitializer(_languageSettings);
+            yield return _yandexInitializer.Initialize(this);
+            Initialize();
+        }
 
         public void Read(PlayerData playerData)
         {
@@ -36,12 +57,21 @@ namespace Sourse.Root
 
         private void Initialize()
         {
-            _wallet.AddMoney(1000);
-            _localSave = new LocalSave(new List<IDataReader> { this },
-                new List<IDataWriter> { this, _wallet});
+            _audio = new Audio(_soundGroup, _musicGroup);
+            _audioView.Initialize(_audio);
+            _audioView.Subscribe();
+            _audioView.Closed += OnClosed;
+            _localSave = new LocalSave(new List<IDataReader> { this, _wallet, _audio },
+                new List<IDataWriter> { this, _wallet, _audio});
             _saveLoadService = _localSave;
             _saveLoadService.Load();
             TakeSkinProgress();
+        }
+
+        private void Unsubscribe()
+        {
+            _audioView.Unsubscribe();
+            _audioView.Closed -= OnClosed;
         }
 
         private void TakeSkinProgress()
@@ -87,5 +117,8 @@ namespace Sourse.Root
             var openableSkinSaveData = _skinSaveDataSpawner.CreateOpenableSkinSaveData(openableSkin);
             _openableSkinSaveDatas.Add(openableSkinSaveData);
         }
+
+        private void OnClosed()
+            => _saveLoadService.Save();
     }
 }

@@ -1,85 +1,62 @@
+using Sourse.Constants;
+using Sourse.Save;
+using System;
 using UnityEngine;
 using UnityEngine.Audio;
-using UnityEngine.UI;
 
 namespace Sourse.Settings.Audio
 {
-    [RequireComponent(typeof(AudioView))]
-    public class Audio : MonoBehaviour
+    public class Audio : IDataReader, IDataWriter
     {
-        private const string SoundVolume = "SoundVolume";
-        private const string MusicVolume = "MusicVolume";
-        private const string SoundVolumeKey = "SoundVolumeKey";
-        private const string MusicVolumeKey = "MusicVolumeKey";
-        private const float MuteVolume = 0.0001f;
-        private const float AudioMixerValueRatio = 20f;
+        private readonly AudioMixerGroup _soundGroup;
+        private readonly AudioMixerGroup _musicGroup;
 
-        [SerializeField] private Slider _soundSlider;
-        [SerializeField] private Slider _musicSlider;
-        [SerializeField] private AudioMixerGroup _soundGroup;
-        [SerializeField] private AudioMixerGroup _musicGroup;
+        private float _soundValue;
+        private float _musicValue;
 
-        private AudioView _audioView;
+        public event Action<float> SoundValueChanged;
+        public event Action<float> MusicValueChanged;
 
-        private void Awake()
+        public Audio(AudioMixerGroup soundGroup,
+            AudioMixerGroup musicGroup)
         {
-            _audioView = GetComponent<AudioView>();
+            _soundGroup = soundGroup;
+            _musicGroup = musicGroup;
         }
 
-        private void OnEnable()
+        public void Read(PlayerData playerData)
         {
-            _soundSlider.onValueChanged.AddListener(ChangeSoundVolume);
-            _musicSlider.onValueChanged.AddListener(ChangeMusicVolume);
+            _soundValue = playerData.SoundValue;
+            _musicValue = playerData.MusicValue;
+            SoundValueChanged?.Invoke(_soundValue);
+            MusicValueChanged?.Invoke(_musicValue);
         }
 
-        private void OnDisable()
+        public void Write(PlayerData playerData)
         {
-            _soundSlider.onValueChanged.RemoveListener(ChangeSoundVolume);
-            _musicSlider.onValueChanged.RemoveListener(ChangeMusicVolume);
+            playerData.SoundValue = _soundValue;
+            playerData.MusicValue = _musicValue;
+            Debug.Log(playerData.SoundValue);
         }
 
-        private void Start()
-            => Initialize();
+        public void Mute()
+            => AudioListener.pause = true;
+
+        public void Unmute()
+            => AudioListener.pause = false;
 
         public void ChangeSoundVolume(float value)
-            => ChangeVolume(value, _soundGroup, SoundVolume, SoundVolumeKey);
-
-        public void ChangeMusicVolume(float value)
-            => ChangeVolume(value, _musicGroup, MusicVolume, MusicVolumeKey);
-
-        private void Initialize()
         {
-           /* if (_saver.TryGetValue(MusicVolumeKey, out float musicVolume))
-            {
-                ChangeMusicVolume(musicVolume);
-                _musicSlider.value = musicVolume;
-            }
-
-            if (_saver.TryGetValue(SoundVolumeKey, out float soundVolume))
-            {
-                ChangeSoundVolume(soundVolume);
-                _soundSlider.value = soundVolume;
-            }*/
+            _soundValue = value;
+            float soundVolume = Mathf.Log10(_soundValue) * AudioParameters.AudioMixerValueRatio;
+            _soundGroup.audioMixer.SetFloat(AudioParameters.MusicGroup, soundVolume);
         }
 
-        private void ChangeVolume(float value, AudioMixerGroup audioMixerGroup, string groupName, string key)
+        public void ChangeMusicVolume(float value)
         {
-            audioMixerGroup.audioMixer.SetFloat(groupName, Mathf.Log10(value) * AudioMixerValueRatio);
-
-            if (value == MuteVolume)
-            {
-                if (audioMixerGroup == _soundGroup)
-                    _audioView.MuteSound();
-                else if (audioMixerGroup == _musicGroup)
-                    _audioView.MuteMusic();
-            }
-            else
-            {
-                if (audioMixerGroup == _soundGroup)
-                    _audioView.UnmuteSound();
-                else if (audioMixerGroup == _musicGroup)
-                    _audioView.UnmuteMusic();
-            }
+            _musicValue = value;
+            float musicVolume = Mathf.Log10(_musicValue) * AudioParameters.AudioMixerValueRatio;
+            _musicGroup.audioMixer.SetFloat(AudioParameters.MusicGroup, musicVolume);
         }
     }
 }

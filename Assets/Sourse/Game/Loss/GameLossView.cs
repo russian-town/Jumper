@@ -1,8 +1,8 @@
+using System;
 using Lean.Localization;
 using Sourse.Constants;
 using Sourse.UI;
 using Sourse.UI.Shop.Scripts.Buttons;
-using System;
 using TMPro;
 using UnityEngine;
 
@@ -23,7 +23,8 @@ namespace Sourse.Game.Lose
         public event Action CloseAdOfferScreenButtonClicked;
         public event Action RetryButtonClicked;
 
-        public void Initialize(GameLoss gameLoss, LastPropsSaver lastPropsSaver)
+        public void Initialize(GameLoss gameLoss,
+            LastPropsSaver lastPropsSaver)
         {
             _gameLoss = gameLoss;
             _lastPropsSaver = lastPropsSaver;
@@ -37,7 +38,6 @@ namespace Sourse.Game.Lose
         public void Subscribe()
         {
             _gameLoss.GameOver += OnGameOver;
-            _lastPropsSaver.IndexSaved += OnIndexSaved;
             _rewardedButton.AddListener(()
                 => RewardedButtonClicked?.Invoke());
             _closeAdOfferScreenButton.AddListener(()
@@ -49,7 +49,6 @@ namespace Sourse.Game.Lose
         public void Unsubscribe()
         {
             _gameLoss.GameOver -= OnGameOver;
-            _lastPropsSaver.IndexSaved -= OnIndexSaved;
             _rewardedButton.RemoveListener(()
                 => RewardedButtonClicked?.Invoke());
             _closeAdOfferScreenButton.RemoveListener(()
@@ -67,13 +66,10 @@ namespace Sourse.Game.Lose
         }
 
         private void OnGameOver(float progress)
-            => ShowProgress(progress);
-
-        private void OnIndexSaved(int index)
         {
-            Debug.Log(index);
+            ShowProgress(progress);
 
-            if (index <= 0)
+            if (_lastPropsSaver.LastPropsIndex <= 0)
                 return;
 
             _rewardedPanel.Show();

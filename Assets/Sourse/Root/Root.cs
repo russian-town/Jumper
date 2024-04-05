@@ -160,6 +160,7 @@ namespace Sourse.Root
 
         private void OnRewardedButtonClicked()
         {
+            _lastPropsSaver.SaveIndex();
             _localSave.Save();
             _levelLoader.Restart();
         }

@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using Sourse.Enviroment.Common;
 using Sourse.Player.Common.Scripts;
@@ -14,7 +13,7 @@ namespace Sourse.Game
         private readonly PlayerPosition _startPosition;
 
         private PlayerPosition _savedPosition;
-        private int _lastPropsIndex;
+        private int _savedPropsIndex;
 
         public LastPropsSaver(List<Props> props,
             GroundDetector groundDetector,
@@ -25,7 +24,7 @@ namespace Sourse.Game
             _startPosition = startPosition;
         }
 
-        public event Action<int> IndexSaved;
+        public int LastPropsIndex { get; private set; }
 
         public void Subscribe()
             => _groundDetector.Fell += OnFell;
@@ -35,27 +34,27 @@ namespace Sourse.Game
 
         public void Read(PlayerData playerData)
         {
-            _lastPropsIndex = playerData.LastPropsIndex;
+            _savedPropsIndex = playerData.SavedPropsIndex;
 
-            if (_lastPropsIndex < 0)
+            if (_savedPropsIndex < 0)
                 return;
 
-            _savedPosition = _props[_lastPropsIndex].PlayerPosition;
+            _savedPosition = _props[_savedPropsIndex].PlayerPosition;
             ClearIndex();
         }
 
         public void Write(PlayerData playerData)
-        {
-            playerData.LastPropsIndex = _lastPropsIndex;
-            IndexSaved?.Invoke(_lastPropsIndex);
-        }
+            => playerData.SavedPropsIndex = _savedPropsIndex;
+
+        public void SaveIndex()
+            => _savedPropsIndex = LastPropsIndex;
 
         public void ClearIndex()
-            => _lastPropsIndex = -1;
+            => _savedPropsIndex = -1;
 
         public PlayerPosition GetPlayerPositon()
         {
-            if(_savedPosition != null)
+            if (_savedPosition != null)
                 return _savedPosition;
 
             return _startPosition;
@@ -65,7 +64,7 @@ namespace Sourse.Game
         {
             if (collision.transform.TryGetComponent(out Props props))
                 if (_props.Contains(props))
-                    _lastPropsIndex = _props.IndexOf(props);
+                    LastPropsIndex = _props.IndexOf(props);
         }
     }
 }

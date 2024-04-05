@@ -6,11 +6,19 @@ using UnityEngine;
 
 namespace Sourse.Yandex
 {
-    public class YandexInit : MonoBehaviour
+    public class YandexInitializer
     {
-        [SerializeField] private LanguageSettings _languageSettings;
+        private readonly LanguageSettings _languageSettings;
 
-        private IEnumerator Start()
+        public YandexInitializer(LanguageSettings languageSettings)
+            => _languageSettings = languageSettings;
+
+        public Coroutine Initialize(MonoBehaviour context)
+        {
+            return context.StartCoroutine(Initialize());
+        }
+
+        private IEnumerator Initialize()
         {
 #if UNITY_EDITOR
             yield break;

@@ -1,9 +1,13 @@
+using System;
+using Sourse.Constants;
+using Sourse.UI;
+using Sourse.UI.Shop.Scripts.Buttons;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace Sourse.Settings.Audio
 {
-    public class AudioView : MonoBehaviour
+    public class AudioView : UIElement
     {
         [SerializeField] private Image _soundImage;
         [SerializeField] private Image _musicImage;
@@ -11,30 +15,64 @@ namespace Sourse.Settings.Audio
         [SerializeField] private Sprite _muteSound;
         [SerializeField] private Sprite _unmuteMusic;
         [SerializeField] private Sprite _muteMusic;
+        [SerializeField] private Slider _soundSlider;
+        [SerializeField] private Slider _musicSlider;
+        [SerializeField] private CloseButton _closeButton;
 
-        public void MuteSound()
+        private Audio _audio;
+
+        public event Action Closed;
+
+        public void Subscribe()
         {
-            ChangeIcon(_soundImage, _muteSound);
+            _soundSlider.onValueChanged.AddListener(_audio.ChangeSoundVolume);
+            _soundSlider.onValueChanged.AddListener(OnSoundSliderValueChaged);
+            _musicSlider.onValueChanged.AddListener(_audio.ChangeMusicVolume);
+            _musicSlider.onValueChanged.AddListener(OnMusicSliderValueChaged);
+            _audio.SoundValueChanged += OnSoundValueChanged;
+            _audio.MusicValueChanged += OnMusicValueChanged;
+            _closeButton.AddListener(Hide);
+            _closeButton.AddListener(() => Closed?.Invoke());
         }
 
-        public void UnmuteSound()
+        public void Unsubscribe()
         {
-            ChangeIcon(_soundImage, _unmuteSound);
+            _soundSlider.onValueChanged.RemoveListener(_audio.ChangeSoundVolume);
+            _soundSlider.onValueChanged.RemoveListener(OnSoundSliderValueChaged);
+            _musicSlider.onValueChanged.RemoveListener(_audio.ChangeMusicVolume);
+            _musicSlider.onValueChanged.RemoveListener(OnMusicSliderValueChaged);
+            _audio.SoundValueChanged -= OnSoundValueChanged;
+            _audio.MusicValueChanged -= OnMusicValueChanged;
+            _closeButton.RemoveListener(Hide);
+            _closeButton.RemoveListener(() => Closed?.Invoke());
         }
 
-        public void MuteMusic()
+        public void Initialize(Audio audio)
         {
-            ChangeIcon(_musicImage, _muteMusic);
+            _audio = audio;
+            Hide();
         }
 
-        public void UnmuteMusic()
+        private void OnSoundValueChanged(float value)
+            => _soundSlider.value = value;
+
+        private void OnMusicValueChanged(float value)
+            => _musicSlider.value = value;
+
+        private void OnSoundSliderValueChaged(float value)
         {
-            ChangeIcon(_musicImage, _unmuteMusic);
+            if (value <= AudioParameters.MuteVolume)
+                _soundImage.sprite = _muteSound;
+            else
+                _soundImage.sprite = _unmuteSound;
         }
 
-        private void ChangeIcon(Image icon, Sprite iconState)
+        private void OnMusicSliderValueChaged(float value) 
         {
-            icon.sprite = iconState;
+            if (value <= AudioParameters.MuteVolume)
+                _musicImage.sprite = _muteMusic;
+            else
+                _musicImage.sprite = _unmuteMusic;
         }
     }
 }
