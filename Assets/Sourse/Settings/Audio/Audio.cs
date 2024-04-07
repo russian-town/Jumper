@@ -36,7 +36,6 @@ namespace Sourse.Settings.Audio
         {
             playerData.SoundValue = _soundValue;
             playerData.MusicValue = _musicValue;
-            Debug.Log(playerData.SoundValue);
         }
 
         public void Mute()

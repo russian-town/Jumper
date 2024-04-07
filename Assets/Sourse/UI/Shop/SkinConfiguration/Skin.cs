@@ -21,6 +21,10 @@ namespace Sourse.UI.Shop.SkinConfiguration
         public int ID { get; private set; }
         public Sprite Icon { get; private set; }
 
+        public event Action Selected;
+        public event Action Bought;
+        public event Action Deselected;
+
         public void ApplySaveData(SkinSaveData skinSaveData)
         {
             if (skinSaveData.IsSelect)
@@ -31,12 +35,21 @@ namespace Sourse.UI.Shop.SkinConfiguration
         }
 
         public void Select()
-            =>  IsSelect = true;
+        {
+            IsSelect = true;
+            Selected?.Invoke();
+        }
 
         public void Buy()
-            => IsBought = true;
+        {
+            IsBought = true;
+            Bought?.Invoke();
+        }
 
         public void Deselect()
-            => IsSelect = false;
+        { 
+            IsSelect = false;
+            Deselected?.Invoke();
+        }
     }
 }

@@ -50,6 +50,7 @@ namespace Sourse.Settings.Audio
         public void Initialize(Audio audio)
         {
             _audio = audio;
+            _closeButton.Initialize();
             Hide();
         }
 

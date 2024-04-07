@@ -17,17 +17,14 @@ namespace Sourse.Game.Lose
         [SerializeField] private CloseAdOfferScreenButton _closeAdOfferScreenButton;
 
         private GameLoss _gameLoss;
-        private LastPropsSaver _lastPropsSaver;
 
         public event Action RewardedButtonClicked;
         public event Action CloseAdOfferScreenButtonClicked;
         public event Action RetryButtonClicked;
 
-        public void Initialize(GameLoss gameLoss,
-            LastPropsSaver lastPropsSaver)
+        public void Initialize(GameLoss gameLoss)
         {
             _gameLoss = gameLoss;
-            _lastPropsSaver = lastPropsSaver;
             _retryButton.Initialize();
             _rewardedButton.Initialize();
             _closeAdOfferScreenButton.Initialize();
@@ -68,10 +65,6 @@ namespace Sourse.Game.Lose
         private void OnGameOver(float progress)
         {
             ShowProgress(progress);
-
-            if (_lastPropsSaver.LastPropsIndex <= 0)
-                return;
-
             _rewardedPanel.Show();
             _retryButton.Hide();
         }

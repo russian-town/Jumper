@@ -6,7 +6,7 @@ namespace Sourse.Constants
         public const string MusicGroup = "MusicVolume";
         public const string MasterGroup = "MasterVolume";
         public const float MuteVolume = 0.0001f;
-        public const float FullVolume = 0f;
+        public const float FullVolume = 1f;
         public const float AudioMixerValueRatio = 20f;
     }
 }

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Lean.Localization;
 using Sourse.Balance;
+using Sourse.Level;
 using Sourse.Menu;
 using Sourse.Save;
 using Sourse.Settings.Audio;
@@ -25,6 +26,7 @@ namespace Sourse.Root
         private readonly SkinSpawner _skinSpawner = new();
         private readonly SkinSaveDataSpawner _skinSaveDataSpawner = new();
         private readonly Wallet _wallet = new();
+        private readonly LevelLoader _levelLoader = new();
 
         private YandexInitializer _yandexInitializer;
         private LanguageSettings _languageSettings;
@@ -63,22 +65,33 @@ namespace Sourse.Root
             _audioView.Initialize(_audio);
             _audioView.Subscribe();
             _audioView.Closed += OnClosed;
+            _mainMenuView.Initialize();
             _mainMenuView.Subscribe();
+            _mainMenuView.ShopButtonClicked += OnShopButtonClicked;
+            _mainMenuView.PlayButtonClicked += OnPlayButtonClicked;
             _localSave = new LocalSave(new List<IDataReader> { this, _wallet, _audio },
                 new List<IDataWriter> { this, _wallet, _audio});
             _saveLoadService = _localSave;
             _saveLoadService.Load();
-            TakeSkinProgress();
+            LoadSkinProgress();
         }
+
+        private void OnShopButtonClicked()
+            => _levelLoader.OpenShop();
+
+        private void OnPlayButtonClicked()
+            => _levelLoader.GoNext();
 
         private void Unsubscribe()
         {
             _audioView.Unsubscribe();
             _audioView.Closed -= OnClosed;
             _mainMenuView.Unsubscribe();
+            _mainMenuView.ShopButtonClicked -= OnShopButtonClicked;
+            _mainMenuView.PlayButtonClicked -= OnPlayButtonClicked;
         }
 
-        private void TakeSkinProgress()
+        private void LoadSkinProgress()
         {
             foreach (var skinConfig in _skinConfigs)
             {
@@ -117,8 +130,10 @@ namespace Sourse.Root
                     return;
             }
 
-            OpenableSkin openableSkin = _skinSpawner.CreateOpenableSkin(skinConfig);
-            var openableSkinSaveData = _skinSaveDataSpawner.CreateOpenableSkinSaveData(openableSkin);
+            OpenableSkin openableSkin =
+                _skinSpawner.CreateOpenableSkin(skinConfig);
+            var openableSkinSaveData =
+                _skinSaveDataSpawner.CreateOpenableSkinSaveData(openableSkin);
             _openableSkinSaveDatas.Add(openableSkinSaveData);
         }
 

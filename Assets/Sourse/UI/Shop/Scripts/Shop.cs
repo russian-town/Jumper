@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using Sourse.Balance;
 using Sourse.UI.Shop.SkinConfiguration;
-using UnityEngine;
+using Sourse.Yandex;
 
 namespace Sourse.UI.Shop.Scripts
 {
@@ -14,6 +14,8 @@ namespace Sourse.UI.Shop.Scripts
         private List<OpenableSkinView> _openableSkinViews = new();
         private List<RewardedSkinView> _rewardedSkinViews = new();
         private Skin _currentSelectedSkin;
+        private YandexAds _yandexAds;
+        private SkinRewarded _skinRewarded;
 
         public event Action<Skin> Bought;
         public event Action<Skin> Selected;
@@ -60,6 +62,7 @@ namespace Sourse.UI.Shop.Scripts
             foreach (var rewardedSkinView in _rewardedSkinViews)
             {
                 rewardedSkinView.RewardedButtonClicked += OnRewardedButtonClicked;
+                rewardedSkinView.SelectButtonClicked += OnSelectButtonClicked;
                 rewardedSkinView.Subscribe();
             }
         }
@@ -82,6 +85,7 @@ namespace Sourse.UI.Shop.Scripts
             foreach (var rewardedSkinView in _rewardedSkinViews)
             {
                 rewardedSkinView.RewardedButtonClicked -= OnRewardedButtonClicked;
+                rewardedSkinView.SelectButtonClicked -= OnSelectButtonClicked;
                 rewardedSkinView.Unsubscribe();
             }
         }
@@ -130,7 +134,16 @@ namespace Sourse.UI.Shop.Scripts
 
         private void OnRewardedButtonClicked(Skin skin)
         {
-            Debug.Log("Rewarded button clicked");
+            _skinRewarded = new SkinRewarded(skin);
+            _yandexAds.ShowRewardedVideo();
+            _yandexAds.RewardedCallback += OnRewardedCallback;
+        }
+
+        private void OnRewardedCallback()
+        {
+            _yandexAds.RewardedCallback -= OnRewardedCallback;
+            _skinRewarded.Accept();
+            Bought?.Invoke(_skinRewarded.Skin);
         }
     }
 }

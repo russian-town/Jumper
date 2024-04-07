@@ -37,14 +37,29 @@ namespace Sourse.UI.Shop.SkinConfiguration
         {
             _selectButton.onClick.AddListener(()
                 => SelectButtonClicked?.Invoke(Skin()));
+            Skin().Bought += OnBought;
+            Skin().Selected += OnSelected;
+            Skin().Deselected += OnDeselected;
         }
 
         public virtual void Unsubscribe()
         {
             _selectButton.onClick.RemoveListener(()
                 => SelectButtonClicked?.Invoke(Skin()));
+            Skin().Bought -= OnBought;
+            Skin().Selected -= OnSelected;
+            Skin().Deselected -= OnDeselected;
         }
 
         protected abstract Skin Skin();
+
+        private void OnBought()
+            => UpdateView();
+
+        private void OnSelected()
+            => UpdateView();
+
+        private void OnDeselected()
+            => UpdateView();
     }
 }

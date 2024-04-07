@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Sourse.Balance;
+using Sourse.Level;
 using Sourse.Save;
 using Sourse.UI.Shop.Scripts;
 using Sourse.UI.Shop.SkinConfiguration;
@@ -16,6 +17,7 @@ namespace Sourse.Root
         [SerializeField] private RewardedSkinView _rewardedSkinViewTemplate;
         [SerializeField] private Transform _parent;
         [SerializeField] private WalletView _walletView;
+        [SerializeField] private ShopView _shopView;
 
         private readonly Shop _shop = new();
         private readonly SkinViewSpawner _skinViewSpawner = new();
@@ -27,6 +29,7 @@ namespace Sourse.Root
         private readonly SkinSpawner _skinSpawner = new();
         private readonly Wallet _wallet = new();
         private readonly BubbleSort _bubbleSort = new();
+        private readonly LevelLoader _levelLoader = new();
 
         private List<SkinSaveData> _skinSaveDatas = new();
         private List<OpenableSkinSaveData> _openableSkinSaveDatas = new();
@@ -61,11 +64,11 @@ namespace Sourse.Root
             _shop.Unsubscribe();
             _shop.Bought -= OnBought;
             _shop.Selected -= OnSelected;
+            _shopView.CloseButtonClicked -= OnCloseButtonClicked;
         }
 
         private void Initialize()
         {
-            _wallet.AddMoney(1000);
             List<IDataWriter> dataWriters = new()
             {
                 _wallet,
@@ -84,7 +87,6 @@ namespace Sourse.Root
 
             foreach (var skinConfig in _skinConfigs)
             {
-
                 switch (skinConfig.Type)
                 {
                     case SkinType.Paid:
@@ -130,6 +132,9 @@ namespace Sourse.Root
             _shop.Subscribe();
             _shop.Bought += OnBought;
             _shop.Selected += OnSelected;
+            _shopView.Initialize();
+            _shopView.Subscribe();
+            _shopView.CloseButtonClicked += OnCloseButtonClicked;
             List<SkinView> skinViews = new();
             skinViews.AddRange(_paidSkinViews);
             skinViews.AddRange(_openableSkinViews);
@@ -142,5 +147,8 @@ namespace Sourse.Root
 
         private void OnBought(Skin skin)
             => _saveLoadService.Save();
+
+        private void OnCloseButtonClicked()
+            => _levelLoader.ExitToMainMenu();
     }
 }

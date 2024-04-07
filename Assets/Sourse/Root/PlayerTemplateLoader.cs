@@ -1,26 +1,13 @@
-using System;
 using Sourse.Constants;
-using Sourse.Game;
 using Sourse.Player.Common.Scripts;
 using Sourse.Save;
 using UnityEngine;
 
 namespace Sourse.Root
 {
-    public class PlayerServis : IDataReader
+    public class PlayerTemplateLoader : IDataReader
     {
-        private readonly PlayerSpawner _playerSpawner = new();
-
         private int _id;
-        private LastPropsSaver _lastPropsSaver;
-        private PlayerInitializer _template;
-        private PlayerInitializer _spawnedPlayer;
-        private Vector3 _startRotation = new(0f, 90f, 0f);
-
-        public PlayerServis(LastPropsSaver lastPropsSaver)
-            => _lastPropsSaver = lastPropsSaver;
-
-        public event Action<PlayerInitializer> PlayerSpawned;
 
         public void Read(PlayerData playerData)
         {
@@ -43,17 +30,12 @@ namespace Sourse.Root
             }
 
             _id = PlayerParameter.DefaultPlayerID;
-            _spawnedPlayer = _playerSpawner.GetPlayer(LoadPlayerTemplate(),
-                _lastPropsSaver.GetPlayerPositon().Position,
-                _startRotation);
-            PlayerSpawned?.Invoke(_spawnedPlayer);
         }
 
-        private PlayerInitializer LoadPlayerTemplate()
+        public PlayerInitializer Get()
         {
             string path = $"{PlayerParameter.PlayerPrefabsPath}{_id}";
-            _template = Resources.Load<PlayerInitializer>(path);
-            return _template;
+            return Resources.Load<PlayerInitializer>(path);
         }
     }
 }

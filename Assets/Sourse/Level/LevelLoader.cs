@@ -32,5 +32,8 @@ namespace Sourse.Level
 
         public void ExitToMainMenu()
             => SceneManager.LoadScene(LevelName.MainMenu);
+
+        public void OpenShop()
+            => SceneManager.LoadScene(LevelName.Shop);
     }
 }

@@ -6,9 +6,10 @@ namespace Sourse.Save
 {
     public class LocalSave : ISaveLoadService
     {
-        private List<IDataReader> _dataReaders;
-        private List<IDataWriter> _dataWriters;
-        private PlayerData _playerData = new PlayerData();
+        private readonly List<IDataReader> _dataReaders;
+        private readonly List<IDataWriter> _dataWriters;
+
+        private PlayerData _playerData = new();
 
         public LocalSave(List<IDataReader> dataReaders,
             List<IDataWriter> dataWriters)
@@ -23,7 +24,6 @@ namespace Sourse.Save
                 dataWriter.Write(_playerData);
 
             string saveData = JsonUtility.ToJson(_playerData);
-            Debug.Log(saveData);
             PlayerPrefs.SetString(SaveKeys.PlayerProgress, saveData);
             PlayerPrefs.Save();
         }

@@ -9,5 +9,6 @@ namespace Sourse.Constants
         public const int MinIndex = 0;
         public const float PercentPerLevel = .1f;
         public const float PercentRatio = 100f;
+        public const int MoneyPerLevel = 100;
     }
 }

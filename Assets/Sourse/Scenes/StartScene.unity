@@ -242,6 +242,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _settingsButton: {fileID: 1080172474}
+  _shopButton: {fileID: 243134946}
+  _playButton: {fileID: 1212297618}
   _audioView: {fileID: 1088260855021108411}
 --- !u!1 &243134940
 GameObject:
@@ -256,6 +258,7 @@ GameObject:
   - component: {fileID: 243134944}
   - component: {fileID: 243134943}
   - component: {fileID: 243134942}
+  - component: {fileID: 243134946}
   m_Layer: 5
   m_Name: ShopButton
   m_TagString: Untagged
@@ -380,6 +383,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 243134940}
   m_CullTransparentMesh: 1
+--- !u!114 &243134946
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 243134940}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eae52c509bcb49b43bd120e8998a2cb6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &268893925
 GameObject:
   m_ObjectHideFlags: 0
@@ -1329,6 +1344,7 @@ GameObject:
   - component: {fileID: 1212297615}
   - component: {fileID: 1212297614}
   - component: {fileID: 1212297617}
+  - component: {fileID: 1212297618}
   m_Layer: 5
   m_Name: PlayButton
   m_TagString: Untagged
@@ -1452,6 +1468,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_AspectMode: 2
   m_AspectRatio: 1.0592937
+--- !u!114 &1212297618
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1212297612}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 44de6bb816de5d644b70520f9c40651d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1234995504
 GameObject:
   m_ObjectHideFlags: 0

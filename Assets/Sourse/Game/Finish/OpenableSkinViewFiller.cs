@@ -11,10 +11,10 @@ namespace Sourse.Game.Finish
     {
         private readonly List<SkinConfig> _skinConfigs = new();
         private readonly OpenableSkinBar _openableSkinBar;
+        private readonly List<OpenableSkinSaveData> _aviableOpenableSkinSaveData = new();
 
         private float _currentCompletePercent;
         private int _currentOpenableSkinID = -1;
-        private List<OpenableSkinSaveData> _aviableOpenableSkinSaveData = new();
 
         public OpenableSkinViewFiller(List<SkinConfig> skinConfigs,
             OpenableSkinBar openableSkinBar)
@@ -91,16 +91,15 @@ namespace Sourse.Game.Finish
             }
         }
 
-        public void CalculatePercent()
+        public void FillPercent()
         {
-            _currentCompletePercent += PlayerParameter.MaxPercent;
-
             if (_currentOpenableSkinID < 0)
             {
                 _openableSkinBar.Hide();
                 return;
             }
 
+            _currentCompletePercent += PlayerParameter.PercentPerLevel;
             _openableSkinBar.Show();
             _openableSkinBar.StartFillSkinBarCoroutine(_currentCompletePercent);
         }

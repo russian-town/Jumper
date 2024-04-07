@@ -10,7 +10,6 @@ namespace Sourse.UI.Shop.SkinConfiguration
 
         public void Initialize(OpenableSkin openableSkin)
         {
-            Debug.Log(openableSkin.Percent);
             _openableSkin = openableSkin;
             _bar.Initialize(_openableSkin.Icon, openableSkin.Percent);
         }
