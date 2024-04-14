@@ -12,7 +12,7 @@ namespace Sourse.Level
         public void Initialize(int levelNumber)
         {
             _text = GetComponent<TMP_Text>();
-            string translatedLevel = 
+            string translatedLevel =
                 LeanLocalization.GetTranslationText(TranslationText.Level);
             _text.text = $"{translatedLevel} {levelNumber}";
         }

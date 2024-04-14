@@ -42,7 +42,8 @@ namespace Sourse.UI
         {
             while (_fillArea.fillAmount != targetFillAmount)
             {
-                _fillArea.fillAmount = Mathf.MoveTowards(_fillArea.fillAmount,
+                _fillArea.fillAmount = Mathf.MoveTowards(
+                    _fillArea.fillAmount,
                     targetFillAmount,
                     _speed * Time.deltaTime);
                 yield return null;

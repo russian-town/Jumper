@@ -8,10 +8,11 @@ namespace Sourse.UI
 {
     public class PlayerInput : MonoBehaviour, IPointerDownHandler, IPauseHandler
     {
+        private readonly bool _isGameOver;
+        private readonly bool _isLevelComleted;
+
         private PlayerAnimator _animator;
         private bool _isPause;
-        private bool _isGameOver;
-        private bool _isLevelComleted;
 
         public event Action Pressed;
 

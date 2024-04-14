@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using Sourse.Balance;
 using Sourse.Camera;
 using Sourse.Constants;
-using Sourse.Enviroment.Common;
 using Sourse.Game.Finish;
 using Sourse.Game.Lose;
 using Sourse.Level;
@@ -21,6 +20,12 @@ namespace Sourse.Root
 {
     public class Root : MonoBehaviour, IDataReader, IDataWriter
     {
+        private readonly Wallet _wallet = new ();
+        private readonly LevelLoader _levelLoader = new ();
+        private readonly YandexAds _yandexAds = new ();
+        private readonly PlayerSpawner _playerSpawner = new ();
+        private readonly PlayerTemplateLoader _playerTemplateLoader = new ();
+
         [SerializeField] private FollowCamera _followCamera;
         [SerializeField] private PlayerInput _playerInput;
         [SerializeField] private PlayerPosition _startPosition;
@@ -30,22 +35,15 @@ namespace Sourse.Root
         [SerializeField] private int _moneyOfLevel;
         [SerializeField] private PauseView _pauseView;
         [SerializeField] private RewardedPanel _rewardedPanel;
-        [SerializeField] private List<Props> _props = new();
         [SerializeField] private FinishPosition _finishPosition;
-        [SerializeField] private List<SkinConfig> _skinConfigs = new();
+        [SerializeField] private List<SkinConfig> _skinConfigs = new ();
         [SerializeField] private OpenableSkinBar _openableSkinBar;
         [SerializeField] private HUD _hud;
         [SerializeField] private AudioMixerGroup _soundGroup;
         [SerializeField] private AudioMixerGroup _musicGroup;
 
-        private readonly Wallet _wallet = new();
-        private readonly LevelLoader _levelLoader = new();
-        private readonly YandexAds _yandexAds = new();
-        private readonly PlayerSpawner _playerSpawner = new();
-        private readonly PlayerTemplateLoader _playerTemplateLoader = new();
-
-        private List<IDataReader> _dataReaders = new();
-        private List<IDataWriter> _dataWriters = new();
+        private List<IDataReader> _dataReaders = new ();
+        private List<IDataWriter> _dataWriters = new ();
         private PlayerInitializer _startPlayer;
         private LocalSave _localSave;
         private GameLoss _gameLoss;
@@ -72,7 +70,7 @@ namespace Sourse.Root
                 return;
 
             _applicationFocus.SetFocus(focus);
-        }    
+        }
 
         public void Read(PlayerData playerData)
         {
@@ -92,17 +90,17 @@ namespace Sourse.Root
         {
             _dataReaders.Add(_playerTemplateLoader);
             _dataReaders.Add(this);
-            _localSave = new(_dataReaders, _dataWriters);
+            _localSave = new (_dataReaders, _dataWriters);
             _localSave.Load();
             PlayerInitializer template = _playerTemplateLoader.Get();
             _startPlayer = _playerSpawner.Create(template, _spawnPosition);
-            _dataReaders = new();
-            _dataWriters = new();
+            _dataReaders = new ();
+            _dataWriters = new ();
             _startPlayer.Initialize();
-            _restartLastPoint = new(_levelLoader, _startPlayer.GroundDetector);
+            _restartLastPoint = new (_levelLoader, _startPlayer.GroundDetector);
             _restartLastPoint.Subscribe();
             _playerInput.Initialize(_startPlayer.Animator);
-            _openableSkinViewFiller = new(_skinConfigs, _openableSkinBar);
+            _openableSkinViewFiller = new (_skinConfigs, _openableSkinBar);
             _dataReaders.AddRange(new IDataReader[]
             {
                 _wallet,
@@ -116,10 +114,11 @@ namespace Sourse.Root
             _levelProgress = new LevelProgress(_startPlayer, _finishPosition, _startPosition);
             _gameLoss = new GameLoss(_levelProgress, _startPlayer.Death);
             _gameLoss.Subscribe();
-            _localSave = new(_dataReaders, _dataWriters);
+            _localSave = new (_dataReaders, _dataWriters);
             _localSave.Load();
             _followCamera.SetTarget(_startPlayer);
-            _levelProgressView.Initialize(_levelProgress,
+            _levelProgressView.Initialize(
+                _levelProgress,
                 _startPlayer.Finisher,
                 _startPlayer.Death);
             _levelProgressView.Subscribe();
@@ -133,10 +132,9 @@ namespace Sourse.Root
             _gameLossView.RewardedButtonClicked += OnRewardedButtonClicked;
             _yandexAds.RewardedCallback += OnRewardedCallback;
             _gameLossView.CloseAdOfferScreenButtonClicked += OnCloseAdOfferScreenButtonClicked;
-            List<IPauseHandler> pauseHandlers = new()
+            List<IPauseHandler> pauseHandlers = new ()
             {
                 _playerInput,
-                _gameLoss,
             };
             _pause = new Pause(pauseHandlers);
             _audio = new Audio(_soundGroup, _musicGroup);

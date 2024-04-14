@@ -7,7 +7,7 @@ namespace Sourse.UI.Shop.SkinConfiguration
             return new Skin(skinConfig);
         }
 
-        public OpenableSkin CreateOpenableSkin(SkinConfig skinConfig) 
+        public OpenableSkin CreateOpenableSkin(SkinConfig skinConfig)
         {
             return new OpenableSkin(skinConfig);
         }

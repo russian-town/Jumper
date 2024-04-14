@@ -13,6 +13,7 @@ namespace Sourse.PauseContent
         }
 
         public event Action Enabled;
+
         public event Action Disabled;
 
         public void Enable()

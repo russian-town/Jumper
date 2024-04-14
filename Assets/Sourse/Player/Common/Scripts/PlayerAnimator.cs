@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Sourse.Player.Common.Scripts
 {
-    public class PlayerAnimator: MonoBehaviour
+    public class PlayerAnimator : MonoBehaviour
     {
         [SerializeField] private float _animationDelay;
         [SerializeField] private HeadPosition _headPosition;
@@ -16,10 +16,13 @@ namespace Sourse.Player.Common.Scripts
         private GroundDetector _groundDetector;
 
         public bool IsJumped { get; private set; }
+
         public bool IsdDoubleJumped { get; private set; }
+
         public bool IsGrounded => _groundDetector.IsGrounded();
 
         public event Action Jumped;
+
         public event Action DoubleJumped;
 
         private void OnAnimatorIK()

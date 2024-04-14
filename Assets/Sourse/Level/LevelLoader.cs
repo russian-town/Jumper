@@ -7,7 +7,7 @@ namespace Sourse.Level
     {
         public int GetCurrentNumber()
         {
-            if(int.TryParse(SceneManager.GetActiveScene().name, out int number))
+            if (int.TryParse(SceneManager.GetActiveScene().name, out int number))
                 return number;
 
             return LevelName.FirstNumber;

@@ -4,10 +4,10 @@ namespace Sourse.Yandex
 {
     public class SkinRewarded : Rewarded
     {
-        public Skin Skin { get; private set; }
-
         public SkinRewarded(Skin skin)
             => Skin = skin;
+
+        public Skin Skin { get; private set; }
 
         public override void Accept()
             => Skin.Buy();

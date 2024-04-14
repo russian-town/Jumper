@@ -5,11 +5,12 @@ namespace Sourse.Player.Common
 {
     public class EffectsPlayer
     {
-        private ParticleSystem _fallParticle;
-        private ParticleSystem _fallOnGroundParticle;
-        private GroundDetector _groundDetector;
+        private readonly ParticleSystem _fallParticle;
+        private readonly ParticleSystem _fallOnGroundParticle;
+        private readonly GroundDetector _groundDetector;
 
-        public EffectsPlayer(ParticleSystem fallParticle,
+        public EffectsPlayer(
+            ParticleSystem fallParticle,
             ParticleSystem fallOnGroundParticle,
             GroundDetector groundDetector)
         {

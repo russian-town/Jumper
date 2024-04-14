@@ -8,7 +8,8 @@ namespace Sourse.Save
         private readonly List<SkinSaveData> _skinSaveDatas;
         private readonly List<OpenableSkinSaveData> _openableSkinSaveDatas;
 
-        public SaveDataInjector(List<SkinSaveData> skinSaveDatas,
+        public SaveDataInjector(
+            List<SkinSaveData> skinSaveDatas,
             List<OpenableSkinSaveData> openableSkinSaveDatas)
         {
             _skinSaveDatas = skinSaveDatas;
@@ -22,7 +23,7 @@ namespace Sourse.Save
 
             foreach (var skinSaveData in _skinSaveDatas)
             {
-                if(skinSaveData.ID == skin.ID)
+                if (skinSaveData.ID == skin.ID)
                 {
                     skin.ApplySaveData(skinSaveData);
                     break;
@@ -49,7 +50,7 @@ namespace Sourse.Save
         {
             foreach (var skinSaveData in _skinSaveDatas)
             {
-                if(skinSaveData.ID == skin.ID)
+                if (skinSaveData.ID == skin.ID)
                 {
                     skinSaveData.IsBought = skin.IsBought;
                     skinSaveData.IsSelect = skin.IsSelect;
@@ -62,7 +63,7 @@ namespace Sourse.Save
         {
             foreach (var openableSkinSaveData in _openableSkinSaveDatas)
             {
-                if(openableSkinSaveData.ID == openableSkin.ID)
+                if (openableSkinSaveData.ID == openableSkin.ID)
                 {
                     openableSkinSaveData.IsBought = openableSkin.IsBought;
                     openableSkinSaveData.IsSelect = openableSkin.IsSelect;

@@ -10,8 +10,20 @@ namespace Sourse.Root
 {
     public class CompositionRoot : MonoBehaviour, IDataReader, IDataWriter
     {
+        private readonly Shop _shop = new ();
+        private readonly SkinViewSpawner _skinViewSpawner = new ();
+        private readonly List<PaidSkinView> _paidSkinViews = new ();
+        private readonly List<OpenableSkinView> _openableSkinViews = new ();
+        private readonly List<RewardedSkinView> _rewardedSkinViews = new ();
+        private readonly List<Skin> _skins = new ();
+        private readonly List<OpenableSkin> _openableSkins = new ();
+        private readonly SkinSpawner _skinSpawner = new ();
+        private readonly Wallet _wallet = new ();
+        private readonly BubbleSort _bubbleSort = new ();
+        private readonly LevelLoader _levelLoader = new ();
+
         [SerializeField] private ShopScroll _shopScroll;
-        [SerializeField] private List<SkinConfig> _skinConfigs = new();
+        [SerializeField] private List<SkinConfig> _skinConfigs = new ();
         [SerializeField] private PaidSkinView _paidSkinViewTemplate;
         [SerializeField] private OpenableSkinView _openableSkinViewTemplate;
         [SerializeField] private RewardedSkinView _rewardedSkinViewTemplate;
@@ -19,20 +31,8 @@ namespace Sourse.Root
         [SerializeField] private WalletView _walletView;
         [SerializeField] private ShopView _shopView;
 
-        private readonly Shop _shop = new();
-        private readonly SkinViewSpawner _skinViewSpawner = new();
-        private readonly List<PaidSkinView> _paidSkinViews = new();
-        private readonly List<OpenableSkinView> _openableSkinViews = new();
-        private readonly List<RewardedSkinView> _rewardedSkinViews = new();
-        private readonly List<Skin> _skins = new();
-        private readonly List<OpenableSkin> _openableSkins = new();
-        private readonly SkinSpawner _skinSpawner = new();
-        private readonly Wallet _wallet = new();
-        private readonly BubbleSort _bubbleSort = new();
-        private readonly LevelLoader _levelLoader = new();
-
-        private List<SkinSaveData> _skinSaveDatas = new();
-        private List<OpenableSkinSaveData> _openableSkinSaveDatas = new();
+        private List<SkinSaveData> _skinSaveDatas = new ();
+        private List<OpenableSkinSaveData> _openableSkinSaveDatas = new ();
         private SaveDataInjector _saveDataInjector;
         private ISaveLoadService _saveLoadService;
         private LocalSave _localSave;
@@ -69,15 +69,15 @@ namespace Sourse.Root
 
         private void Initialize()
         {
-            List<IDataWriter> dataWriters = new()
+            List<IDataWriter> dataWriters = new ()
             {
                 _wallet,
-                this
+                this,
             };
-            List<IDataReader> dataReaders = new()
+            List<IDataReader> dataReaders = new ()
             {
                 _wallet,
-                this
+                this,
             };
             _localSave = new LocalSave(dataReaders, dataWriters);
             _saveLoadService = _localSave;
@@ -90,7 +90,8 @@ namespace Sourse.Root
                 switch (skinConfig.Type)
                 {
                     case SkinType.Paid:
-                        var paidSkinView = _skinViewSpawner.Get(_paidSkinViewTemplate,
+                        var paidSkinView = _skinViewSpawner.Get(
+                            _paidSkinViewTemplate,
                             _parent);
                         var skin = _skinSpawner.CreateSkin(skinConfig);
                         _saveDataInjector.Update(skin);
@@ -99,7 +100,8 @@ namespace Sourse.Root
                         _paidSkinViews.Add(paidSkinView);
                         break;
                     case SkinType.Openable:
-                        var openableSkinView = _skinViewSpawner.Get(_openableSkinViewTemplate,
+                        var openableSkinView = _skinViewSpawner.Get(
+                            _openableSkinViewTemplate,
                             _parent);
                         var openableSkin = _skinSpawner.CreateOpenableSkin(skinConfig);
                         _saveDataInjector.Update(openableSkin);
@@ -108,7 +110,8 @@ namespace Sourse.Root
                         _openableSkinViews.Add(openableSkinView);
                         break;
                     case SkinType.Rewarded:
-                        var rewardedSkinView = _skinViewSpawner.Get(_rewardedSkinViewTemplate,
+                        var rewardedSkinView = _skinViewSpawner.Get(
+                            _rewardedSkinViewTemplate,
                             _parent);
                         var skin1 = _skinSpawner.CreateSkin(skinConfig);
                         _saveDataInjector.Update(skin1);
@@ -121,7 +124,7 @@ namespace Sourse.Root
 
             _walletView.Initialize(_wallet);
             _walletView.Subscribe();
-            List<Skin> skins = new();
+            List<Skin> skins = new ();
             skins.AddRange(_skins);
             skins.AddRange(_openableSkins);
             _shop.Initialize(skins,
@@ -135,7 +138,7 @@ namespace Sourse.Root
             _shopView.Initialize();
             _shopView.Subscribe();
             _shopView.CloseButtonClicked += OnCloseButtonClicked;
-            List<SkinView> skinViews = new();
+            List<SkinView> skinViews = new ();
             skinViews.AddRange(_paidSkinViews);
             skinViews.AddRange(_openableSkinViews);
             skinViews.AddRange(_rewardedSkinViews);

@@ -9,14 +9,15 @@ namespace Sourse.Game.Finish
 {
     public class OpenableSkinViewFiller : IDataReader, IDataWriter
     {
-        private readonly List<SkinConfig> _skinConfigs = new();
+        private readonly List<SkinConfig> _skinConfigs = new ();
         private readonly OpenableSkinBar _openableSkinBar;
-        private readonly List<OpenableSkinSaveData> _aviableOpenableSkinSaveData = new();
+        private readonly List<OpenableSkinSaveData> _aviableOpenableSkinSaveData = new ();
 
         private float _currentCompletePercent;
         private int _currentOpenableSkinID = -1;
 
-        public OpenableSkinViewFiller(List<SkinConfig> skinConfigs,
+        public OpenableSkinViewFiller(
+            List<SkinConfig> skinConfigs,
             OpenableSkinBar openableSkinBar)
         {
             _skinConfigs = skinConfigs;
@@ -26,8 +27,12 @@ namespace Sourse.Game.Finish
         public void Read(PlayerData playerData)
         {
             foreach (var openableSkinSaveData in playerData.OpenableSkinSaveDatas)
+            {
                 if (openableSkinSaveData.Persent < PlayerParameter.MaxPercent)
+                {
                     _aviableOpenableSkinSaveData.Add(openableSkinSaveData);
+                }
+            }
 
             if (_aviableOpenableSkinSaveData.Count == 0)
             {
@@ -78,19 +83,6 @@ namespace Sourse.Game.Finish
             playerData.CurrentOpenableSkinID = _currentOpenableSkinID;
         }
 
-        private void InitializeOpenableSkinBar()
-        {
-            foreach (var skinConfig in _skinConfigs)
-            {
-                if (skinConfig.ID == _currentOpenableSkinID)
-                {
-                    _openableSkinBar.Initialize(skinConfig.Icon,
-                        _currentCompletePercent);
-                    break;
-                }
-            }
-        }
-
         public void FillPercent()
         {
             if (_currentOpenableSkinID < 0)
@@ -102,6 +94,18 @@ namespace Sourse.Game.Finish
             _currentCompletePercent += PlayerParameter.PercentPerLevel;
             _openableSkinBar.Show();
             _openableSkinBar.StartFillSkinBarCoroutine(_currentCompletePercent);
+        }
+
+        private void InitializeOpenableSkinBar()
+        {
+            foreach (var skinConfig in _skinConfigs)
+            {
+                if (skinConfig.ID == _currentOpenableSkinID)
+                {
+                    _openableSkinBar.Initialize(skinConfig.Icon, _currentCompletePercent);
+                    break;
+                }
+            }
         }
     }
 }

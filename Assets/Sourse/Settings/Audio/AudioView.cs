@@ -68,7 +68,7 @@ namespace Sourse.Settings.Audio
                 _soundImage.sprite = _unmuteSound;
         }
 
-        private void OnMusicSliderValueChaged(float value) 
+        private void OnMusicSliderValueChaged(float value)
         {
             if (value <= AudioParameters.MuteVolume)
                 _musicImage.sprite = _muteMusic;

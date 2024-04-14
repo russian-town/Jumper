@@ -21,16 +21,16 @@ namespace Sourse.Enviroment.Barrel
             _rigidbody.isKinematic = true;
         }
 
-        public void AddPhysics()
-        {
-            _capsuleCollider.enabled = true;
-            _rigidbody.isKinematic = false;
-        }
-
         private void OnCollisionEnter(Collision collision)
         {
             if (collision.relativeVelocity.magnitude > _maxRelativeVelocity)
                 _audioSource.PlayOneShot(_fallSound);
+        }
+
+        public void AddPhysics()
+        {
+            _capsuleCollider.enabled = true;
+            _rigidbody.isKinematic = false;
         }
     }
 }

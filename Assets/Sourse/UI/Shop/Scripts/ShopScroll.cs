@@ -9,6 +9,11 @@ namespace Sourse.UI.Shop.Scripts
 {
     public class ShopScroll : MonoBehaviour, IBeginDragHandler, IEndDragHandler
     {
+        private List<RectTransform> _skins = new List<RectTransform>();
+        private readonly float _calculateSizeStep = .5f;
+        private readonly float _inversePositionX = -1f;
+        private readonly float _minSize = 0f;
+
         [SerializeField] private ScrollRect _scrollRect;
         [SerializeField] private HorizontalLayoutGroup _horizontalLayoutGroup;
         [SerializeField] private float _lerpSpeed = 3;
@@ -20,10 +25,6 @@ namespace Sourse.UI.Shop.Scripts
         private bool _isDragging;
         private float _correctivePositionX;
         private RectTransform _content;
-        private List<RectTransform> _skins = new List<RectTransform>();
-        private float _calculateSizeStep = .5f;
-        private float _inversePositionX = -1f;
-        private float _minSize = 0f;
 
         private void Awake()
         {
@@ -60,8 +61,12 @@ namespace Sourse.UI.Shop.Scripts
             }
 
             if (_isDragging == false)
+            {
                 if (Mathf.Abs(_scrollRect.velocity.x) < _stopVelocityX)
+                {
                     ScrollTo(nearestIndex);
+                }
+            }
         }
 
         public void Initialize(List<SkinView> skins)

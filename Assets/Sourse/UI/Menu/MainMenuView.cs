@@ -13,6 +13,7 @@ namespace Sourse.Menu
         [SerializeField] private AudioView _audioView;
 
         public event Action ShopButtonClicked;
+
         public event Action PlayButtonClicked;
 
         public void Initialize()

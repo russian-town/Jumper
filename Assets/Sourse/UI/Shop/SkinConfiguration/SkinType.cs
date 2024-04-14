@@ -4,6 +4,6 @@ namespace Sourse.UI.Shop.SkinConfiguration
     {
         Paid,
         Rewarded,
-        Openable
+        Openable,
     }
 }

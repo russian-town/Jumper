@@ -4,6 +4,6 @@ namespace Sourse.Settings.Language
     {
         Rus,
         Eng,
-        Tur
+        Tur,
     }
 }

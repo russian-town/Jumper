@@ -1,6 +1,6 @@
+using System;
 using Sourse.Constants;
 using Sourse.Save;
-using System;
 using UnityEngine;
 using UnityEngine.Audio;
 
@@ -14,15 +14,17 @@ namespace Sourse.Settings.Audio
         private float _soundValue;
         private float _musicValue;
 
-        public event Action<float> SoundValueChanged;
-        public event Action<float> MusicValueChanged;
-
-        public Audio(AudioMixerGroup soundGroup,
+        public Audio(
+            AudioMixerGroup soundGroup,
             AudioMixerGroup musicGroup)
         {
             _soundGroup = soundGroup;
             _musicGroup = musicGroup;
         }
+
+        public event Action<float> SoundValueChanged;
+
+        public event Action<float> MusicValueChanged;
 
         public void Read(PlayerData playerData)
         {

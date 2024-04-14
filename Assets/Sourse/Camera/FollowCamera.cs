@@ -16,7 +16,7 @@ namespace Sourse.Camera
 
             Vector3 targetPosition = new Vector3(_target.position.x, _target.position.y, transform.position.z);
             Vector3 offSet = new Vector3(_offSet.x, _offSet.y, 0f);
-            Vector3 followPosition = targetPosition + offSet; 
+            Vector3 followPosition = targetPosition + offSet;
             transform.position = Vector3.Lerp(transform.position, followPosition, _speed * Time.deltaTime);
         }
 

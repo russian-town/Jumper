@@ -9,10 +9,10 @@ namespace Sourse.Player.Common
     {
         private readonly GroundDetector _groundDetector;
 
-        public event Action LevelCompleted;
-
         public PlayerFinisher(GroundDetector groundDetector)
             => _groundDetector = groundDetector;
+
+        public event Action LevelCompleted;
 
         public void Subscribe()
             => _groundDetector.Fell += OnFell;

@@ -25,7 +25,8 @@ namespace Sourse.Level
             _playerDeath.Died -= OnPlayerDied;
         }
 
-        public void Initialize(LevelProgress levelProgress,
+        public void Initialize(
+            LevelProgress levelProgress,
             PlayerFinisher playerFinisher,
             PlayerDeath playerDeath)
         {

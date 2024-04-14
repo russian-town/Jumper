@@ -4,7 +4,7 @@ namespace Sourse.UI.Shop.SkinConfiguration
     {
         public SkinSaveData CreateSkinSaveData(Skin skin)
         {
-            SkinSaveData skinSaveData = new();
+            SkinSaveData skinSaveData = new ();
             skinSaveData.ID = skin.ID;
             skinSaveData.IsBought = skin.IsBought;
             skinSaveData.IsSelect = skin.IsSelect;
@@ -13,7 +13,7 @@ namespace Sourse.UI.Shop.SkinConfiguration
 
         public OpenableSkinSaveData CreateOpenableSkinSaveData(OpenableSkin openableSkin)
         {
-            OpenableSkinSaveData openableSkinSaveData = new();
+            OpenableSkinSaveData openableSkinSaveData = new ();
             openableSkinSaveData.ID = openableSkin.ID;
             openableSkinSaveData.IsBought = openableSkin.IsBought;
             openableSkinSaveData.IsSelect = openableSkin.IsSelect;

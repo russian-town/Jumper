@@ -14,7 +14,9 @@ namespace Sourse.PauseContent
         private Pause _pause;
 
         public event Action ContinueButtonClicked;
+
         public event Action RestatrButtonClicked;
+
         public event Action ExitButtonClicked;
 
         public void Subscribe()

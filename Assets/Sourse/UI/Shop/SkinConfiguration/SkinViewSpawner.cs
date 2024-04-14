@@ -9,12 +9,12 @@ namespace Sourse.UI.Shop.SkinConfiguration
             return Object.Instantiate(template, parent);
         }
 
-        public OpenableSkinView Get(OpenableSkinView template, Transform parent) 
+        public OpenableSkinView Get(OpenableSkinView template, Transform parent)
         {
             return Object.Instantiate(template, parent);
         }
 
-        public RewardedSkinView Get(RewardedSkinView template, Transform parent) 
+        public RewardedSkinView Get(RewardedSkinView template, Transform parent)
         {
             return Object.Instantiate(template, parent);
         }

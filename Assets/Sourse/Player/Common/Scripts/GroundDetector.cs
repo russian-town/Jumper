@@ -24,8 +24,7 @@ namespace Sourse.Player.Common.Scripts
             if (collision.transform.TryGetComponent(out Barrel barrel))
                 return;
 
-            _canDetect = !Physics.ComputePenetration
-            (
+            _canDetect = !Physics.ComputePenetration(
                 _head,
                 _head.transform.position,
                 _head.transform.rotation,

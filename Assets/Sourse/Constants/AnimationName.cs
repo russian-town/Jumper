@@ -1,4 +1,3 @@
-
 namespace Sourse.Constants
 {
     public class AnimationName

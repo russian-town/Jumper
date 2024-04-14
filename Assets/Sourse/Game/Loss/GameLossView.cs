@@ -19,7 +19,9 @@ namespace Sourse.Game.Lose
         private GameLoss _gameLoss;
 
         public event Action RewardedButtonClicked;
+
         public event Action CloseAdOfferScreenButtonClicked;
+
         public event Action RetryButtonClicked;
 
         public void Initialize(GameLoss gameLoss)

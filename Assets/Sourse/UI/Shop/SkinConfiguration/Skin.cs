@@ -15,15 +15,21 @@ namespace Sourse.UI.Shop.SkinConfiguration
             Icon = skinConfig.Icon;
         }
 
-        public bool IsSelect { get; private set; }
-        public bool IsBought {  get; private set; }
-        public int Price { get; private set; }
-        public int ID { get; private set; }
-        public Sprite Icon { get; private set; }
-
         public event Action Selected;
+
         public event Action Bought;
+
         public event Action Deselected;
+
+        public bool IsSelect { get; private set; }
+
+        public bool IsBought { get; private set; }
+
+        public int Price { get; private set; }
+
+        public int ID { get; private set; }
+
+        public Sprite Icon { get; private set; }
 
         public void ApplySaveData(SkinSaveData skinSaveData)
         {

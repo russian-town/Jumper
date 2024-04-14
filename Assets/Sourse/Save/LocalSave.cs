@@ -9,9 +9,10 @@ namespace Sourse.Save
         private readonly List<IDataReader> _dataReaders;
         private readonly List<IDataWriter> _dataWriters;
 
-        private PlayerData _playerData = new();
+        private PlayerData _playerData = new ();
 
-        public LocalSave(List<IDataReader> dataReaders,
+        public LocalSave(
+            List<IDataReader> dataReaders,
             List<IDataWriter> dataWriters)
         {
             _dataReaders = dataReaders;

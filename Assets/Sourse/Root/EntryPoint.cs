@@ -16,25 +16,25 @@ namespace Sourse.Root
 {
     public class EntryPoint : MonoBehaviour, IDataReader, IDataWriter
     {
-        [SerializeField] private List<SkinConfig> _skinConfigs = new();
+        private readonly SkinSpawner _skinSpawner = new ();
+        private readonly SkinSaveDataSpawner _skinSaveDataSpawner = new ();
+        private readonly Wallet _wallet = new ();
+        private readonly LevelLoader _levelLoader = new ();
+
+        [SerializeField] private List<SkinConfig> _skinConfigs = new ();
         [SerializeField] private AudioView _audioView;
         [SerializeField] private MainMenuView _mainMenuView;
         [SerializeField] private LeanLocalization _leanLocalization;
         [SerializeField] private AudioMixerGroup _soundGroup;
         [SerializeField] private AudioMixerGroup _musicGroup;
 
-        private readonly SkinSpawner _skinSpawner = new();
-        private readonly SkinSaveDataSpawner _skinSaveDataSpawner = new();
-        private readonly Wallet _wallet = new();
-        private readonly LevelLoader _levelLoader = new();
-
         private YandexInitializer _yandexInitializer;
         private LanguageSettings _languageSettings;
         private Audio _audio;
         private ISaveLoadService _saveLoadService;
         private LocalSave _localSave;
-        private List<SkinSaveData> _skinSaveDatas = new();
-        private List<OpenableSkinSaveData> _openableSkinSaveDatas = new();
+        private List<SkinSaveData> _skinSaveDatas = new ();
+        private List<OpenableSkinSaveData> _openableSkinSaveDatas = new ();
 
         private void OnDestroy()
             => Unsubscribe();
@@ -69,8 +69,9 @@ namespace Sourse.Root
             _mainMenuView.Subscribe();
             _mainMenuView.ShopButtonClicked += OnShopButtonClicked;
             _mainMenuView.PlayButtonClicked += OnPlayButtonClicked;
-            _localSave = new LocalSave(new List<IDataReader> { this, _wallet, _audio },
-                new List<IDataWriter> { this, _wallet, _audio});
+            _localSave = new LocalSave(
+                new List<IDataReader> { this, _wallet, _audio },
+                new List<IDataWriter> { this, _wallet, _audio });
             _saveLoadService = _localSave;
             _saveLoadService.Load();
             LoadSkinProgress();

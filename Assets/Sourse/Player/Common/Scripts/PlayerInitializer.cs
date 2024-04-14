@@ -12,8 +12,11 @@ namespace Sourse.Player.Common.Scripts
         private EffectsPlayer _effectsPlayer;
 
         public PlayerAnimator Animator { get; private set; }
+
         public GroundDetector GroundDetector { get; private set; }
+
         public PlayerDeath Death { get; private set; }
+
         public PlayerFinisher Finisher { get; private set; }
 
         public void Unsubscribe()
@@ -35,7 +38,8 @@ namespace Sourse.Player.Common.Scripts
             GroundDetector.Initialize();
             Animator.Initialize(GroundDetector);
             Death = new PlayerDeath(GroundDetector);
-            _effectsPlayer = new EffectsPlayer(_fallParticle,
+            _effectsPlayer = new EffectsPlayer(
+                _fallParticle,
                 _fallOnGroundParticle,
                 GroundDetector);
             Death.Subscribe();

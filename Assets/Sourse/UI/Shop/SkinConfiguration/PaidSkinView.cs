@@ -41,19 +41,14 @@ namespace Sourse.UI.Shop.SkinConfiguration
         {
             base.UpdateView();
 
-            if (_skin.IsSelect)
+            if (!_skin.IsBought)
             {
-                _priceText.Hide();
-            }
-            else if (!_skin.IsBought && !_skin.IsSelect)
-            {
+                _buyButton.gameObject.SetActive(true);
                 _priceText.Show();
+                return;
             }
-            else if(_skin.IsBought && !_skin.IsSelect)
-            {
-                _priceText.Hide();
-                _buyButton.gameObject.SetActive(false);
-            }
+
+            _priceText.Hide();
         }
 
         protected override Skin Skin()

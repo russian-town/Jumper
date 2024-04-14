@@ -19,7 +19,8 @@ namespace Sourse.UI.LevelCompletePanel
 
         public event Action NextLevelButtonClicked;
 
-        public void Initialize(PlayerFinisher levelFinisher,
+        public void Initialize(
+            PlayerFinisher levelFinisher,
             LevelLoader levelLoader)
         {
             _playerFinisher = levelFinisher;
@@ -35,7 +36,7 @@ namespace Sourse.UI.LevelCompletePanel
                 => NextLevelButtonClicked?.Invoke());
         }
 
-        public void Unsubscribe() 
+        public void Unsubscribe()
         {
             _playerFinisher.LevelCompleted -= OnLevelComplete;
             _nextLevelButton.RemoveListener(()

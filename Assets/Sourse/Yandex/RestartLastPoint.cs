@@ -13,7 +13,8 @@ namespace Sourse.Yandex
 
         private PlayerPosition _lastPosition;
 
-        public RestartLastPoint(LevelLoader levelLoader,
+        public RestartLastPoint(
+            LevelLoader levelLoader,
             GroundDetector groundDetector)
         {
             _levelLoader = levelLoader;

@@ -8,19 +8,22 @@ namespace Sourse.UI.Shop.Scripts
 {
     public class Shop
     {
+        private readonly YandexAds _yandexAds;
+
         private Wallet _wallet;
-        private List<Skin> _skins = new List<Skin>();
-        private List<PaidSkinView> _paidSkinViews = new();
-        private List<OpenableSkinView> _openableSkinViews = new();
-        private List<RewardedSkinView> _rewardedSkinViews = new();
+        private List<Skin> _skins = new ();
+        private List<PaidSkinView> _paidSkinViews = new ();
+        private List<OpenableSkinView> _openableSkinViews = new ();
+        private List<RewardedSkinView> _rewardedSkinViews = new ();
         private Skin _currentSelectedSkin;
-        private YandexAds _yandexAds;
         private SkinRewarded _skinRewarded;
 
         public event Action<Skin> Bought;
+
         public event Action<Skin> Selected;
 
-        public void Initialize(List<Skin> skins,
+        public void Initialize(
+            List<Skin> skins,
             List<PaidSkinView> paidSkinViews,
             List<OpenableSkinView> openableSkinViews,
             List<RewardedSkinView> rewardedSkinViews,
