@@ -10,27 +10,7 @@ namespace Sourse.Root
         private int _id;
 
         public void Read(PlayerData playerData)
-        {
-            foreach (var skinSaveData in playerData.SkinSaveDatas)
-            {
-                if (skinSaveData.IsSelect == true)
-                {
-                    _id = skinSaveData.ID;
-                    return;
-                }
-            }
-
-            foreach (var openableSkinSaveData in playerData.OpenableSkinSaveDatas)
-            {
-                if (openableSkinSaveData.IsSelect == true)
-                {
-                    _id = openableSkinSaveData.ID;
-                    return;
-                }
-            }
-
-            _id = PlayerParameter.DefaultPlayerID;
-        }
+            => _id = playerData.CurrentSelectedSkinID;
 
         public PlayerInitializer Get()
         {

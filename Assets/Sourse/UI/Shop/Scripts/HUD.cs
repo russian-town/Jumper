@@ -7,7 +7,8 @@ using UnityEngine;
 public class HUD : UIElement
 {
     [SerializeField] private PauseButton _pauseButton;
-    [SerializeField] private LevelNumberText _levelNumberText;
+    [SerializeField] private LevelNumberText _currentlevelNumberText;
+    [SerializeField] private LevelNumberText _nextlevelNumberText;
 
     public event Action PauseButtonClicked;
 
@@ -22,6 +23,8 @@ public class HUD : UIElement
     public void Initialize(int levelNumber)
     {
         _pauseButton.Initialize();
-        _levelNumberText.Initialize(levelNumber);
+        _currentlevelNumberText.Initialize(levelNumber);
+        int nextLevelNumber = levelNumber++;
+        _nextlevelNumberText.Initialize(nextLevelNumber);
     }
 }

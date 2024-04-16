@@ -11,6 +11,7 @@ namespace Sourse.Save
         public List<OpenableSkinSaveData> OpenableSkinSaveDatas;
         public bool IsTutorialCompleted;
         public int Money;
+        public int CurrentSelectedSkinID;
         public int CurrentOpenableSkinID = -1;
         public float SoundValue = 1f;
         public float MusicValue = 1f;

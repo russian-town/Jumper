@@ -7,7 +7,7 @@ namespace Sourse.Level
 {
     public class LevelProgressView : UIElement
     {
-        [SerializeField] private Image _levelProgressBar;
+        [SerializeField] private Image _fillImage;
 
         private LevelProgress _levelProgress;
         private PlayerFinisher _playerFinisher;
@@ -33,7 +33,7 @@ namespace Sourse.Level
             _levelProgress = levelProgress;
             _playerFinisher = playerFinisher;
             _playerDeath = playerDeath;
-            _levelProgressBar.fillAmount = _levelProgress.GetCurrentDistance();
+            _fillImage.fillAmount = _levelProgress.GetCurrentDistance();
         }
 
         public void UpdateProgressBar()
@@ -41,10 +41,10 @@ namespace Sourse.Level
             if (gameObject.activeSelf == false)
                 return;
 
-            if (_levelProgress.GetCurrentDistance() < _levelProgressBar.fillAmount)
+            if (_levelProgress.GetCurrentDistance() < _fillImage.fillAmount)
                 return;
 
-            _levelProgressBar.fillAmount = _levelProgress.GetCurrentDistance();
+            _fillImage.fillAmount = _levelProgress.GetCurrentDistance();
         }
 
         private void OnLevelCompleted()
