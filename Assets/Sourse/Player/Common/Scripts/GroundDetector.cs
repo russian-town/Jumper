@@ -32,8 +32,7 @@ namespace Sourse.Player.Common.Scripts
                 collision.transform.position,
                 collision.transform.rotation,
                 out Vector3 direction,
-                out float distance
-            );
+                out float distance);
 
             if (Vector3.Dot(collision.GetContact(0).normal, Vector3.up) > Threshold && _canDetect)
                 Fell?.Invoke(collision);

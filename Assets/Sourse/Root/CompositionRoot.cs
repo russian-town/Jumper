@@ -127,7 +127,8 @@ namespace Sourse.Root
             List<Skin> skins = new ();
             skins.AddRange(_skins);
             skins.AddRange(_openableSkins);
-            _shop.Initialize(skins,
+            _shop.Initialize(
+                skins,
                 _paidSkinViews,
                 _openableSkinViews,
                 _rewardedSkinViews,

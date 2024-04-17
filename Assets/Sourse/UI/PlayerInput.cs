@@ -8,9 +8,6 @@ namespace Sourse.UI
 {
     public class PlayerInput : MonoBehaviour, IPointerDownHandler, IPauseHandler
     {
-        private readonly bool _isGameOver;
-        private readonly bool _isLevelComleted;
-
         private PlayerAnimator _animator;
         private bool _isPause;
 
@@ -21,19 +18,22 @@ namespace Sourse.UI
 
         public void OnPointerDown(PointerEventData eventData)
         {
+            Pressed?.Invoke();
+
             if (_animator == null)
                 return;
 
-            if (_isPause == true || _isGameOver == true || _isLevelComleted == true)
+            if (_isPause == true)
                 return;
 
             if (_animator.IsJumped == false && _animator.IsGrounded == true)
+            {
                 _animator.Jump();
-            else if (_animator.IsdDoubleJumped == false && _animator.IsJumped == true
-                || _animator.IsdDoubleJumped == false && _animator.IsGrounded == false)
-                _animator.DoubleJump();
+                return;
+            }
 
-            Pressed?.Invoke();
+            if (_animator.IsDoubleJumped == false && _animator.IsGrounded == false)
+                _animator.DoubleJump();
         }
 
         public void SetPause(bool isPause)

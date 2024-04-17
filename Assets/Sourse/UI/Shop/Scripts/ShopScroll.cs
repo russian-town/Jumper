@@ -9,7 +9,7 @@ namespace Sourse.UI.Shop.Scripts
 {
     public class ShopScroll : MonoBehaviour, IBeginDragHandler, IEndDragHandler
     {
-        private List<RectTransform> _skins = new List<RectTransform>();
+        private readonly List<RectTransform> _skins = new ();
         private readonly float _calculateSizeStep = .5f;
         private readonly float _inversePositionX = -1f;
         private readonly float _minSize = 0f;

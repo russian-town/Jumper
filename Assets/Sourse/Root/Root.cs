@@ -32,9 +32,7 @@ namespace Sourse.Root
         [SerializeField] private GameLossView _gameLossView;
         [SerializeField] private LevelProgressView _levelProgressView;
         [SerializeField] private LevelFinishView _levelFinishView;
-        [SerializeField] private int _moneyOfLevel;
         [SerializeField] private PauseView _pauseView;
-        [SerializeField] private RewardedPanel _rewardedPanel;
         [SerializeField] private FinishPosition _finishPosition;
         [SerializeField] private List<SkinConfig> _skinConfigs = new ();
         [SerializeField] private OpenableSkinBar _openableSkinBar;

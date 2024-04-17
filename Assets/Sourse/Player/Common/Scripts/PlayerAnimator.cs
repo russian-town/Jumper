@@ -15,15 +15,15 @@ namespace Sourse.Player.Common.Scripts
         private float _weight;
         private GroundDetector _groundDetector;
 
-        public bool IsJumped { get; private set; }
-
-        public bool IsdDoubleJumped { get; private set; }
-
-        public bool IsGrounded => _groundDetector.IsGrounded();
-
         public event Action Jumped;
 
         public event Action DoubleJumped;
+
+        public bool IsJumped { get; private set; }
+
+        public bool IsDoubleJumped { get; private set; }
+
+        public bool IsGrounded => _groundDetector.IsGrounded();
 
         private void OnAnimatorIK()
         {
@@ -60,7 +60,7 @@ namespace Sourse.Player.Common.Scripts
 
         public void DoubleJump()
         {
-            IsdDoubleJumped = true;
+            IsDoubleJumped = true;
             _animator.SetTrigger(AnimationName.DoubleJump);
             _startResetTriggers = StartCoroutine(ResetTriggers());
         }
@@ -83,7 +83,7 @@ namespace Sourse.Player.Common.Scripts
         private void Die(float relativeVelocity)
         {
             IsJumped = false;
-            IsdDoubleJumped = false;
+            IsDoubleJumped = false;
             DisableIK();
 
             if (relativeVelocity >= AnimationParameter.MaxRelativeVelocityY)

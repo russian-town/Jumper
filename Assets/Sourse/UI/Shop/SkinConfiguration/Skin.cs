@@ -53,7 +53,7 @@ namespace Sourse.UI.Shop.SkinConfiguration
         }
 
         public void Deselect()
-        { 
+        {
             IsSelect = false;
             Deselected?.Invoke();
         }

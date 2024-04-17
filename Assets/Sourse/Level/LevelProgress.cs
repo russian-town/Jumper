@@ -11,7 +11,7 @@ namespace Sourse.Level
         private readonly PlayerPosition _startPosition;
         private readonly float _startDistancePlayerToFinish;
         private readonly PlayerInitializer _playerInitializer;
-        
+
         public LevelProgress(
             PlayerInitializer playerInitializer,
             FinishPosition finishPosition,
