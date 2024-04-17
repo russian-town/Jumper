@@ -35,8 +35,8 @@ namespace Sourse.Yandex
 
         private void OnFell(Collision collision)
         {
-            if (collision.transform.TryGetComponent(out Props props))
-                _lastPosition = props.PlayerPosition;
+            if (collision.transform.TryGetComponent(out Item props))
+                _lastPosition = null;
         }
     }
 }

@@ -3,13 +3,10 @@ using UnityEngine;
 
 namespace Sourse.Enviroment.Common
 {
-    public class Props : MonoBehaviour
+    public class Item : MonoBehaviour
     {
         [SerializeField] private CollisionEvent CollisionEnter;
         [SerializeField] private CollisionEvent CollisionExit;
-        [SerializeField] private PlayerPosition _playerPosition;
-
-        public PlayerPosition PlayerPosition => _playerPosition;
 
         private void OnCollisionEnter(Collision collision)
         {

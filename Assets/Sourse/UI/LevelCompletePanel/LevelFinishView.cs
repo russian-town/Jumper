@@ -1,7 +1,6 @@
 using System;
 using Lean.Localization;
 using Sourse.Constants;
-using Sourse.Level;
 using Sourse.Player.Common;
 using TMPro;
 using UnityEngine;
@@ -15,16 +14,12 @@ namespace Sourse.UI.LevelCompletePanel
         [SerializeField] private NextLevelButton _nextLevelButton;
 
         private PlayerFinisher _playerFinisher;
-        private LevelLoader _levelLoader;
 
         public event Action NextLevelButtonClicked;
 
-        public void Initialize(
-            PlayerFinisher levelFinisher,
-            LevelLoader levelLoader)
+        public void Initialize(PlayerFinisher levelFinisher)
         {
             _playerFinisher = levelFinisher;
-            _levelLoader = levelLoader;
             _nextLevelButton.Initialize();
             Hide();
         }
@@ -53,7 +48,7 @@ namespace Sourse.UI.LevelCompletePanel
 
         private void OnLevelComplete()
         {
-            SetText(_levelLoader.GetCurrentNumber());
+            SetText(1);
             Show();
         }
     }

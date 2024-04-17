@@ -1,4 +1,5 @@
 using System.Collections;
+using Sourse.Game.FinishContent;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,13 +10,33 @@ namespace Sourse.UI
         [SerializeField] private Image _background;
         [SerializeField] private Image _fillArea;
         [SerializeField] private float _speed;
+        
+        private OpenableSkinViewFiller _openableSkinViewFiller;
 
-        public void Initialize(Sprite icon, float currentValue)
+        public void Initialize(Sprite icon,
+            float currentValue,
+            OpenableSkinViewFiller openableSkinViewFiller)
         {
             _background.color = Color.black;
             _background.sprite = icon;
             _fillArea.sprite = icon;
             _fillArea.fillAmount = currentValue;
+            _openableSkinViewFiller = openableSkinViewFiller;
+            _openableSkinViewFiller.Initialized += OnInitialized;
+            _openableSkinViewFiller.PercentCalculated += OnPercentCalculated;
+            Hide();
+        }
+
+        private void OnInitialized(Sprite sprite, float percent)
+        {
+            _background.sprite = sprite;
+            _fillArea.fillAmount = percent;
+        }
+
+        private void OnPercentCalculated(float persent)
+        {
+            Show();
+            StartCoroutine(FillSkinBarOverTime(persent));
         }
 
         public void Show()
@@ -30,12 +51,10 @@ namespace Sourse.UI
             _background.enabled = false;
         }
 
-        public void StartFillSkinBarCoroutine(float targetFillAmount)
+        public void Unsubscribe()
         {
-            if (enabled == false || gameObject.activeInHierarchy == false)
-                return;
-
-            StartCoroutine(FillSkinBarOverTime(targetFillAmount));
+            _openableSkinViewFiller.Initialized -= OnInitialized;
+            _openableSkinViewFiller.PercentCalculated -= OnPercentCalculated;
         }
 
         private IEnumerator FillSkinBarOverTime(float targetFillAmount)

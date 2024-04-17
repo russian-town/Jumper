@@ -2,15 +2,14 @@ using System.Collections.Generic;
 using Sourse.Balance;
 using Sourse.Camera;
 using Sourse.Constants;
-using Sourse.Game.Finish;
+using Sourse.Game.FinishContent;
 using Sourse.Game.Lose;
 using Sourse.Level;
 using Sourse.PauseContent;
 using Sourse.Player.Common.Scripts;
 using Sourse.Save;
+using Sourse.SceneConfigurator;
 using Sourse.Settings.Audio;
-using Sourse.UI;
-using Sourse.UI.LevelCompletePanel;
 using Sourse.UI.Shop.SkinConfiguration;
 using Sourse.Yandex;
 using UnityEngine;
@@ -26,21 +25,15 @@ namespace Sourse.Root
         private readonly PlayerSpawner _playerSpawner = new ();
         private readonly PlayerTemplateLoader _playerTemplateLoader = new ();
 
-        [SerializeField] private FollowCamera _followCamera;
-        [SerializeField] private PlayerInput _playerInput;
-        [SerializeField] private PlayerPosition _startPosition;
-        [SerializeField] private GameLossView _gameLossView;
-        [SerializeField] private LevelProgressView _levelProgressView;
-        [SerializeField] private LevelFinishView _levelFinishView;
-        [SerializeField] private int _moneyOfLevel;
-        [SerializeField] private PauseView _pauseView;
-        [SerializeField] private RewardedPanel _rewardedPanel;
-        [SerializeField] private FinishPosition _finishPosition;
-        [SerializeField] private List<SkinConfig> _skinConfigs = new ();
-        [SerializeField] private OpenableSkinBar _openableSkinBar;
-        [SerializeField] private HUD _hud;
         [SerializeField] private AudioMixerGroup _soundGroup;
         [SerializeField] private AudioMixerGroup _musicGroup;
+        [SerializeField] private List<SceneConfig> _sceneConfigs = new ();
+        [SerializeField] private List<SkinConfig> _skinConfigs = new ();
+
+        private FollowCamera _followCamera;
+        private PlayerPosition _startPosition;
+        private FinishPosition _finishPosition;
+        private HUD _hud;
 
         private List<IDataReader> _dataReaders = new ();
         private List<IDataWriter> _dataWriters = new ();
@@ -62,7 +55,7 @@ namespace Sourse.Root
             => Initialize();
 
         private void Update()
-            => _levelProgressView.UpdateProgressBar();
+            => _hud.UpdateView();
 
         private void OnApplicationFocus(bool focus)
         {
@@ -98,9 +91,8 @@ namespace Sourse.Root
             _dataWriters = new ();
             _startPlayer.Initialize();
             _restartLastPoint = new (_levelLoader, _startPlayer.GroundDetector);
-            _restartLastPoint.Subscribe();
-            _playerInput.Initialize(_startPlayer.Animator);
-            _openableSkinViewFiller = new (_skinConfigs, _openableSkinBar);
+            _restartLastPoint.Subscribe();    
+            _openableSkinViewFiller = new (_skinConfigs);
             _dataReaders.AddRange(new IDataReader[]
             {
                 _wallet,
@@ -116,46 +108,24 @@ namespace Sourse.Root
             _gameLoss.Subscribe();
             _localSave = new (_dataReaders, _dataWriters);
             _localSave.Load();
-            _followCamera.SetTarget(_startPlayer);
-            _levelProgressView.Initialize(
-                _levelProgress,
-                _startPlayer.Finisher,
-                _startPlayer.Death);
-            _levelProgressView.Subscribe();
-            _levelProgressView.UpdateProgressBar();
-            _levelFinishView.Initialize(_startPlayer.Finisher, _levelLoader);
-            _levelFinishView.Subscribe();
-            _levelFinishView.NextLevelButtonClicked += OnNextLevelButtonClicked;
-            _gameLossView.Initialize(_gameLoss);
-            _gameLossView.Subscribe();
-            _gameLossView.RetryButtonClicked += OnRetryButtonClicked;
-            _gameLossView.RewardedButtonClicked += OnRewardedButtonClicked;
-            _yandexAds.RewardedCallback += OnRewardedCallback;
-            _gameLossView.CloseAdOfferScreenButtonClicked += OnCloseAdOfferScreenButtonClicked;
-            List<IPauseHandler> pauseHandlers = new ()
-            {
-                _playerInput,
-            };
+            _followCamera.SetTarget(_startPlayer); 
+            _yandexAds.RewardedCallback += OnRewardedCallback;  
+            List<IPauseHandler> pauseHandlers = new () { _hud };
             _pause = new Pause(pauseHandlers);
             _audio = new Audio(_soundGroup, _musicGroup);
             _applicationFocus = new ApplicationFocus(_audio, _pause);
-            _pauseView.Initialize(_pause);
-            _pauseView.Subscribe();
-            _pauseView.ContinueButtonClicked += OnContinueButtonClicked;
-            _pauseView.ExitButtonClicked += OnExitButtonClicked;
-            _pauseView.RestatrButtonClicked += OnRestartButtonClicked;
-            _hud.Initialize(_levelLoader.GetCurrentNumber());
+            _hud.Initialize(_levelLoader.GetCurrentNumber(),
+                _startPlayer,
+                _levelProgress,
+                _gameLoss,
+                _pause);
             _hud.Subscribe();
             _hud.PauseButtonClicked += OnPauseButtonClicked;
             _startPlayer.Finisher.LevelCompleted += OnLevelCompleted;
-            _levelProgressView.Show();
             _spawnPosition = Vector3.zero;
             _dataWriters.Add(this);
             _localSave.Save();
         }
-
-        private void OnRewardedButtonClicked()
-            => _yandexAds.ShowRewardedVideo();
 
         private void OnRewardedCallback()
         {
@@ -167,51 +137,22 @@ namespace Sourse.Root
         private void OnPauseButtonClicked()
             => _pause.Enable();
 
-        private void OnContinueButtonClicked()
-            => _pause.Disable();
-
-        private void OnCloseAdOfferScreenButtonClicked()
-            => _levelLoader.Restart();
-
         private void OnLevelCompleted()
         {
             _wallet.AddMoney(PlayerParameter.MoneyPerLevel);
-            _openableSkinViewFiller.FillPercent();
+            _openableSkinViewFiller.CalculatePercent();
             _localSave.Save();
         }
-
-        private void OnNextLevelButtonClicked()
-            => _levelLoader.GoNext();
-
-        private void OnExitButtonClicked()
-            => _levelLoader.ExitToMainMenu();
-
-        private void OnRestartButtonClicked()
-            => _levelLoader.Restart();
-
-        private void OnRetryButtonClicked()
-            => _levelLoader.Restart();
 
         private void Unsubscribe()
         {
             _startPlayer.Finisher.LevelCompleted -= OnLevelCompleted;
             _startPlayer.Unsubscribe();
-            _levelFinishView.Unsubscribe();
-            _gameLossView.RewardedButtonClicked -= OnRewardedButtonClicked;
             _yandexAds.RewardedCallback -= OnRewardedCallback;
             _restartLastPoint.Unsubscribe();
             _gameLoss.Unsubscribe();
-            _gameLossView.Unsubscribe();
-            _gameLossView.RetryButtonClicked -= OnRetryButtonClicked;
-            _gameLossView.CloseAdOfferScreenButtonClicked -= OnCloseAdOfferScreenButtonClicked;
-            _levelProgressView.Unsubscribe();
-            _pauseView.Unsubscribe();
             _hud.Unsubscribe();
             _hud.PauseButtonClicked -= OnPauseButtonClicked;
-            _pauseView.ContinueButtonClicked -= OnContinueButtonClicked;
-            _pauseView.ExitButtonClicked -= OnExitButtonClicked;
-            _pauseView.RestatrButtonClicked -= OnRestartButtonClicked;
-            _levelFinishView.NextLevelButtonClicked -= OnNextLevelButtonClicked;
         }
     }
 }

@@ -11,7 +11,7 @@ namespace Sourse.UI.Shop.SkinConfiguration
         public void Initialize(OpenableSkin openableSkin)
         {
             _openableSkin = openableSkin;
-            _bar.Initialize(_openableSkin.Icon, openableSkin.Percent);
+            //_bar.Initialize(_openableSkin.Icon, openableSkin.Percent);
         }
 
         protected override Skin Skin()
