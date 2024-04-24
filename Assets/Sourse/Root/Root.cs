@@ -5,6 +5,7 @@ using Sourse.Constants;
 using Sourse.Enviroment.Common;
 using Sourse.Game.FinishContent;
 using Sourse.Game.Lose;
+using Sourse.Ground;
 using Sourse.Level;
 using Sourse.PauseContent;
 using Sourse.Player.Common.Scripts;
@@ -31,7 +32,7 @@ namespace Sourse.Root
         [SerializeField] private AudioMixerGroup _musicGroup;
         [SerializeField] private List<SceneConfig> _sceneConfigs = new ();
         [SerializeField] private List<SkinConfig> _skinConfigs = new ();
-        [SerializeField] private Ground.Ground _groundTemplate;
+        [SerializeField] private Ground.DeadZone _groundTemplate;
 
         [SerializeField] private FollowCamera _followCamera; // Сделать через фабрику
         [SerializeField] private HUD _hud; // adresable
@@ -47,6 +48,8 @@ namespace Sourse.Root
         private Pause _pause;
         private Audio _audio;
         private RestartLastPoint _restartLastPoint;
+        private Finish _finish;
+        private DeadZone _deadZone;
 
         private void OnDestroy()
             => Unsubscribe();
@@ -92,7 +95,7 @@ namespace Sourse.Root
             _levelProgress = new LevelProgress(_startPlayer,
                 items[items.Count - 1].Position,
                 items[0].Position);
-            _gameLoss = new GameLoss(_levelProgress, _startPlayer.Death);
+            _gameLoss = new GameLoss(_levelProgress, _deadZone);
             _gameLoss.Subscribe();
             _localSave = new (_dataReaders, _dataWriters);
             _localSave.Load();
@@ -102,14 +105,17 @@ namespace Sourse.Root
             _pause = new Pause(pauseHandlers);
             _audio = new Audio(_soundGroup, _musicGroup);
             _applicationFocus = new ApplicationFocus(_audio, _pause);
-            _hud.Initialize(_levelLoader.GetCurrentNumber(),
+            _hud.Initialize(
+                _levelLoader.GetCurrentNumber(),
                 _startPlayer,
                 _levelProgress,
                 _gameLoss,
-                _pause);
+                _pause,
+                _openableSkinViewFiller,
+                _finish,
+                _deadZone);
             _hud.Subscribe();
-            _hud.PauseButtonClicked += OnPauseButtonClicked;
-            _startPlayer.Finisher.LevelCompleted += OnLevelCompleted;
+            _finish.LevelCompleted += OnLevelCompleted;
             _localSave.Save();
         }
 
@@ -120,9 +126,6 @@ namespace Sourse.Root
             _localSave.Save();
         }
 
-        private void OnPauseButtonClicked()
-            => _pause.Enable();
-
         private void OnLevelCompleted()
         {
             _wallet.AddMoney(PlayerParameter.MoneyPerLevel);
@@ -132,13 +135,12 @@ namespace Sourse.Root
 
         private void Unsubscribe()
         {
-            _startPlayer.Finisher.LevelCompleted -= OnLevelCompleted;
+            _finish.LevelCompleted -= OnLevelCompleted;
             _startPlayer.Unsubscribe();
             _yandexAds.RewardedCallback -= OnRewardedCallback;
             _restartLastPoint.Unsubscribe();
             _gameLoss.Unsubscribe();
             _hud.Unsubscribe();
-            _hud.PauseButtonClicked -= OnPauseButtonClicked;
         }
     }
 }

@@ -918,7 +918,7 @@ MonoBehaviour:
   _propsLayer:
     serializedVersion: 2
     m_Bits: 64
-  _startRayPoint: {fileID: 9181479937599655912}
+  _startRayPoint: {fileID: 3954161459619527241, guid: 0b5bb1cc5d08c78429cf02b4b73699a2, type: 3}
 --- !u!114 &1022912744377414683
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -963,9 +963,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e71fd5fe79d0c04eb88411b14547ae7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _fallParticle: {fileID: 4010387522712283875}
-  _fallOnGroundParticle: {fileID: 8987576291613188277}
-  _id: 0
+  _fallParticle: {fileID: 7791460325603894264, guid: 0b5bb1cc5d08c78429cf02b4b73699a2, type: 3}
+  _fallOnGroundParticle: {fileID: 6481707215074429541, guid: 0b5bb1cc5d08c78429cf02b4b73699a2, type: 3}
 --- !u!1 &1631679959830018498
 GameObject:
   m_ObjectHideFlags: 0
@@ -2074,11 +2073,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7780084791659767258, guid: 9498c0ee3f6366049ab8be757a86ca26, type: 3}
   m_PrefabInstance: {fileID: 1675938163773079599}
   m_PrefabAsset: {fileID: 0}
---- !u!198 &8987576291613188277 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 7780084791644561562, guid: 9498c0ee3f6366049ab8be757a86ca26, type: 3}
-  m_PrefabInstance: {fileID: 1675938163773079599}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &4010387522726311203
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2144,11 +2138,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 83cd9cc9f9c88824ba18dc59b05ae328, type: 3}
---- !u!198 &4010387522712283875 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 19800000, guid: 83cd9cc9f9c88824ba18dc59b05ae328, type: 3}
-  m_PrefabInstance: {fileID: 4010387522726311203}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &4010387522726440867 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: 83cd9cc9f9c88824ba18dc59b05ae328, type: 3}

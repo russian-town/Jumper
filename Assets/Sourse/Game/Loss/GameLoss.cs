@@ -1,7 +1,7 @@
 using System;
 using Sourse.Constants;
+using Sourse.Ground;
 using Sourse.Level;
-using Sourse.Player.Common;
 using UnityEngine;
 
 namespace Sourse.Game.Lose
@@ -9,23 +9,23 @@ namespace Sourse.Game.Lose
     public class GameLoss
     {
         private readonly LevelProgress _levelProgress;
-        private readonly PlayerDeath _playerDeath;
+        private readonly DeadZone _deadZone;
 
-        public GameLoss(LevelProgress levelProgress, PlayerDeath playerDeath)
+        public GameLoss(LevelProgress levelProgress, DeadZone deadZone)
         {
             _levelProgress = levelProgress;
-            _playerDeath = playerDeath;
+            _deadZone = deadZone;
         }
 
         public event Action<float> GameOver;
 
         public void Subscribe()
-            => _playerDeath.Died += OnDied;
+            => _deadZone.LevelLost += OnLevelLost;
 
         public void Unsubscribe()
-            => _playerDeath.Died -= OnDied;
+            => _deadZone.LevelLost -= OnLevelLost;
 
-        private void OnDied()
+        private void OnLevelLost()
         {
             float currentDistance = _levelProgress.GetCurrentDistance();
             float percent =

@@ -67,7 +67,7 @@ namespace Sourse.Player.Common.Scripts
 
         private void OnFell(Collision collision)
         {
-            if (collision.transform.TryGetComponent(out Ground.Ground ground))
+            if (collision.transform.TryGetComponent(out Ground.DeadZone ground))
                 Die(collision.relativeVelocity.y);
         }
 
@@ -100,6 +100,8 @@ namespace Sourse.Player.Common.Scripts
             yield return new WaitForSeconds(_animationDelay);
             _animator.ResetTrigger(AnimationName.Jump);
             _animator.ResetTrigger(AnimationName.DoubleJump);
+            IsJumped = false;
+            IsdDoubleJumped = false;
         }
     }
 }

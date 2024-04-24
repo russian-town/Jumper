@@ -1,7 +1,7 @@
 using System;
 using Lean.Localization;
 using Sourse.Constants;
-using Sourse.Player.Common;
+using Sourse.Game.FinishContent;
 using TMPro;
 using UnityEngine;
 
@@ -13,27 +13,27 @@ namespace Sourse.UI.LevelCompletePanel
         [SerializeField] private TMP_Text _completeLevelText;
         [SerializeField] private NextLevelButton _nextLevelButton;
 
-        private PlayerFinisher _playerFinisher;
+        private Finish _finish;
 
         public event Action NextLevelButtonClicked;
 
-        public void Initialize(PlayerFinisher levelFinisher)
+        public void Initialize(Finish finish)
         {
-            _playerFinisher = levelFinisher;
+            _finish = finish;
             _nextLevelButton.Initialize();
             Hide();
         }
 
         public void Subscribe()
         {
-            _playerFinisher.LevelCompleted += OnLevelComplete;
+            _finish.LevelCompleted += OnLevelComplete;
             _nextLevelButton.AddListener(()
                 => NextLevelButtonClicked?.Invoke());
         }
 
         public void Unsubscribe()
         {
-            _playerFinisher.LevelCompleted -= OnLevelComplete;
+            _finish.LevelCompleted -= OnLevelComplete;
             _nextLevelButton.RemoveListener(()
                 => NextLevelButtonClicked?.Invoke());
         }

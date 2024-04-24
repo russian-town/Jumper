@@ -6,7 +6,7 @@ namespace Sourse.SceneConfigurator
 {
     public class SceneBuilder
     {
-        public List<Item> Create(SceneConfig sceneConfig, Ground.Ground groundTemplate)
+        public List<Item> Create(SceneConfig sceneConfig, Ground.DeadZone groundTemplate)
         {
             List<Item> items = new();
             Vector3 position = Vector3.zero;
@@ -19,9 +19,9 @@ namespace Sourse.SceneConfigurator
             }
 
             int index = items.Count / 2;
-            Ground.Ground ground = Object.Instantiate(groundTemplate);
-            ground.transform.position = new Vector3(items[index].Position.x, -.25f, 0f);
-            ground.transform.localScale = new Vector3(position.x, .5f, 5f);
+            Ground.DeadZone ground = Object.Instantiate(groundTemplate);
+            ground.transform.position = new Vector3(items[index].Position.x, -.5f, 0f);
+            ground.transform.localScale += new Vector3(position.x, .5f, 5f);
             return items;
         }
     }

@@ -13,14 +13,8 @@ namespace Sourse.UI
         
         private OpenableSkinViewFiller _openableSkinViewFiller;
 
-        public void Initialize(Sprite icon,
-            float currentValue,
-            OpenableSkinViewFiller openableSkinViewFiller)
+        public void Initialize(OpenableSkinViewFiller openableSkinViewFiller)
         {
-            _background.color = Color.black;
-            _background.sprite = icon;
-            _fillArea.sprite = icon;
-            _fillArea.fillAmount = currentValue;
             _openableSkinViewFiller = openableSkinViewFiller;
             _openableSkinViewFiller.Initialized += OnInitialized;
             _openableSkinViewFiller.PercentCalculated += OnPercentCalculated;
@@ -29,7 +23,9 @@ namespace Sourse.UI
 
         private void OnInitialized(Sprite sprite, float percent)
         {
+            _background.color = Color.black;
             _background.sprite = sprite;
+            _fillArea.sprite = sprite;
             _fillArea.fillAmount = percent;
         }
 

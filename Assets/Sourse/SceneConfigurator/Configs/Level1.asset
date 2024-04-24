@@ -18,5 +18,4 @@ MonoBehaviour:
   - {fileID: 2532025128181034765, guid: 7fed993bbb00be440af8c70733c92834, type: 3}
   - {fileID: 5844224646108310549, guid: 9fa9093f81282274db0bdcf25767ecd5, type: 3}
   _spaces: []
-  <FinishTemplate>k__BackingField: {fileID: 5844224646108310549, guid: 9fa9093f81282274db0bdcf25767ecd5, type: 3}
   <LevelNumber>k__BackingField: 1

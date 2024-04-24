@@ -1,4 +1,5 @@
-using Sourse.Player.Common;
+using Sourse.Game.FinishContent;
+using Sourse.Ground;
 using Sourse.UI;
 using UnityEngine;
 using UnityEngine.UI;
@@ -10,29 +11,29 @@ namespace Sourse.Level
         [SerializeField] private Image _fillImage;
 
         private LevelProgress _levelProgress;
-        private PlayerFinisher _playerFinisher;
-        private PlayerDeath _playerDeath;
+        private Finish _finish;
+        private DeadZone _deadZone;
 
         public void Subscribe()
         {
-            _playerFinisher.LevelCompleted += OnLevelCompleted;
-            _playerDeath.Died += OnPlayerDied;
+            _finish.LevelCompleted += OnLevelCompleted;
+            _deadZone.LevelLost += OnLevelLost;
         }
 
         public void Unsubscribe()
         {
-            _playerFinisher.LevelCompleted -= OnLevelCompleted;
-            _playerDeath.Died -= OnPlayerDied;
+            _finish.LevelCompleted -= OnLevelCompleted;
+            _deadZone.LevelLost -= OnLevelLost;
         }
 
         public void Initialize(
             LevelProgress levelProgress,
-            PlayerFinisher playerFinisher,
-            PlayerDeath playerDeath)
+            Finish finish,
+            DeadZone deadZone)
         {
             _levelProgress = levelProgress;
-            _playerFinisher = playerFinisher;
-            _playerDeath = playerDeath;
+            _finish = finish;
+            _deadZone = deadZone;
             _fillImage.fillAmount = _levelProgress.GetCurrentDistance();
         }
 
@@ -50,7 +51,7 @@ namespace Sourse.Level
         private void OnLevelCompleted()
             => Hide();
 
-        private void OnPlayerDied()
+        private void OnLevelLost()
             => Hide();
     }
 }

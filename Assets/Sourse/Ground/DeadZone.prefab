@@ -13,9 +13,9 @@ GameObject:
   - component: {fileID: 4838273528933446206}
   - component: {fileID: 4838273528933446207}
   - component: {fileID: -5248006638832466139}
-  - component: {fileID: 34869719155902198}
-  m_Layer: 0
-  m_Name: Ground
+  - component: {fileID: -2837006681803895139}
+  m_Layer: 6
+  m_Name: DeadZone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -195,7 +195,7 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &34869719155902198
+--- !u!114 &-2837006681803895139
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -204,7 +204,24 @@ MonoBehaviour:
   m_GameObject: {fileID: 4838273528933446200}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 76cecc98253a0d14087a9a0ecfd68fbb, type: 3}
+  m_Script: {fileID: 11500000, guid: d3b4ceccf20df974ab379ebbec0155fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playerFallSound: {fileID: 8300000, guid: 9ad4a0705db08614ba9460f990519e27, type: 3}
+  CollisionEnter:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: -2837006681803895139}
+        m_TargetAssemblyTypeName: Sourse.Ground.DeadZone, Assembly-CSharp
+        m_MethodName: GameOver
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  CollisionExit:
+    m_PersistentCalls:
+      m_Calls: []

@@ -9,9 +9,7 @@ namespace Sourse.SceneConfigurator
     public class SceneConfig : ScriptableObject
     {
         [SerializeField] private List<Item> _itemTemplates = new ();
-        [SerializeField] private List<float> _spaces;
-
-        [field: SerializeField] public Finish FinishTemplate {  get; private set; }
+        [SerializeField] private List<float> _spaces = new ();
 
         [field: SerializeField] public int LevelNumber { get; private set; }
 
@@ -20,6 +18,9 @@ namespace Sourse.SceneConfigurator
         public IReadOnlyCollection<float> Spaces => _spaces;
 
         private void OnValidate()
-            => _spaces = new List<float> (_itemTemplates.Count);
+        {
+            if (_spaces.Count != _itemTemplates.Count)
+                _spaces.Capacity = _itemTemplates.Count;
+        }
     }
 }

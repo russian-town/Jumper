@@ -578,7 +578,7 @@ MonoBehaviour:
   _propsLayer:
     serializedVersion: 2
     m_Bits: 64
-  _startRayPoint: {fileID: 4721261169217117326}
+  _startRayPoint: {fileID: 3954161459619527241, guid: 0b5bb1cc5d08c78429cf02b4b73699a2, type: 3}
 --- !u!114 &4925540115628262574
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -608,9 +608,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e71fd5fe79d0c04eb88411b14547ae7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _fallParticle: {fileID: 7407772883976491074}
-  _fallOnGroundParticle: {fileID: 2723087429735041276}
-  _id: 0
+  _fallParticle: {fileID: 7791460325603894264, guid: 0b5bb1cc5d08c78429cf02b4b73699a2, type: 3}
+  _fallOnGroundParticle: {fileID: 6481707215074429541, guid: 0b5bb1cc5d08c78429cf02b4b73699a2, type: 3}
 --- !u!114 &-9106040862977664959
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2076,11 +2075,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7780084791659767258, guid: 9498c0ee3f6366049ab8be757a86ca26, type: 3}
   m_PrefabInstance: {fileID: 5634619355444865126}
   m_PrefabAsset: {fileID: 0}
---- !u!198 &2723087429735041276 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 7780084791644561562, guid: 9498c0ee3f6366049ab8be757a86ca26, type: 3}
-  m_PrefabInstance: {fileID: 5634619355444865126}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7407772883992088450
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2146,11 +2140,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 83cd9cc9f9c88824ba18dc59b05ae328, type: 3}
---- !u!198 &7407772883976491074 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 19800000, guid: 83cd9cc9f9c88824ba18dc59b05ae328, type: 3}
-  m_PrefabInstance: {fileID: 7407772883992088450}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &7407772883991696642 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: 83cd9cc9f9c88824ba18dc59b05ae328, type: 3}

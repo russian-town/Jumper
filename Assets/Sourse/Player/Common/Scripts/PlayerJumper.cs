@@ -33,7 +33,7 @@ namespace Sourse.Player.Common.Scripts
 
         private void OnJumped()
         {
-            Ray ray = new Ray(_startRayPoint.position, -_startRayPoint.up);
+            Ray ray = new (_startRayPoint.position, -_startRayPoint.up);
 
             if (Physics.SphereCast(ray, _radius, out RaycastHit hitInfo, _maxDistance, _propsLayer))
             {
