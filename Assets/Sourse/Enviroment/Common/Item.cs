@@ -8,6 +8,9 @@ namespace Sourse.Enviroment.Common
         [SerializeField] private CollisionEvent CollisionEnter;
         [SerializeField] private CollisionEvent CollisionExit;
 
+        public Vector3 Position
+            => new (transform.position.x, 1f, transform.position.z);
+
         private void OnCollisionEnter(Collision collision)
         {
             if (collision.transform.TryGetComponent(out PlayerInitializer _))

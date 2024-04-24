@@ -74,6 +74,7 @@ public class HUD : UIElement, IPauseHandler
         _levelFinishView.Initialize(player.Finisher);
         _gameLossView.Initialize(gameLoss);
         _pauseView.Initialize(pause);
+        //_openableSkinBar.Initialize();
     }
 
     public void UpdateView()

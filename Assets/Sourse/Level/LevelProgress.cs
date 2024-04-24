@@ -1,5 +1,4 @@
 using Sourse.Constants;
-using Sourse.Game.FinishContent;
 using Sourse.Player.Common.Scripts;
 using UnityEngine;
 
@@ -7,15 +6,15 @@ namespace Sourse.Level
 {
     public class LevelProgress
     {
-        private readonly FinishPosition _finishPosition;
-        private readonly PlayerPosition _startPosition;
+        private readonly Vector3 _finishPosition;
+        private readonly Vector3 _startPosition;
         private readonly float _startDistancePlayerToFinish;
         private readonly PlayerInitializer _playerInitializer;
         
         public LevelProgress(
             PlayerInitializer playerInitializer,
-            FinishPosition finishPosition,
-            PlayerPosition startPosition)
+            Vector3 finishPosition,
+            Vector3 startPosition)
         {
             _playerInitializer = playerInitializer;
             _finishPosition = finishPosition;
@@ -41,8 +40,8 @@ namespace Sourse.Level
                 _playerInitializer.transform.position.x,
                 0f, _playerInitializer.transform.position.z);
             Vector3 startPositionXZ = new (
-                _startPosition.Position.x,
-                0f, _startPosition.Position.z);
+                _startPosition.x,
+                0f, _startPosition.z);
 
             return Vector3.Distance(startPositionXZ, finishPositionXZ);
         }
@@ -53,8 +52,8 @@ namespace Sourse.Level
                 _playerInitializer.transform.position.x,
                 0f, _playerInitializer.transform.position.z);
             Vector3 finishPositionXZ = new (
-                _finishPosition.transform.position.x,
-                0f, _finishPosition.transform.position.z);
+                _finishPosition.x,
+                0f, _finishPosition.z);
 
             return Vector3.Distance(playerPositionXZ, finishPositionXZ);
         }

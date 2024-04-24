@@ -14,7 +14,7 @@ namespace Sourse.Root
 
         public PlayerInitializer Get()
         {
-            string path = $"{PlayerParameter.PlayerPrefabsPath}{_id}";
+            string path = $"{PersistentPath.PlayerPrefabs}{_id}";
             return Resources.Load<PlayerInitializer>(path);
         }
     }

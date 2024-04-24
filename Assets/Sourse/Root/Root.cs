@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Sourse.Balance;
 using Sourse.Camera;
 using Sourse.Constants;
+using Sourse.Enviroment.Common;
 using Sourse.Game.FinishContent;
 using Sourse.Game.Lose;
 using Sourse.Level;
@@ -17,23 +18,23 @@ using UnityEngine.Audio;
 
 namespace Sourse.Root
 {
-    public class Root : MonoBehaviour, IDataReader, IDataWriter
+    public class Root : MonoBehaviour
     {
         private readonly Wallet _wallet = new ();
         private readonly LevelLoader _levelLoader = new ();
         private readonly YandexAds _yandexAds = new ();
         private readonly PlayerSpawner _playerSpawner = new ();
         private readonly PlayerTemplateLoader _playerTemplateLoader = new ();
+        private readonly SceneBuilder _sceneBuilder = new ();
 
         [SerializeField] private AudioMixerGroup _soundGroup;
         [SerializeField] private AudioMixerGroup _musicGroup;
         [SerializeField] private List<SceneConfig> _sceneConfigs = new ();
         [SerializeField] private List<SkinConfig> _skinConfigs = new ();
+        [SerializeField] private Ground.Ground _groundTemplate;
 
-        private FollowCamera _followCamera;
-        private PlayerPosition _startPosition;
-        private FinishPosition _finishPosition;
-        private HUD _hud;
+        [SerializeField] private FollowCamera _followCamera; // Сделать через фабрику
+        [SerializeField] private HUD _hud; // adresable
 
         private List<IDataReader> _dataReaders = new ();
         private List<IDataWriter> _dataWriters = new ();
@@ -45,7 +46,6 @@ namespace Sourse.Root
         private ApplicationFocus _applicationFocus;
         private Pause _pause;
         private Audio _audio;
-        private Vector3 _spawnPosition;
         private RestartLastPoint _restartLastPoint;
 
         private void OnDestroy()
@@ -65,28 +65,14 @@ namespace Sourse.Root
             _applicationFocus.SetFocus(focus);
         }
 
-        public void Read(PlayerData playerData)
-        {
-            _spawnPosition = playerData.SpawnPosition;
-
-            if (_spawnPosition == Vector3.zero)
-            {
-                _spawnPosition = _startPosition.Position;
-                return;
-            }
-        }
-
-        public void Write(PlayerData playerData)
-            => playerData.SpawnPosition = _spawnPosition;
-
         private void Initialize()
         {
             _dataReaders.Add(_playerTemplateLoader);
-            _dataReaders.Add(this);
             _localSave = new (_dataReaders, _dataWriters);
             _localSave.Load();
+            List<Item> items = _sceneBuilder.Create(_sceneConfigs[0], _groundTemplate);
             PlayerInitializer template = _playerTemplateLoader.Get();
-            _startPlayer = _playerSpawner.Create(template, _spawnPosition);
+            _startPlayer = _playerSpawner.Create(template, items[0].Position);
             _dataReaders = new ();
             _dataWriters = new ();
             _startPlayer.Initialize();
@@ -103,7 +89,9 @@ namespace Sourse.Root
                 _wallet,
                 _openableSkinViewFiller,
             });
-            _levelProgress = new LevelProgress(_startPlayer, _finishPosition, _startPosition);
+            _levelProgress = new LevelProgress(_startPlayer,
+                items[items.Count - 1].Position,
+                items[0].Position);
             _gameLoss = new GameLoss(_levelProgress, _startPlayer.Death);
             _gameLoss.Subscribe();
             _localSave = new (_dataReaders, _dataWriters);
@@ -122,8 +110,6 @@ namespace Sourse.Root
             _hud.Subscribe();
             _hud.PauseButtonClicked += OnPauseButtonClicked;
             _startPlayer.Finisher.LevelCompleted += OnLevelCompleted;
-            _spawnPosition = Vector3.zero;
-            _dataWriters.Add(this);
             _localSave.Save();
         }
 
