@@ -6,4 +6,9 @@ namespace Sourse.Enviroment.Common
     public class CollisionEvent<Vector3> : UnityEvent<Vector3>
     {
     }
+
+    [System.Serializable]
+    public class CollisionEvent : UnityEvent
+    {
+    }
 }

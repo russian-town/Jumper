@@ -3,13 +3,26 @@ using UnityEngine;
 
 namespace Sourse.Enviroment.Common
 {
-    public class Item : MonoBehaviour
+    public abstract class Item : MonoBehaviour
     {
         [SerializeField] private CollisionEvent<Vector3> CollisionEnter;
-        [SerializeField] private CollisionEvent<Vector3> CollisionExit;
+        [SerializeField] private CollisionEvent CollisionExit;
 
-        public Vector3 Position
-            => new (transform.position.x, 1f, transform.position.z);
+        public Vector3 Position => transform.position;
+
+        public float GetHalfSize()
+        {
+            return GetCollider().bounds.size.y / 2f;
+        }
+
+        public float GetMinSurface()
+        {
+            return GetCollider().bounds.min.y;
+        }
+
+        public abstract void Initialize();
+
+        protected abstract Collider GetCollider();
 
         private void OnCollisionEnter(Collision collision)
         {
@@ -19,8 +32,8 @@ namespace Sourse.Enviroment.Common
 
         private void OnCollisionExit(Collision collision)
         {
-            if (CheckCollision(collision, out Vector3 point))
-                CollisionExit.Invoke(point);
+            if (collision.transform.TryGetComponent(out PlayerInitializer _))
+                CollisionExit.Invoke();
         }
 
         private bool CheckCollision(Collision collision, out Vector3 point)

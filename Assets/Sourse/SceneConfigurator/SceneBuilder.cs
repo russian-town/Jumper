@@ -1,28 +1,64 @@
+using System;
 using System.Collections.Generic;
 using Sourse.Enviroment.Common;
+using Sourse.Ground;
+using Sourse.Game.FinishContent;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 namespace Sourse.SceneConfigurator
 {
     public class SceneBuilder
     {
-        public List<Item> Create(SceneConfig sceneConfig, Ground.DeadZone groundTemplate)
+        private readonly List<Item> _items = new();
+
+        public List<Item> Create(SceneConfig sceneConfig, DeadZone deadZoneTemplate)
         {
-            List<Item> items = new();
             Vector3 position = Vector3.zero;
+            Item deadZone = Object.Instantiate(deadZoneTemplate);
+            deadZone.Initialize();
 
             foreach (var itemTemplate in sceneConfig.ItemTemplates)
             {
-                Item item = Object.Instantiate(itemTemplate, position, Quaternion.identity);
-                items.Add(item);
+                Item item = Object.Instantiate(itemTemplate);
+                item.Initialize();             
                 position.x += 4.5f;
+                position.y = deadZone.transform.position.y - item.GetMinSurface() + deadZone.GetHalfSize() - deadZone.GetMinSurface();
+                item.transform.position = position;
+                _items.Add(item);
             }
 
-            int index = items.Count / 2;
-            Ground.DeadZone ground = Object.Instantiate(groundTemplate);
-            ground.transform.position = new Vector3(items[index].Position.x, -.5f, 0f);
-            ground.transform.localScale += new Vector3(position.x, .5f, 5f);
-            return items;
+            int index = _items.Count / 2;
+            deadZone.transform.position = new Vector3(_items[index].Position.x, 0f, 0f);
+            deadZone.transform.localScale += new Vector3(position.x, .5f, 5f);
+            _items.Add(deadZone);
+            return _items;
+        }
+
+        public Finish GetFinish() 
+        {
+            foreach (var item in _items) 
+            {
+                if(item.GetType() == typeof(Finish))
+                {
+                    return item as Finish;
+                }
+            }
+
+            return null;
+        }
+
+        public DeadZone GetDeadZone()
+        {
+            foreach(var item in _items)
+            {
+                if (item.GetType() == typeof(DeadZone))
+                {
+                    return item as DeadZone;
+                }
+            }
+
+            return null;
         }
     }
 }

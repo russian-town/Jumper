@@ -32,7 +32,7 @@ namespace Sourse.Root
         [SerializeField] private AudioMixerGroup _musicGroup;
         [SerializeField] private List<SceneConfig> _sceneConfigs = new ();
         [SerializeField] private List<SkinConfig> _skinConfigs = new ();
-        [SerializeField] private Ground.DeadZone _groundTemplate;
+        [SerializeField] private DeadZone _deadZoneTemplate;
 
         [SerializeField] private FollowCamera _followCamera; // Сделать через фабрику
         [SerializeField] private HUD _hud; // adresable
@@ -73,9 +73,13 @@ namespace Sourse.Root
             _dataReaders.Add(_playerTemplateLoader);
             _localSave = new (_dataReaders, _dataWriters);
             _localSave.Load();
-            List<Item> items = _sceneBuilder.Create(_sceneConfigs[0], _groundTemplate);
+            List<Item> items = _sceneBuilder.Create(_sceneConfigs[0], _deadZoneTemplate);
+            _deadZone = _sceneBuilder.GetDeadZone();
+            _finish = _sceneBuilder.GetFinish();
             PlayerInitializer template = _playerTemplateLoader.Get();
-            _startPlayer = _playerSpawner.Create(template, items[0].Position);
+            float spawnPositionY = items[0].Position.y + template.transform.localScale.y;
+            Vector3 spawnPosition = new Vector3(items[0].Position.x, spawnPositionY, items[0].Position.z);
+            _startPlayer = _playerSpawner.Create(template, spawnPosition);
             _dataReaders = new ();
             _dataWriters = new ();
             _startPlayer.Initialize();

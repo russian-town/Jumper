@@ -1,5 +1,4 @@
 using System;
-using Sourse.Enviroment.Barrel;
 using UnityEngine;
 
 namespace Sourse.Player.Common.Scripts
@@ -21,9 +20,6 @@ namespace Sourse.Player.Common.Scripts
 
         private void OnCollisionEnter(Collision collision)
         {
-            if (collision.transform.TryGetComponent(out Barrel barrel))
-                return;
-
             _canDetect = !Physics.ComputePenetration(
                 _head,
                 _head.transform.position,

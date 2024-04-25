@@ -320,7 +320,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 1b99fb8c7796b3c44b8ab8ec5a70c3bf, type: 2}
   - {fileID: 11400000, guid: b228c802c047227479c91f54c029e377, type: 2}
   - {fileID: 11400000, guid: d6ed2b81bdc86264bb963aaa61e034fa, type: 2}
-  _groundTemplate: {fileID: 34869719155902198, guid: 74ae1180d870a82429965e838eb0bb9f, type: 3}
+  _deadZoneTemplate: {fileID: -2837006681803895139, guid: 74ae1180d870a82429965e838eb0bb9f, type: 3}
   _followCamera: {fileID: 3550241489933864265}
   _hud: {fileID: 7561211547349624508}
 --- !u!4 &1367273997

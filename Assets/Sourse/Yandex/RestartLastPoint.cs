@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Sourse.Yandex
 {
-    public class RestartLastPoint : Rewarded, IDataWriter
+    public class RestartLastPoint : Reward, IDataWriter
     {
         private readonly LevelLoader _levelLoader;
         private readonly GroundDetector _groundDetector;

@@ -1,6 +1,6 @@
 namespace Sourse.Yandex
 {
-    public abstract class Rewarded
+    public abstract class Reward
     {
         public abstract void Accept();
     }

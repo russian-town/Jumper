@@ -2,7 +2,7 @@ using Sourse.UI.Shop.SkinConfiguration;
 
 namespace Sourse.Yandex
 {
-    public class SkinRewarded : Rewarded
+    public class SkinRewarded : Reward
     {
         public SkinRewarded(Skin skin)
             => Skin = skin;
