@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Sourse.Player.Common.Scripts
@@ -9,10 +10,7 @@ namespace Sourse.Player.Common.Scripts
         [SerializeField] private float _jumpLength;
         [SerializeField] private float _doubleJumpForce;
         [SerializeField] private float _doubleJumpLength;
-        [SerializeField] private float _radius;
-        [SerializeField] private float _maxDistance;
-        [SerializeField] private LayerMask _propsLayer;
-        [SerializeField] private Transform _startRayPoint;
+        [SerializeField] private List<Leg> _legs = new ();
 
         private Rigidbody _rigidbody;
         private PlayerAnimator _animator;
@@ -29,17 +27,15 @@ namespace Sourse.Player.Common.Scripts
             _animator = animator;
             _animator.Jumped += OnJumped;
             _animator.DoubleJumped += OnDoubleJumped;
+
+            foreach (Leg leg in _legs)
+                leg.Initialize(_rigidbody);
         }
 
         private void OnJumped()
         {
-            Ray ray = new (_startRayPoint.position, -_startRayPoint.up);
-
-            if (Physics.SphereCast(ray, _radius, out RaycastHit hitInfo, _maxDistance, _propsLayer))
-            {
-                _rigidbody.AddForce(hitInfo.normal * _jumpForce);
-                _rigidbody.AddForce(Vector3.right * _jumpLength);
-            }
+            foreach (Leg leg in _legs)
+                leg.AddForce(_jumpForce, _jumpLength);
         }
 
         private void OnDoubleJumped()

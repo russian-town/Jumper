@@ -60,6 +60,14 @@ namespace Sourse.Root
         private void Update()
             => _hud.UpdateView();
 
+        private void FixedUpdate()
+        {
+            if (_startPlayer == null)
+                return;
+
+            _startPlayer.UpdatePhysics();
+        }
+
         private void OnApplicationFocus(bool focus)
         {
             if (_applicationFocus == null)
@@ -82,6 +90,10 @@ namespace Sourse.Root
             _startPlayer = _playerSpawner.Create(template, spawnPosition);
             _dataReaders = new ();
             _dataWriters = new ();
+
+            foreach (var item in items)
+                item.Initialize();
+
             _startPlayer.Initialize();
             _restartLastPoint = new (_levelLoader, _startPlayer.GroundDetector);
             _restartLastPoint.Subscribe();    

@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: Level1
   m_EditorClassIdentifier: 
   _itemTemplates:
-  - {fileID: 7244265423925483889, guid: 7fed993bbb00be440af8c70733c92834, type: 3}
-  - {fileID: 7244265423925483889, guid: 7fed993bbb00be440af8c70733c92834, type: 3}
-  - {fileID: 7244265423925483889, guid: 7fed993bbb00be440af8c70733c92834, type: 3}
+  - {fileID: 4303116169915572991, guid: 7fed993bbb00be440af8c70733c92834, type: 3}
+  - {fileID: 4303116169915572991, guid: 7fed993bbb00be440af8c70733c92834, type: 3}
+  - {fileID: 4303116169915572991, guid: 7fed993bbb00be440af8c70733c92834, type: 3}
   - {fileID: 5844224646108310549, guid: 9fa9093f81282274db0bdcf25767ecd5, type: 3}
   _spaces: []
   <LevelNumber>k__BackingField: 1

@@ -23,14 +23,14 @@ namespace Sourse.SceneConfigurator
                 Item item = Object.Instantiate(itemTemplate);
                 item.Initialize();             
                 position.x += 4.5f;
-                position.y = deadZone.transform.position.y - item.GetMinSurface() + deadZone.GetHalfSize() - deadZone.GetMinSurface();
+                position.y = deadZone.transform.position.y + deadZone.transform.localScale.y + item.transform.localScale.y / 2f;
                 item.transform.position = position;
                 _items.Add(item);
             }
 
             int index = _items.Count / 2;
             deadZone.transform.position = new Vector3(_items[index].Position.x, 0f, 0f);
-            deadZone.transform.localScale += new Vector3(position.x, .5f, 5f);
+            deadZone.transform.localScale += new Vector3(position.x * 5f, .5f, 5f);
             _items.Add(deadZone);
             return _items;
         }

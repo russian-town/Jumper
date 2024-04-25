@@ -421,6 +421,7 @@ GameObject:
   - component: {fileID: 1419321314566088268}
   - component: {fileID: 6116312714356142114}
   - component: {fileID: 5139528861283809395}
+  - component: {fileID: 1717656669084401060}
   m_Layer: 8
   m_Name: Player6
   m_TagString: Untagged
@@ -678,6 +679,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _fallParticle: {fileID: 7791460325603894264, guid: 0b5bb1cc5d08c78429cf02b4b73699a2, type: 3}
   _fallOnGroundParticle: {fileID: 6481707215074429541, guid: 0b5bb1cc5d08c78429cf02b4b73699a2, type: 3}
+--- !u!114 &1717656669084401060
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1779987536370517653}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7931206949df1884281ed7cff4410a34, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _stabilizerForce: 5000
+  _damping: 5
 --- !u!1 &1779987536370517655
 GameObject:
   m_ObjectHideFlags: 0

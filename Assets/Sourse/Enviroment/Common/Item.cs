@@ -10,19 +10,7 @@ namespace Sourse.Enviroment.Common
 
         public Vector3 Position => transform.position;
 
-        public float GetHalfSize()
-        {
-            return GetCollider().bounds.size.y / 2f;
-        }
-
-        public float GetMinSurface()
-        {
-            return GetCollider().bounds.min.y;
-        }
-
-        public abstract void Initialize();
-
-        protected abstract Collider GetCollider();
+        public virtual void Initialize() { }
 
         private void OnCollisionEnter(Collision collision)
         {

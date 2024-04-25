@@ -1,21 +1,17 @@
+using System.Collections.Generic;
 using Sourse.Enviroment.Common;
 using UnityEngine;
 
 namespace Sourse.Enviroment
 {
-    [RequireComponent(typeof(BoxCollider))]
     public class Box : Item
     {
-        private BoxCollider _boxCollider;
+        [SerializeField] private List<Rigidbody> _parts = new ();
 
         public override void Initialize()
         {
-            _boxCollider = GetComponent<BoxCollider>();
-        }
-
-        protected override Collider GetCollider()
-        {
-            return _boxCollider;
+            foreach (var part in _parts)
+                part.isKinematic = false;
         }
     }
 }
