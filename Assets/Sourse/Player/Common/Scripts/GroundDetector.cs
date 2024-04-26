@@ -18,6 +18,8 @@ namespace Sourse.Player.Common.Scripts
 
         public event Action<Collision> Fell;
 
+        public RaycastHit Hit;
+
         private void OnCollisionEnter(Collision collision)
         {
             _canDetect = !Physics.ComputePenetration(
@@ -46,13 +48,13 @@ namespace Sourse.Player.Common.Scripts
                 _boxCollider.bounds.center,
                 halfScale,
                 -transform.up,
-                out RaycastHit hit,
+                out Hit,
                 transform.rotation,
                 _distance,
                 _groundLayerMask,
                 QueryTriggerInteraction.Ignore))
             {
-                if (Vector3.Dot(hit.normal, transform.up) > Threshold)
+                if (Vector3.Dot(Hit.normal, transform.up) > Threshold)
                     return true;
             }
 

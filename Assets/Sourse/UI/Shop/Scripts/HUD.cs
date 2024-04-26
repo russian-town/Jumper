@@ -24,6 +24,7 @@ public class HUD : UIElement, IPauseHandler
     [SerializeField] private StartPanel _startPanel;
 
     private Pause _pause;
+    private LevelLoader _levelLoader;
 
     public void Subscribe()
     {
@@ -66,7 +67,8 @@ public class HUD : UIElement, IPauseHandler
         Pause pause,
         OpenableSkinViewFiller openableSkinViewFiller,
         Finish finish,
-        DeadZone deadZone)
+        DeadZone deadZone,
+        LevelLoader levelLoader)
     {
         _pauseButton.Initialize();
         _currentlevelNumberText.Initialize(levelNumber);
@@ -82,6 +84,7 @@ public class HUD : UIElement, IPauseHandler
         _gameLossView.Initialize(gameLoss);
         _pauseView.Initialize(pause);
         _pause = pause;
+        _levelLoader = levelLoader;
         _openableSkinBar.Initialize(openableSkinViewFiller);
         _startPanel.Initialize(_pause);
     }
@@ -90,25 +93,20 @@ public class HUD : UIElement, IPauseHandler
         => _levelProgressView.UpdateProgressBar();
 
     public void SetPause(bool isPause)
-    {
-        _playerInput.SetPause(isPause);
-    }
+        => _playerInput.SetPause(isPause);
 
     private void OnNextLevelButtonClicked()
-    {
-    }
+        => _levelLoader.GoNext();
 
     private void OnRetryButtonClicked()
-    {
-    }
+        => _levelLoader.Restart();
 
     private void OnRewardedButtonClicked()
     {
     }
 
     private void OnCloseAdOfferScreenButtonClicked()
-    {
-    }
+        => _levelLoader.Restart();
 
     private void OnPauseButtonClicked()
         => _pause.Enable();
@@ -117,10 +115,8 @@ public class HUD : UIElement, IPauseHandler
         => _pause.Disable();
 
     private void OnExitButtonClicked()
-    {
-    }
+        => _levelLoader.ExitToMainMenu();
 
     private void OnRestartButtonClicked()
-    {
-    }
+        => _levelLoader.Restart();
 }

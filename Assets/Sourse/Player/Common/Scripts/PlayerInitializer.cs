@@ -33,9 +33,6 @@ namespace Sourse.Player.Common.Scripts
 
         public void UpdatePhysics()
         {
-            if (GroundDetector.IsGrounded() == false)
-                return;
-
             _antiRoll.UpdatePhysics();
         }
     }

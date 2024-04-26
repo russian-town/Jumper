@@ -129,7 +129,8 @@ namespace Sourse.Root
                 _pause,
                 _openableSkinViewFiller,
                 _finish,
-                _deadZone);
+                _deadZone,
+                _levelLoader);
             _hud.Subscribe();
             _finish.LevelCompleted += OnLevelCompleted;
             _localSave.Save();
