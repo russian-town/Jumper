@@ -9,12 +9,7 @@ namespace Sourse.Player.Common.Scripts
         [SerializeField] private float _maxDistance;
         [SerializeField] private LayerMask _propsLayer;
 
-        private Rigidbody _rigidbody;
-
-        public void Initialize(Rigidbody rigidbody)
-            => _rigidbody = rigidbody;
-
-        public void AddForce(float jumpForce, float jumpLenght)
+        public bool CheckGround()
         {
             if (Physics.SphereCast(
                 _origin.position,
@@ -25,9 +20,10 @@ namespace Sourse.Player.Common.Scripts
                 _propsLayer,
                 QueryTriggerInteraction.Ignore))
             {
-                _rigidbody.AddForce(new Vector3(hitInfo.normal.x, hitInfo.normal.y, 0f) * jumpForce);
-                _rigidbody.AddForce(Vector3.right * jumpLenght);
+                return true;
             }
+
+            return false;
         }
 
         private void OnDrawGizmos()

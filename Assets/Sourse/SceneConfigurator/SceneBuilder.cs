@@ -1,10 +1,10 @@
-using System;
 using System.Collections.Generic;
 using Sourse.Enviroment.Common;
 using Sourse.Ground;
 using Sourse.Game.FinishContent;
 using UnityEngine;
 using Object = UnityEngine.Object;
+using Random = UnityEngine.Random;
 
 namespace Sourse.SceneConfigurator
 {
@@ -22,7 +22,7 @@ namespace Sourse.SceneConfigurator
             {
                 Item item = Object.Instantiate(itemTemplate);
                 item.Initialize();             
-                position.x += 4.5f;
+                position.x += Random.Range(3f, 5f);
                 position.y = deadZone.transform.position.y + deadZone.transform.localScale.y + item.transform.localScale.y / 2f;
                 item.transform.position = position;
                 _items.Add(item);

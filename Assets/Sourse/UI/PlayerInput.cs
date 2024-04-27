@@ -21,18 +21,10 @@ namespace Sourse.UI
 
         public void OnPointerDown(PointerEventData eventData)
         {
-            if (_animator == null)
+            if (_isPause)
                 return;
 
-            if (_isPause == true || _isGameOver == true || _isLevelComleted == true)
-                return;
-
-            if (_animator.IsJumped == false && _animator.IsGrounded == true)
-                _animator.Jump();
-            else if (_animator.IsdDoubleJumped == false && _animator.IsJumped == true
-                || _animator.IsdDoubleJumped == false && _animator.IsGrounded == false)
-                _animator.DoubleJump();
-
+            _animator.Jump();
             Pressed?.Invoke();
         }
 

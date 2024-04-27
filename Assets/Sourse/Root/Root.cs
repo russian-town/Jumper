@@ -95,8 +95,7 @@ namespace Sourse.Root
                 item.Initialize();
 
             _startPlayer.Initialize();
-            _restartLastPoint = new (_levelLoader, _startPlayer.GroundDetector);
-            _restartLastPoint.Subscribe();    
+            _restartLastPoint = new (_levelLoader);
             _openableSkinViewFiller = new (_skinConfigs);
             _dataReaders.AddRange(new IDataReader[]
             {
@@ -155,7 +154,6 @@ namespace Sourse.Root
             _finish.LevelCompleted -= OnLevelCompleted;
             _startPlayer.Unsubscribe();
             _yandexAds.RewardedCallback -= OnRewardedCallback;
-            _restartLastPoint.Unsubscribe();
             _gameLoss.Unsubscribe();
             _hud.Unsubscribe();
         }
