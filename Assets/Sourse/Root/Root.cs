@@ -49,7 +49,7 @@ namespace Sourse.Root
         private Audio _audio;
         private RestartLastPoint _restartLastPoint;
         private Finish _finish;
-        private DeadZone _deadZone;
+        private DeadZone _deadZone; 
 
         private void OnDestroy()
             => Unsubscribe();
@@ -62,7 +62,7 @@ namespace Sourse.Root
 
         private void FixedUpdate()
         {
-            if (_startPlayer == null)
+            if(_startPlayer == null)
                 return;
 
             _startPlayer.UpdatePhysics();
@@ -81,10 +81,10 @@ namespace Sourse.Root
             _dataReaders.Add(_playerTemplateLoader);
             _localSave = new (_dataReaders, _dataWriters);
             _localSave.Load();
-            List<Item> items = _sceneBuilder.Create(_sceneConfigs[0], _deadZoneTemplate);
+            PlayerInitializer template = _playerTemplateLoader.Get();
+            List<Item> items = _sceneBuilder.Create(_sceneConfigs[0], _deadZoneTemplate, template);
             _deadZone = _sceneBuilder.GetDeadZone();
             _finish = _sceneBuilder.GetFinish();
-            PlayerInitializer template = _playerTemplateLoader.Get();
             float spawnPositionY = items[0].Position.y + template.transform.localScale.y;
             Vector3 spawnPosition = new Vector3(items[0].Position.x, spawnPositionY, items[0].Position.z);
             _startPlayer = _playerSpawner.Create(template, spawnPosition);
@@ -95,6 +95,7 @@ namespace Sourse.Root
                 item.Initialize();
 
             _startPlayer.Initialize();
+            _startPlayer.Subscribe();
             _restartLastPoint = new (_levelLoader);
             _openableSkinViewFiller = new (_skinConfigs);
             _dataReaders.AddRange(new IDataReader[]

@@ -5,6 +5,7 @@ using Sourse.Game.FinishContent;
 using UnityEngine;
 using Object = UnityEngine.Object;
 using Random = UnityEngine.Random;
+using Sourse.Player.Common.Scripts;
 
 namespace Sourse.SceneConfigurator
 {
@@ -12,7 +13,9 @@ namespace Sourse.SceneConfigurator
     {
         private readonly List<Item> _items = new();
 
-        public List<Item> Create(SceneConfig sceneConfig, DeadZone deadZoneTemplate)
+        public List<Item> Create(SceneConfig sceneConfig,
+            DeadZone deadZoneTemplate,
+            PlayerInitializer playerInitializer)
         {
             Vector3 position = Vector3.zero;
             Item deadZone = Object.Instantiate(deadZoneTemplate);
@@ -21,8 +24,10 @@ namespace Sourse.SceneConfigurator
             foreach (var itemTemplate in sceneConfig.ItemTemplates)
             {
                 Item item = Object.Instantiate(itemTemplate);
-                item.Initialize();             
-                position.x += Random.Range(3f, 5f);
+                item.Initialize();
+                float minPosition = playerInitializer.JumpLenght;
+                float maxPosition = playerInitializer.JumpLenght + playerInitializer.DoubleJumpLenght;
+                position.x += Random.Range(minPosition, maxPosition);
                 position.y = deadZone.transform.position.y + deadZone.transform.localScale.y + item.transform.localScale.y / 2f;
                 item.transform.position = position;
                 _items.Add(item);

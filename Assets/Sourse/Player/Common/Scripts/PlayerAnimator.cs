@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using Sourse.Constants;
 using UnityEngine;
 
@@ -7,27 +6,31 @@ namespace Sourse.Player.Common.Scripts
 {
     public class PlayerAnimator : MonoBehaviour
     {
-        [SerializeField] private float _animationDelay;
-
         private Animator _animator;
-        private Coroutine _startResetTriggers;
         private GroundDetector _groundDetector;
-
-        public bool IsJumped { get; private set; }
-
-        public bool IsdDoubleJumped { get; private set; }
+        private int _jumpCount = 0;
 
         public event Action Jumped;
 
         public event Action DoubleJumped;
 
-        private void Update()
-           => _animator.SetBool(AnimationName.IsGrounded, _groundDetector.IsGrounded);
+        public void Subscribe()
+        {
+            _groundDetector.PlayerJumped += OnPlayerJumped;
+            _groundDetector.PlayerFell += OnPlayerFell;
+        }
+
+        public void Unsubscribe()
+        {
+            _groundDetector.PlayerJumped -= OnPlayerJumped;
+            _groundDetector.PlayerFell -= OnPlayerFell;
+        }
 
         public void Initialize(GroundDetector groundDetector)
         {
             _animator = GetComponent<Animator>();
             _groundDetector = groundDetector;
+            _animator.SetBool(AnimationName.IsGrounded, _groundDetector.IsGrounded);
         }
 
         public void CallJumpEvent()
@@ -38,17 +41,11 @@ namespace Sourse.Player.Common.Scripts
 
         public void Jump()
         {
-            if (IsJumped || !_groundDetector.IsGrounded)
+            if (_jumpCount == 2)
                 return;
 
-            IsJumped = true;
-            _animator.SetTrigger(AnimationName.Jump);
-
-            if (IsdDoubleJumped || !IsJumped || _groundDetector.IsGrounded)
-                return;
-
-            IsdDoubleJumped = true;
-            _animator.SetTrigger(AnimationName.DoubleJump);
+            _jumpCount++;
+            _animator.SetInteger(AnimationName.JumpCount, _jumpCount);
         }
 
         private void HardFall()
@@ -65,14 +62,21 @@ namespace Sourse.Player.Common.Scripts
                 Defeat();
         }
 
-        private IEnumerator ResetTriggers()
+        private void OnPlayerJumped()
         {
-            if (_startResetTriggers != null)
-                StopCoroutine(_startResetTriggers);
+            _animator.SetBool(AnimationName.IsGrounded, _groundDetector.IsGrounded);
+        }
 
-            yield return new WaitForSeconds(_animationDelay);
-            _animator.ResetTrigger(AnimationName.Jump);
-            _animator.ResetTrigger(AnimationName.DoubleJump);
+        private void OnPlayerFell()
+        {
+            _animator.SetBool(AnimationName.IsGrounded, _groundDetector.IsGrounded);
+            ResetJumping();
+        }
+
+        private void ResetJumping()
+        {
+            _jumpCount = 0;
+            _animator.SetInteger(AnimationName.JumpCount, _jumpCount);
         }
     }
 }

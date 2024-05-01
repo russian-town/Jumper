@@ -7,5 +7,6 @@ namespace Sourse.Constants
         public const string IsGrounded = "IsGrounded";
         public const string HardFall = "HardFall";
         public const string Defeat = "Defeat";
+        public const string JumpCount = "JumpCount";
     }
 }

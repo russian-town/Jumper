@@ -15,15 +15,16 @@ namespace Sourse.Player.Common.Scripts
 
         public TransformChanges LastChanges { get; private set; }
 
-        public void Play(float duration, Func<float, TransformChanges> body)
+        public void Play(AnimationCurve duration, Func<float, TransformChanges> body)
+            => _lastAnimation = _context.StartCoroutine(Get(duration, body));
+
+        public void Stop()
         {
             if (_lastAnimation != null)
-                _context.StopCoroutine(Get(duration, body));
-
-            _context.StartCoroutine(Get(duration, body));
+                _context.StopCoroutine(_lastAnimation);
         }
 
-        private IEnumerator Get(float duration, Func<float, TransformChanges> body)
+        private IEnumerator Get(AnimationCurve duration, Func<float, TransformChanges> body)
         {
             float expiredSeconds = 0f;
             float progress = 0f;
@@ -31,7 +32,7 @@ namespace Sourse.Player.Common.Scripts
             while (progress < 1f)
             {
                 expiredSeconds += Time.deltaTime;
-                progress = expiredSeconds / duration;
+                progress = expiredSeconds / duration.Evaluate(expiredSeconds);
                 LastChanges = body.Invoke(progress);
                 yield return null;
             }

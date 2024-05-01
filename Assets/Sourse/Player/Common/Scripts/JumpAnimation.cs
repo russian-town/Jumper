@@ -9,7 +9,7 @@ namespace Sourse.Player.Common.Scripts
         public void Initialize()
             => _playtime = new PureAnimation(this);
 
-        public PureAnimation Play(Transform jumper, float duration, float height, AnimationCurve animationCurve)
+        public PureAnimation Play(Transform jumper, AnimationCurve duration, float height, AnimationCurve animationCurve)
         {
             _playtime.Play(duration, (float progress) =>
             {

@@ -213,7 +213,7 @@ MonoBehaviour:
       - m_Target: {fileID: -2837006681803895139}
         m_TargetAssemblyTypeName: Sourse.Ground.DeadZone, Assembly-CSharp
         m_MethodName: GameOver
-        m_Mode: 1
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -225,3 +225,4 @@ MonoBehaviour:
   CollisionExit:
     m_PersistentCalls:
       m_Calls: []
+  _fallParticleTemplate: {fileID: 7780084791644561562, guid: 9498c0ee3f6366049ab8be757a86ca26, type: 3}

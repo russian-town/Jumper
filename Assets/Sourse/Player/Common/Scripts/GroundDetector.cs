@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 namespace Sourse.Player.Common.Scripts
@@ -6,17 +6,22 @@ namespace Sourse.Player.Common.Scripts
     [RequireComponent(typeof(BoxCollider))]
     public class GroundDetector : MonoBehaviour
     {
-        [SerializeField] private List<Leg> _legs = new ();
+        public event Action PlayerFell;
+
+        public event Action PlayerJumped;
 
         public bool IsGrounded { get; private set; }
 
-        public void UpdatePhysics()
+        private void OnCollisionEnter(Collision collision)
         {
-            foreach (Leg leg in _legs)
-            {
-                IsGrounded = leg.CheckGround();
-                break;
-            }
+            IsGrounded = true;
+            PlayerFell?.Invoke();
+        }
+
+        private void OnCollisionExit(Collision collision)
+        {
+            IsGrounded = false;
+            PlayerJumped?.Invoke();
         }
     }
 }
