@@ -3,16 +3,16 @@ using UnityEngine;
 namespace Sourse.Player.Common.Scripts
 {
     [RequireComponent(typeof(PlayerAnimator), typeof(PhysicsJump), typeof(GroundDetector))]
-    [RequireComponent(typeof(JumpAnimation), typeof(PhysicsMovement))]
+    [RequireComponent(typeof(JumpAnimation))]
     public class PlayerInitializer : MonoBehaviour
     {
         [SerializeField] private ParticleSystem _fallParticle;
         [SerializeField] private ParticleSystem _fallOnGroundParticle;
         [SerializeField] private AntiRoll _antiRoll;
+        [SerializeField] private SurfaceSlider _surfaceSlider;
 
         private JumpAnimation _jumpAnimation;
         private PhysicsJump _physicsJump;
-        private PhysicsMovement _physicsMovement;
 
         public GroundDetector GroundDetector { get; private set; }
 
@@ -40,12 +40,11 @@ namespace Sourse.Player.Common.Scripts
             Animator = GetComponent<PlayerAnimator>();
             _jumpAnimation = GetComponent<JumpAnimation>();
             _physicsJump = GetComponent<PhysicsJump>();
-            _physicsMovement = GetComponent<PhysicsMovement>();
             Animator.Initialize(GroundDetector);
             _jumpAnimation.Initialize();
-            _physicsJump.Initialize(_jumpAnimation, Animator, JumpLenght, DoubleJumpLenght);
-            _physicsMovement.Initialize();
-            _antiRoll.Initialize();
+            _surfaceSlider.Initialize();
+            _physicsJump.Initialize(_jumpAnimation, Animator, _surfaceSlider, JumpLenght, DoubleJumpLenght);
+            _antiRoll.Initialize(_surfaceSlider, GroundDetector);
         }
 
         public void UpdatePhysics()

@@ -1,31 +1,26 @@
-using UnityEditor.PackageManager;
 using UnityEngine;
 
 namespace Sourse.Player.Common.Scripts
 {
-    [RequireComponent(typeof(BoxCollider))]
     public class PhysicsJump : MonoBehaviour
     {
-        [SerializeField] private AnimationCurve _jumpDuration;
-        [SerializeField] private float _jumpHeight;
         [SerializeField] private AnimationCurve _jumpCurve;
+        [SerializeField] private AnimationCurve _jumpDuration;
         [SerializeField] private AnimationCurve _doubleJumpDuration;
+        [SerializeField] private float _jumpHeight;
         [SerializeField] private float _doubleJumpHeight;
-        [SerializeField] private AnimationCurve _doubleJumpCurve;
         [SerializeField] private Rigidbody _rb;
-        [SerializeField] private LayerMask _groundMask;
-        [SerializeField] private SurfaceSlider _surfaceSlider;
+        [SerializeField] private ParticleSystem _smokeEffect;
 
         private JumpAnimation _jumpAnimation;
-        private PureAnimation _pureAnimation;
         private PlayerAnimator _playerAnimator;
+        private SurfaceSlider _surfaceSlider;
+        private Transform _transform;
+        private PureAnimation _pureAnimation;
         private float _jumpLenght;
         private float _doubleJumpLenght;
-        private BoxCollider _boxCollider;
         private PureAnimation _currentAnimation;
         private Vector3 _target;
-        private Vector3 _halfSize;
-        private RaycastHit _hitInfo;
 
         public void Subsctibe()
         {
@@ -42,64 +37,44 @@ namespace Sourse.Player.Common.Scripts
         public void Initialize(
             JumpAnimation jumpAnimation,
             PlayerAnimator playerAnimator,
+            SurfaceSlider surfaceSlider,
             float jumpLenght,
             float doubleJumpLenght)
         {
             _jumpAnimation = jumpAnimation;
             _playerAnimator = playerAnimator;
+            _surfaceSlider = surfaceSlider;
+            _transform = transform;
             _pureAnimation = new PureAnimation(this);
             _jumpLenght = jumpLenght;
             _doubleJumpLenght = doubleJumpLenght;
-            _boxCollider = GetComponent<BoxCollider>();
-            _halfSize = _boxCollider.size / 2;
         }
 
         private void OnJumped()
-            => Jump(transform.forward, _jumpDuration, _jumpLenght, _jumpHeight, _jumpCurve);
+            => Jump(_transform.forward, _jumpDuration, _jumpLenght, _jumpHeight);
 
         private void OnDoubleJumped()
-            => Jump(transform.forward, _doubleJumpDuration, _doubleJumpLenght, _doubleJumpHeight, _doubleJumpCurve);
+            => Jump(_transform.forward, _doubleJumpDuration, _doubleJumpLenght, _doubleJumpHeight);
 
-        private void Jump(Vector3 direction, AnimationCurve duration, float lenght, float height, AnimationCurve animationCurve)
+        private void Jump(Vector3 direction, AnimationCurve duration, float lenght, float height)
         {
             _pureAnimation?.Stop();
             _currentAnimation?.Stop();
-            Quaternion orientation = transform.localRotation;
-            Vector3 startPosition = transform.position;
-            _target = transform.position + (direction * lenght);
+            _smokeEffect.Stop();
+            _smokeEffect.Play();
+            Vector3 startPosition = _transform.position;
+            _target = _transform.position + (direction * lenght);
 
-            if (Physics.BoxCast(
-                _target,
-                _halfSize,
-                Vector3.down,
-                out _hitInfo,
-                orientation,
-                Mathf.Infinity,
-                _groundMask))
-            {
-                _target = new Vector3(_target.x, _hitInfo.point.y + _halfSize.y, _target.z) +
-                    _surfaceSlider.Project(transform.forward.normalized, _hitInfo.normal);
-            }
+            if(_surfaceSlider.TryGetTargetPosition(_target, out Vector3 target))
+                _target = target;
 
-            _currentAnimation = _jumpAnimation.Play(transform, duration, height, animationCurve);
+            _currentAnimation = _jumpAnimation.Play(_transform, duration, height, _jumpCurve);
 
             _pureAnimation.Play(duration, (progress) =>
             {
-                transform.position = Vector3.Lerp(startPosition, _target, progress) + _currentAnimation.LastChanges.Positon;
+                _transform.position = Vector3.Lerp(startPosition, _target, progress) + _currentAnimation.LastChanges.Positon;
                 return null;
             });
-        }
-
-        private void OnDrawGizmos()
-        {
-            if(_boxCollider == null)
-                return;
-
-            Gizmos.color = Color.red;
-            Gizmos.DrawWireCube(_target, _boxCollider.size);
-            Gizmos.color = Color.cyan;
-            Gizmos.DrawLine(_hitInfo.point, new Vector3(_target.x, _hitInfo.point.y + _halfSize.y, _target.z) +
-                    _surfaceSlider.Project(transform.forward.normalized, _hitInfo.point));
         }
     }
 }

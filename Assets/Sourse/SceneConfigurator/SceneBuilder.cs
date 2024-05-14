@@ -27,7 +27,7 @@ namespace Sourse.SceneConfigurator
                 item.Initialize();
                 float minPosition = playerInitializer.JumpLenght;
                 float maxPosition = playerInitializer.JumpLenght + playerInitializer.DoubleJumpLenght;
-                position.x += Random.Range(minPosition, maxPosition);
+                position.x += Random.Range(minPosition, maxPosition) - itemTemplate.transform.localScale.x / 2f ;
                 position.y = deadZone.transform.position.y + deadZone.transform.localScale.y + item.transform.localScale.y / 2f;
                 item.transform.position = position;
                 _items.Add(item);

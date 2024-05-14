@@ -116,7 +116,7 @@ MonoBehaviour:
       - m_Target: {fileID: 5844224646108310549}
         m_TargetAssemblyTypeName: Sourse.Game.FinishContent.Finish, Assembly-CSharp
         m_MethodName: CompleteLevel
-        m_Mode: 1
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -128,3 +128,4 @@ MonoBehaviour:
   CollisionExit:
     m_PersistentCalls:
       m_Calls: []
+  _finishEffects: {fileID: 6236919813024348725, guid: 82d920b6eca60684994c0f82afcf95f1, type: 3}

@@ -8,6 +8,8 @@ namespace Sourse.Player.Common.Scripts
     {
         public event Action PlayerFell;
 
+        public event Action PlayerStay;
+
         public event Action PlayerJumped;
 
         public bool IsGrounded { get; private set; }
@@ -17,6 +19,9 @@ namespace Sourse.Player.Common.Scripts
             IsGrounded = true;
             PlayerFell?.Invoke();
         }
+
+        private void OnCollisionStay(Collision collision)
+            => PlayerStay?.Invoke();
 
         private void OnCollisionExit(Collision collision)
         {

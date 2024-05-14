@@ -31,6 +31,7 @@ namespace Sourse.Player.Common.Scripts
             _animator = GetComponent<Animator>();
             _groundDetector = groundDetector;
             _animator.SetBool(AnimationName.IsGrounded, _groundDetector.IsGrounded);
+            ResetJumping();
         }
 
         public void CallJumpEvent()
